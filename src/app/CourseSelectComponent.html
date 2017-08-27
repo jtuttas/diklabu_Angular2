@@ -1,0 +1,4 @@
+<input type="text" placeholder="filter" (change)="filterChanged()" [(ngModel)]="filter">
+<select type="number" [(ngModel)]="courseid" (ngModelChange)="toNumber()">
+  <option *ngFor="let c of courses" [ngValue]="c.id">{{c.coursename}}</option>
+</select>
