@@ -1,5 +1,7 @@
 import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import {CourseBook} from "./data/CourseBook";
+import {ComponentChangedListener} from "./data/ComponentChangedListener";
 
 @Component({
   selector: 'app-root',
@@ -7,24 +9,33 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
-  name =  'Tuttas!';
-  title = 'app';
+export class AppComponent implements ComponentChangedListener{
+  componentChanged(): void {
+    console.log("Component Changed ! from="+this.fromDateComponent+" to="+this.toDateComponent);
+    AppComponent.courseBook.fromDate=this.fromDateComponent.d;
+    AppComponent.courseBook.toDate=this.toDateComponent.d;
+    AppComponent.courseBook.course=this.courseComponent.getSelectedCourse();
+  }
 
-  @ViewChild('fromDate') fromDate;
+  @ViewChild('fromDateComponent') fromDateComponent;
+  @ViewChild('toDateComponent') toDateComponent;
+  @ViewChild('courseComponent') courseComponent;
 
-
+  public static courseBook:CourseBook;
 
   constructor(public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
     this.toastr.success('You are awesome!', 'Success!');
   }
 
-  doNumer(t1: number, t2: number): number {
-    return t1 + t2;
+  ngOnInit(){
+    AppComponent.courseBook = new CourseBook(this.fromDateComponent.d,this.toDateComponent.d,this.courseComponent.getSelectedCourse());
+    console.log("NGInit!");
   }
 
+
   testClick() {
-    console.log('from Date='+this.fromDate.d.toString());
+    AppComponent.courseBook.toString();
+    console.log(this.fromDateComponent.d);
   }
 }

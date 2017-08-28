@@ -9,6 +9,6 @@ export class Course {
   }
 
   toString() {
-    console.log("Course:"+this.coursename+" ID="+this.id);
+    console.log(" > Coursename:"+this.coursename+" ID="+this.id);
   }
 }

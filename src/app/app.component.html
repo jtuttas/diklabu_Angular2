@@ -1,15 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 <div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!!<br/>
-    {{doNumer(2,4)}}
-  </h1>
-  <div class="jumbotron"><h1>Diklabu</h1></div>
-  <h2 (click)="testClick()">{{name}}</h2>
-  <datepickerComponent #fromDate [titel]="'von'"></datepickerComponent>
-  <datepickerComponent #toDate [titel]="'bis'"></datepickerComponent>
-  <courseselect></courseselect>
+
+  <h2 (click)="testClick()">test</h2>
+  <datepickerComponent #fromDateComponent [titel]="'von'" [listner]="this" ></datepickerComponent>
+  <datepickerComponent #toDateComponent [titel]="'bis'" [listner]="this"></datepickerComponent>
+  <courseselect #courseComponent [listner]="this"></courseselect>
 
 </div>
 

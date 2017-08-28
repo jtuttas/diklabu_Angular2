@@ -1,5 +1,8 @@
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {Course} from "./data/Course";
+import {AppComponent} from "./app.component";
+import {ComponentChangedListener} from "./data/ComponentChangedListener";
+
 
 @Component({
   selector: 'courseselect',
@@ -8,22 +11,34 @@ import {Course} from "./data/Course";
 })
 
 export class CourseSelectComponent{
+  @Input() listner: ComponentChangedListener;
+
   public courseid:number=0;
   public filter:string="";
   public allCourses:Array<Course>;
   public courses:Array<Course>;
-
   constructor(){
+
     this.courses=[];
+
     this.courses.push(new Course(0,"FISI1A"));
     this.courses.push(new Course(1,"FISI1B"));
     this.courses.push(new Course(2,"FISI1C"));
     this.courses.push(new Course(3,"FIAE1A"));
+
     this.allCourses=this.courses;
+    console.log("Construktor CourseSelectComponent");
   }
 
-  toNumber(){
-    console.log(this.courseid);
+
+  updated(){
+    this.listner.componentChanged();
+  }
+
+  getSelectedCourse():Course {
+    console.log("Number of Courses="+this.courses.length);
+    console.log("get selected Course="+this.courses[this.courseid].coursename);
+    return this.courses[this.courseid];
   }
 
   filterChanged() {

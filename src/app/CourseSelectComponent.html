@@ -1,4 +1,11 @@
-<input type="text" placeholder="filter" (change)="filterChanged()" [(ngModel)]="filter">
-<select type="number" [(ngModel)]="courseid" (ngModelChange)="toNumber()">
-  <option *ngFor="let c of courses" [ngValue]="c.id">{{c.coursename}}</option>
-</select>
+<md-input-container class="example-full-width">
+  <input mdInput placeholder="Filter" (change)="filterChanged()" [(ngModel)]="filter">
+</md-input-container>
+
+  <md-select placeholder="Klassen" [(ngModel)]="courseid" (ngModelChange)="updated()">
+    <md-option *ngFor="let c of courses" [value]="c.id">
+      {{c.coursename}}
+    </md-option>
+  </md-select>
+
+
