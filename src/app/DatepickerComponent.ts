@@ -1,6 +1,5 @@
 ///<reference path="../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, Input} from '@angular/core';
-import {CourseBook} from "./data/CourseBook";
 import {ComponentChangedListener} from "./data/ComponentChangedListener";
 
 @Component({

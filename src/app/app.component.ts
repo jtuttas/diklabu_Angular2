@@ -10,32 +10,31 @@ import {ComponentChangedListener} from "./data/ComponentChangedListener";
 })
 
 export class AppComponent implements ComponentChangedListener{
+
   componentChanged(): void {
-    console.log("Component Changed ! from="+this.fromDateComponent+" to="+this.toDateComponent);
-    AppComponent.courseBook.fromDate=this.fromDateComponent.d;
-    AppComponent.courseBook.toDate=this.toDateComponent.d;
+    console.log("component Changed !!");
+    AppComponent.courseBook.fromDate=this.durationPickerComponent.fromDate;
+    AppComponent.courseBook.toDate=this.durationPickerComponent.toDate;
     AppComponent.courseBook.course=this.courseComponent.getSelectedCourse();
   }
 
-  @ViewChild('fromDateComponent') fromDateComponent;
-  @ViewChild('toDateComponent') toDateComponent;
+  @ViewChild('durationComponent') durationPickerComponent;
   @ViewChild('courseComponent') courseComponent;
 
   public static courseBook:CourseBook;
+  public static SERVER="http://service.joerg-tuttas.de:8081/"
 
   constructor(public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
-    this.toastr.success('You are awesome!', 'Success!');
   }
 
-  ngOnInit(){
-    AppComponent.courseBook = new CourseBook(this.fromDateComponent.d,this.toDateComponent.d,this.courseComponent.getSelectedCourse());
+  componentInit(){
+    AppComponent.courseBook = new CourseBook(this.durationPickerComponent.fromDate,this.durationPickerComponent.toDate,this.courseComponent.getSelectedCourse());
     console.log("NGInit!");
   }
 
 
   testClick() {
     AppComponent.courseBook.toString();
-    console.log(this.fromDateComponent.d);
   }
 }

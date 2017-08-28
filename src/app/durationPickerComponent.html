@@ -1,0 +1,10 @@
+<md-input-container>
+  <input  [value]="fromDate" mdInput [mdDatepicker]="picker1" placeholder="von">
+  <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+</md-input-container>
+<md-datepicker (selectedChanged)="fromChange($event)" #picker1></md-datepicker>
+<md-input-container>
+  <input  [value]="toDate" mdInput [mdDatepicker]="picker2" placeholder="bis">
+  <button mdSuffix [mdDatepickerToggle]="picker2"></button>
+</md-input-container>
+<md-datepicker (selectedChanged)="toChange($event)" #picker2></md-datepicker>

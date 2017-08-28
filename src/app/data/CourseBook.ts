@@ -12,6 +12,6 @@ export class  CourseBook {
   }
 
   public toString() {
-    console.log("from="+this.fromDate+ " to="+this.toDate+" Course:"+this.course.coursename+" ID="+this.course.id);
+    console.log("from="+this.fromDate+ " to="+this.toDate+" Course:"+this.course.KNAME+"  ID="+this.course.id);
   }
 }

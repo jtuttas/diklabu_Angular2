@@ -3,8 +3,7 @@
 <div style="text-align:center">
 
   <h2 (click)="testClick()">test</h2>
-  <datepickerComponent #fromDateComponent [titel]="'von'" [listner]="this" ></datepickerComponent>
-  <datepickerComponent #toDateComponent [titel]="'bis'" [listner]="this"></datepickerComponent>
+  <duration #durationComponent [listner]="this"></duration>
   <courseselect #courseComponent [listner]="this"></courseselect>
 
 </div>

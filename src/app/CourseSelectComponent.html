@@ -3,8 +3,8 @@
 </md-input-container>
 
   <md-select placeholder="Klassen" [(ngModel)]="courseid" (ngModelChange)="updated()">
-    <md-option *ngFor="let c of courses" [value]="c.id">
-      {{c.coursename}}
+    <md-option *ngFor="let c of courses; let j = index" [value]="j">
+      {{c.KNAME}}
     </md-option>
   </md-select>
 
