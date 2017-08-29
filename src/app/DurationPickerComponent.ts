@@ -20,18 +20,18 @@ export class DurationPickerComponent {
 
   fromChange(event): void {
     this.fromDate = event;
-    console.log("from="+this.fromDate.getTime()+" to="+this.toDate.getTime());
+    //console.log("from="+this.fromDate.getTime()+" to="+this.toDate.getTime());
     if (this.fromDate.getTime() > this.toDate.getTime()) {
-      console.log("FEHLER");
+      //console.log("FEHLER");
       this.toastr.info('Start-Datum muss vor dem End-Datum liegen!', 'Hinweis!');
     }
     this.listner.componentChanged();
   }
   toChange(event): void {
     this.toDate = event;
-    console.log("from="+this.fromDate.getTime()+" to="+this.toDate.getTime());
+    //console.log("from="+this.fromDate.getTime()+" to="+this.toDate.getTime());
     if (this.fromDate.getTime() > this.toDate.getTime()) {
-      console.log("FEHLER");
+      //console.log("FEHLER");
       this.toastr.info('Start-Datum muss vor dem End-Datum liegen!', 'Hinweis!');
     }
     this.listner.componentChanged();
