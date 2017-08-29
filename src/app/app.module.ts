@@ -11,10 +11,11 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {CourseSelectComponent} from "./CourseSelectComponent";
 import {DurationPickerComponent} from "./DurationPickerComponent";
 import {HttpClientModule} from "@angular/common/http";
+import {LFSelectComponent} from "./LFSelectComponent";
 
 @NgModule({
   declarations: [
-    AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent
+    AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
