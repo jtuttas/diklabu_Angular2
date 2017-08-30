@@ -4,6 +4,7 @@ export class  CourseBook {
   public fromDate:Date;
   public toDate:Date;
   public course:Course;
+  public idLehrer:string="TU";
 
   constructor(from:Date,to:Date,course:Course) {
     this.fromDate=from;

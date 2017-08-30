@@ -20,9 +20,10 @@ export class AppComponent implements ComponentChangedListener{
 
   @ViewChild('durationComponent') durationPickerComponent;
   @ViewChild('courseComponent') courseComponent;
+  @ViewChild('newVerlaufComponent') verlaufComponent;
 
   public static courseBook:CourseBook;
-  public static SERVER="http://service.joerg-tuttas.de:8081/"
+  public static SERVER="http://localhost:8080/"
 
   constructor(public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -36,5 +37,6 @@ export class AppComponent implements ComponentChangedListener{
 
   testClick() {
     AppComponent.courseBook.toString();
+    this.verlaufComponent.toString();
   }
 }

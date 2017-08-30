@@ -12,15 +12,17 @@ import {CourseSelectComponent} from "./CourseSelectComponent";
 import {DurationPickerComponent} from "./DurationPickerComponent";
 import {HttpClientModule} from "@angular/common/http";
 import {LFSelectComponent} from "./LFSelectComponent";
+import {NewVerlaufComponent} from "./NewVerlaufComponent";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
-    AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent
+    AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
     MdDatepickerModule, MaterialModule, MdNativeDateModule, BrowserAnimationsModule,ToastModule.forRoot()
-    ,HttpClientModule
+    ,HttpClientModule,HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

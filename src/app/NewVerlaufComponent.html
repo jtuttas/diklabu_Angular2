@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-2 col-md-offset-1">
+    <datepickerComponent #dateComponent class="mybox"></datepickerComponent>
+    <div class="mybox">
+      <lfselect #lfSelectComponent [listner]="this"> </lfselect>
+    </div>
+    <div class="mybox">
+    <md-select placeholder="Stunde" [(ngModel)]="stundeindex" [disabled]="compDisabled" >
+      <md-option *ngFor="let c of stunden; let j = index" [value]="j">
+        {{c}}
+      </md-option>
+    </md-select>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <md-input-container class="example-full-width full">
+      <input  mdInput placeholder="Lernsituation" [(ngModel)]="lernsituation" [disabled]="compDisabled">
+    </md-input-container>
+    <md-input-container class="example-full-width full">
+      <input mdInput placeholder="Inhalt" [(ngModel)]="inhalt" [disabled]="compDisabled">
+    </md-input-container>
+    <md-input-container class="example-full-width full">
+      <input mdInput placeholder="Bemerkungen" [(ngModel)]="bemerkungen" [disabled]="compDisabled">
+    </md-input-container>
+  </div>
+  <div class="col-md-1">
+    <button md-fab (click)="addClick()">Add</button>
+  </div>
+</div>

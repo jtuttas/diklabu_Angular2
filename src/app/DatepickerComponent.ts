@@ -16,7 +16,9 @@ export class DatepickerComponent {
 
   onChange(event): void {
     this.d = event;
-    this.listner.componentChanged();
+    if (this.listner!=undefined) {
+      this.listner.componentChanged();
+    }
     console.log('changed!' + event.toString());
     console.log('d=' + this.d.toString());
 
