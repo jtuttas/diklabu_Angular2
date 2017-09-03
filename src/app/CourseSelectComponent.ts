@@ -13,7 +13,7 @@ import {ToastsManager} from "ng2-toastr";
 })
 
 export class CourseSelectComponent{
-  @Input() listner: ComponentChangedListener;
+  @Input() listener: ComponentChangedListener;
 
   public courseid:number=0;
   public filter:string="";
@@ -31,7 +31,7 @@ export class CourseSelectComponent{
       // Read the result field from the JSON response.
       this.courses = data;
       this.allCourses=this.courses;
-      this.listner.componentInit();
+      this.listener.componentInit(this);
       this.compDisabled=false;
     },
 
@@ -55,7 +55,7 @@ export class CourseSelectComponent{
 
 
   updated(){
-    this.listner.componentChanged();
+    this.listener.componentChanged(this);
   }
 
   getSelectedCourse():Course {

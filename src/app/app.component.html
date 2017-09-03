@@ -4,9 +4,10 @@
 
   <h2 (click)="testClick()">test</h2>
   <duration #durationComponent [listner]="this"></duration>
-  <courseselect #courseComponent [listner]="this"></courseselect>
+  <courseselect #courseComponent [listener]="this"></courseselect>
   <hr/>
-  <newverlauf #newVerlaufComponent></newverlauf>
-
+  <newverlauf #newVerlaufComponent [listener]="this"></newverlauf>
+  <hr/>
+  <listverlauf #listVerlaufComponent></listverlauf>
 </div>
 

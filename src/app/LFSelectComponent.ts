@@ -29,7 +29,7 @@ export class LFSelectComponent{
       // Read the result field from the JSON response.
       this.lfs = data;
       if (this.listner != undefined) {
-        this.listner.componentInit();
+        this.listner.componentInit(this);
       }
       this.compDisabled=false;
     },

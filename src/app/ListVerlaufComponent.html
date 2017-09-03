@@ -1,0 +1,44 @@
+<div class="example-container mat-elevation-z8">
+  <md-table #table [dataSource]="dataSource" mdSort>
+
+    <ng-container mdColumnDef="Datum" >
+      <md-header-cell *mdHeaderCellDef md-sort-header  [ngClass]="'smallColumn'"> Datum </md-header-cell>
+      <md-cell *mdCellDef="let row" class="smallField"  [ngClass]="'smallColumn'"> {{row.wochentag+" "+(row.DATUM | date: 'dd.MM.yyyy')}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="LK" cdkColumnDef="LK">
+      <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> LK </md-header-cell>
+      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.ID_LEHRER}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="LF">
+      <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> LF </md-header-cell>
+      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.ID_LERNFELD}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="Stunde">
+      <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> Stunde </md-header-cell>
+      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.STUNDE}}
+      <img src="http://webmaster.webmastersuccess.netdna-cdn.com/wp-content/uploads/2015/03/info.png">
+      </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="Inhalt">
+      <md-header-cell *mdHeaderCellDef md-sort-header> Inhalt </md-header-cell>
+      <md-cell *mdCellDef="let row" class="smallField"> {{row.INHALT}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="Bemerkungen">
+      <md-header-cell *mdHeaderCellDef md-sort-header> Bemerkungen </md-header-cell>
+      <md-cell *mdCellDef="let row" class="smallField"> {{row.BEMERKUNG}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="Lernsituation">
+      <md-header-cell *mdHeaderCellDef md-sort-header> Lernsituation </md-header-cell>
+      <md-cell *mdCellDef="let row" class="smallField"> {{row.AUFGABE}} </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+  </md-table>
+</div>

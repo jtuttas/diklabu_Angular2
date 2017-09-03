@@ -16,6 +16,8 @@ export class DurationPickerComponent {
 
   constructor(public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
+    this.fromDate.setHours(0,0,0,0);
+    this.toDate.setHours(23,59,59,0);
   }
 
   fromChange(event): void {
@@ -25,16 +27,17 @@ export class DurationPickerComponent {
       //console.log("FEHLER");
       this.toastr.info('Start-Datum muss vor dem End-Datum liegen!', 'Hinweis!');
     }
-    this.listner.componentChanged();
+    this.listner.componentChanged(this);
   }
   toChange(event): void {
     this.toDate = event;
+    this.toDate.setHours(23,59,59,0);
     //console.log("from="+this.fromDate.getTime()+" to="+this.toDate.getTime());
     if (this.fromDate.getTime() > this.toDate.getTime()) {
       //console.log("FEHLER");
       this.toastr.info('Start-Datum muss vor dem End-Datum liegen!', 'Hinweis!');
     }
-    this.listner.componentChanged();
+    this.listner.componentChanged(this);
   }
   toString() : void {
     console.log(" from: "+this.fromDate+" to "+this.toDate);

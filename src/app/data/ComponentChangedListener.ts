@@ -1,4 +1,4 @@
 export interface ComponentChangedListener {
-  componentChanged():void;
-  componentInit():void;
+  componentChanged(c:any):void;
+  componentInit(c:any):void;
 }

@@ -1,5 +1,5 @@
-<md-input-container>
-  <input  [value]="d" mdInput [mdDatepicker]="picker" placeholder="{{titel}}">
-  <button mdSuffix [mdDatepickerToggle]="picker"></button>
-</md-input-container>
-<md-datepicker (selectedChanged)="onChange($event)" #picker></md-datepicker>
+<md-form-field>
+  <input  [value]="d" mdInput [mdDatepicker]="picker" placeholder="Datum">
+  <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+  <md-datepicker #picker (selectedChanged)="onChange($event)"></md-datepicker>
+</md-form-field>

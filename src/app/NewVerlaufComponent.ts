@@ -1,4 +1,4 @@
-import {Component,  ViewChild, ViewContainerRef} from "@angular/core";
+import {Component, Input, ViewChild, ViewContainerRef} from "@angular/core";
 import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import {AppComponent} from "./app.component";
 import {ToastModule, ToastsManager} from "ng2-toastr";
@@ -9,6 +9,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 import {MaterialModule} from "@angular/material";
 import {Http, Headers, RequestMethod, RequestOptions, RequestOptionsArgs, ResponseContentType} from "@angular/http";
+import {Verlauf} from "./data/Verlauf";
 
 
 
@@ -20,15 +21,16 @@ import {Http, Headers, RequestMethod, RequestOptions, RequestOptionsArgs, Respon
 
 
 export class NewVerlaufComponent implements ComponentChangedListener{
-  componentChanged(): void {
+  componentChanged(c:any): void {
   }
 
-  componentInit(): void {
+  componentInit(c:any): void {
     this.compDisabled=false;
   }
 
   @ViewChild('dateComponent') dateComponent;
   @ViewChild('lfSelectComponent') lfSelectComponent;
+  @Input() listener: ComponentChangedListener;
 
   public compDisabled: boolean = true;
   public lernsituation:string="";
@@ -37,6 +39,7 @@ export class NewVerlaufComponent implements ComponentChangedListener{
   public stunden = ["01","02","03","04","05","06","07","08","09","10","11","12"];
   public stundeindex:number=0;
   public http:Http;
+  public verlauf:Verlauf;
 
   constructor(http: Http, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -80,6 +83,12 @@ export class NewVerlaufComponent implements ComponentChangedListener{
           if (data.success==false) {
             this.toastr.warning(data.msg, 'Warnung!');
           }
+          this.verlauf=new Verlauf(this.inhalt,this.stunden[this.stundeindex],AppComponent.courseBook.idLehrer,AppComponent.courseBook.course.id,this.dateComponent.d);
+          this.verlauf.AUFGABE=this.lernsituation;
+          this.verlauf.BEMERKUNG=this.bemerkungen;
+          this.verlauf.ID_LERNFELD=this.lfSelectComponent.getSelectedLernfeld().id;
+          this.verlauf.INHALT=this.inhalt;
+          this.listener.componentChanged(this);
         },
         (x) => {
           /* this function is executed when there's an ERROR */

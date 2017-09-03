@@ -11,16 +11,25 @@ import {ComponentChangedListener} from "./data/ComponentChangedListener";
 
 export class AppComponent implements ComponentChangedListener{
 
-  componentChanged(): void {
-    console.log("component Changed !!");
-    AppComponent.courseBook.fromDate=this.durationPickerComponent.fromDate;
-    AppComponent.courseBook.toDate=this.durationPickerComponent.toDate;
-    AppComponent.courseBook.course=this.courseComponent.getSelectedCourse();
+  componentChanged(c:any): void {
+    console.log("component Changed !!"+c);
+    if (c===this.durationPickerComponent || c===this.courseComponent) {
+      console.log("component duration oder course !!");
+      AppComponent.courseBook.fromDate = this.durationPickerComponent.fromDate;
+      AppComponent.courseBook.toDate = this.durationPickerComponent.toDate;
+      AppComponent.courseBook.course = this.courseComponent.getSelectedCourse();
+      this.listVerlaufComponent.getVerlauf();
+    }
+    else if (c===this.verlaufComponent) {
+      console.log("component Verlaufkomponente !!");
+      this.listVerlaufComponent.addVerlauf(this.verlaufComponent.verlauf);
+    }
   }
 
   @ViewChild('durationComponent') durationPickerComponent;
   @ViewChild('courseComponent') courseComponent;
   @ViewChild('newVerlaufComponent') verlaufComponent;
+  @ViewChild('listVerlaufComponent') listVerlaufComponent;
 
   public static courseBook:CourseBook;
   public static SERVER="http://localhost:8080/"
@@ -32,6 +41,7 @@ export class AppComponent implements ComponentChangedListener{
   componentInit(){
     AppComponent.courseBook = new CourseBook(this.durationPickerComponent.fromDate,this.durationPickerComponent.toDate,this.courseComponent.getSelectedCourse());
     console.log("NGInit!");
+    this.listVerlaufComponent.getVerlauf();
   }
 
 

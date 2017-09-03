@@ -1,0 +1,7 @@
+.smallColumn{
+  flex: 0 0 85px;
+}
+
+md-cell {
+  text-align: left;
+}

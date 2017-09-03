@@ -13,9 +13,13 @@ export class DatepickerComponent {
 
   public d: Date = new Date();
 
+  constructor() {
+    this.d.setHours(0,0,0,0);
+  }
 
   onChange(event): void {
     this.d = event;
+    this.d.setHours(0,0,0,0);
     if (this.listner!=undefined) {
       this.listner.componentChanged();
     }
