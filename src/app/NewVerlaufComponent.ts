@@ -50,6 +50,17 @@ export class NewVerlaufComponent implements ComponentChangedListener{
     console.log("Verlauf: LS="+this.lernsituation+" Inhalt="+this.inhalt+" Bem:"+this.bemerkungen);
   }
 
+  public setVerlauf(v:Verlauf):void {
+    this.lernsituation=v.AUFGABE;
+    this.bemerkungen=v.BEMERKUNG;
+    this.dateComponent.d=new Date(v.DATUM);
+    AppComponent.courseBook.course.id=v.ID_KLASSE;
+    this.lfSelectComponent.lfid=this.lfSelectComponent.getLfNumber(v.ID_LERNFELD);
+    console.log("SET LF Number to "+this.lfSelectComponent.lfid);
+    this.inhalt=v.INHALT;
+    this.stundeindex= (+v.STUNDE)-1;
+  }
+
   public addClick() {
     console.log("Add click");
     if (this.inhalt=="") {
@@ -81,13 +92,16 @@ export class NewVerlaufComponent implements ComponentChangedListener{
           console.log("VALUE RECEIVED: ",res);
           var data=JSON.parse(res._body);
           if (data.success==false) {
-            this.toastr.warning(data.msg, 'Warnung!');
+            //this.toastr.warning(data.msg, 'Warnung!');
           }
           this.verlauf=new Verlauf(this.inhalt,this.stunden[this.stundeindex],AppComponent.courseBook.idLehrer,AppComponent.courseBook.course.id,this.dateComponent.d);
           this.verlauf.AUFGABE=this.lernsituation;
           this.verlauf.BEMERKUNG=this.bemerkungen;
           this.verlauf.ID_LERNFELD=this.lfSelectComponent.getSelectedLernfeld().id;
           this.verlauf.INHALT=this.inhalt;
+          this.verlauf.ID=data.ID;
+          this.stundeindex++;
+
           this.listener.componentChanged(this);
         },
         (x) => {

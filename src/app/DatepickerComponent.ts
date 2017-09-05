@@ -21,7 +21,7 @@ export class DatepickerComponent {
     this.d = event;
     this.d.setHours(0,0,0,0);
     if (this.listner!=undefined) {
-      this.listner.componentChanged();
+      this.listner.componentChanged(this);
     }
     console.log('changed!' + event.toString());
     console.log('d=' + this.d.toString());

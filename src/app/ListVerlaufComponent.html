@@ -8,18 +8,22 @@
 
     <ng-container mdColumnDef="LK" cdkColumnDef="LK">
       <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> LK </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.ID_LEHRER}} </md-cell>
+      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.ID_LEHRER}}
+        <img *ngIf="row.ID_LEHRER=='TU'" (click)="delete(row)" class="del" src="/assets/del.png" width="16" height="16">
+        <img *ngIf="row.ID_LEHRER=='TU'" (click)="edit(row)" class="edit" src="/assets/edit.png" width="16" height="16">
+      </md-cell>
     </ng-container>
 
-    <ng-container mdColumnDef="LF">
+    <ng-container mdColumnDef="LF"  >
       <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> LF </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.ID_LERNFELD}} </md-cell>
+      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.ID_LERNFELD}}
+      </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="Stunde">
       <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> Stunde </md-header-cell>
       <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.STUNDE}}
-      <img src="http://webmaster.webmastersuccess.netdna-cdn.com/wp-content/uploads/2015/03/info.png">
+
       </md-cell>
     </ng-container>
 
@@ -35,7 +39,9 @@
 
     <ng-container mdColumnDef="Lernsituation">
       <md-header-cell *mdHeaderCellDef md-sort-header> Lernsituation </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField"> {{row.AUFGABE}} </md-cell>
+      <md-cell *mdCellDef="let row" class="smallField"> {{row.AUFGABE}}
+
+      </md-cell>
     </ng-container>
 
     <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>

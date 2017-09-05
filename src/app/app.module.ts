@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import {
   MdDatepickerModule, MaterialModule, MdNativeDateModule, MdButtonModule,
-  MdCheckboxModule
+  MdCheckboxModule, MdDialogModule
 } from '@angular/material';
 import {DatepickerComponent} from './DatepickerComponent';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -19,18 +19,28 @@ import {NewVerlaufComponent} from "./NewVerlaufComponent";
 import {HttpModule} from "@angular/http";
 import {ListVerlaufComponent} from "./ListVerlaufComponent";
 import 'hammerjs';
+import {ConfirmDialog} from "./VerlaufDeleteDialog";
+import {DialogsService} from "./DialogService";
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
-    , ListVerlaufComponent
+    , ListVerlaufComponent, ConfirmDialog
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
     MdDatepickerModule, MaterialModule, MdNativeDateModule, BrowserAnimationsModule,ToastModule.forRoot()
-    ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule
+    ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule
   ],
-  providers: [],
+  exports: [
+    ConfirmDialog
+  ],
+  providers: [
+    DialogsService
+  ],
+  entryComponents: [
+    ConfirmDialog,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

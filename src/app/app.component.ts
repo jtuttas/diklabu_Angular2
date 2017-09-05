@@ -24,6 +24,9 @@ export class AppComponent implements ComponentChangedListener{
       console.log("component Verlaufkomponente !!");
       this.listVerlaufComponent.addVerlauf(this.verlaufComponent.verlauf);
     }
+    else if (c==this.listVerlaufComponent) {
+      this.verlaufComponent.setVerlauf(this.listVerlaufComponent.getSelected());
+    }
   }
 
   @ViewChild('durationComponent') durationPickerComponent;

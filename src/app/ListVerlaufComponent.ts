@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, Input, ViewChild, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {MdSort} from '@angular/material';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -11,6 +11,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ToastsManager} from "ng2-toastr";
 import {AppComponent} from "./app.component";
 import {CourseBook} from "./data/CourseBook";
+import {ComponentChangedListener} from "./data/ComponentChangedListener";
+import {DialogsService} from "./DialogService";
 
 /**
  * @title List Verlauf
@@ -21,16 +23,19 @@ import {CourseBook} from "./data/CourseBook";
   templateUrl: 'ListVerlaufComponent.html',
 })
 export class ListVerlaufComponent {
+  @Input() listener: ComponentChangedListener;
 
   displayedColumns = ['Datum', 'LK', 'LF', 'Stunde', 'Inhalt', 'Bemerkungen', 'Lernsituation'];
   exampleDatabase = new ExampleDatabase();
   dataSource: ExampleDataSource | null;
   http: HttpClient;
   compDisabled = true;
+  selectedVerlauf:Verlauf;
+  public result: any;
 
   @ViewChild(MdSort) sort: MdSort;
 
-  constructor(http: HttpClient, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(http: HttpClient, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogsService: DialogsService) {
     this.toastr.setRootViewContainerRef(vcr);
     this.http = http;
 
@@ -71,8 +76,56 @@ export class ListVerlaufComponent {
       });
   }
 
+  getSelected():Verlauf {
+    return this.selectedVerlauf;
+  }
+
   addVerlauf(v:Verlauf):void {
     this.exampleDatabase.add(v);
+  }
+
+  delete(v:Verlauf) {
+    console.log("Delete Verlauf ID=" + v.ID);
+    this.dialogsService
+      .confirm('Verlaufseintrag löschen?', 'Wollen Sie den Eintrag ' + v.ID_LERNFELD + ' Stunde ' + v.STUNDE + ' am ' + CourseBook.toReadbleString(new Date(v.DATUM)) + ' löschen ?')
+      .subscribe(res => {
+          if (res) {
+            console.log("OK löschen");
+            this.confimedDelete(v);
+          }
+        }
+      );
+  }
+
+  confimedDelete(v:Verlauf) {
+    this.exampleDatabase.delete(v);
+    this.http.delete(AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + v.ID).subscribe(data => {
+        // Read the result field from the JSON response.
+        //this.lfs = data;
+        console.log("Delete Verlauf=" + JSON.stringify(data));
+      },
+
+      (err: HttpErrorResponse) => {
+
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('An error occurred:', err.error.message);
+          this.toastr.error('Kann Verlaufselement nicht löschen! MSG=' + err.error.message, 'Fehler!');
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+          this.toastr.error('Kann Verlaufelement nicht löschen! (' + err.name + ')', 'Fehler!');
+        }
+
+      });
+  }
+
+
+  edit(v:Verlauf) {
+    this.selectedVerlauf=v;
+    console.log("edit"+v.ID);
+    this.listener.componentChanged(this);
   }
 }
 
@@ -109,6 +162,20 @@ export class ExampleDatabase {
     const copiedData = this.data.slice();
     copiedData.push(<Verlauf>v);
     this.dataChange.next(copiedData);
+  }
+
+  public delete(v:Verlauf) {
+    for (let i = 0; i < this.data.length; i++) {
+      if (v.ID == this.data[i].ID) {
+        console.log("Eintrag gefunden");
+        this.data.splice(i,1);
+        const copiedData = this.data.slice();
+        this.dataChange.next(copiedData);
+
+        return;
+      }
+    }
+
   }
 }
 
@@ -152,7 +219,9 @@ export class ExampleDataSource extends DataSource<any> {
 
       switch (this._sort.active) {
         case 'Datum':
-          [propertyA, propertyB] = [a.DATUM.toTimeString(), b.DATUM.toTimeString()];
+          var a1 = new Date (a.DATUM);
+          var b1 = new Date (b.DATUM);
+          [propertyA, propertyB] = [a1.getTime(), b1.getTime()];
           break;
         case 'LK':
           [propertyA, propertyB] = [a.ID_LEHRER, b.ID_LEHRER];

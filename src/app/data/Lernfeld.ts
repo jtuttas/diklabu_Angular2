@@ -1,4 +1,4 @@
 export class Lernfeld {
-  public bezeichnung:string;
+  public BEZEICHNUNG:string;
   public id:string;
 }

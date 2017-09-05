@@ -5,3 +5,12 @@
 md-cell {
   text-align: left;
 }
+
+.del {
+  cursor: pointer;
+}
+
+.edit {
+  cursor: pointer;
+
+}

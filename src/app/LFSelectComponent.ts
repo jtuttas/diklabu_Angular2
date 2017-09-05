@@ -20,6 +20,15 @@ export class LFSelectComponent{
   public lfs;
   public compDisabled:boolean=true;
 
+  public getLfNumber(s:string):number {
+    for (var i=0;i<this.lfs.length;i++) {
+      console.log( "test ("+s+") ist "+this.lfs[i].BEZEICHNUNG);
+      if (this.lfs[i].BEZEICHNUNG==s) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
   constructor(http:HttpClient,public toastr: ToastsManager, vcr: ViewContainerRef){
     this.toastr.setRootViewContainerRef(vcr);

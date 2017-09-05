@@ -1,4 +1,5 @@
 import {Course} from "./Course";
+import {Verlauf} from "./Verlauf";
 
 export class  CourseBook {
   public fromDate:Date;
@@ -34,7 +35,8 @@ export class  CourseBook {
     return d.getFullYear()+"-"+m+"-"+t;
   }
 
+  static wochentage=["So.","Mo.","Di.","Mi.","Do.","Fr.","Sa."];
   public static toReadbleString(d:Date):string {
-    return d.getDay()+" "+d.getDate()+"."+d.getMonth()+"."+d.getFullYear();
+    return  CourseBook.wochentage[d.getDay()]+" "+d.getDate()+"."+(d.getMonth()+1)+"."+d.getFullYear();
   }
 }

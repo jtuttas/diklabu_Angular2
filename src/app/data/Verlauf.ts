@@ -1,3 +1,5 @@
+import {AppComponent} from "../app.component";
+
 export class Verlauf {
   AUFGABE:string="ls";
   BEMERKUNG:string="bem";
@@ -21,6 +23,11 @@ export class Verlauf {
     this.DATUM=d;
     this.wochentag=Verlauf.wochentage[d.getDay()];
     console.log("Neuer Verlauf "+d.getDay()+" Wochentag="+this.wochentag);
+  }
+
+  isOwnEntry():boolean {
+    if (this.ID_LEHRER==AppComponent.courseBook.idLehrer) {return true;}
+    return false;
   }
 
   euqals(v:Verlauf):boolean {
