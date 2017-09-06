@@ -14,3 +14,8 @@ md-cell {
   cursor: pointer;
 
 }
+
+.example-header {
+  text-align: left;
+  margin-left: 25px;
+}

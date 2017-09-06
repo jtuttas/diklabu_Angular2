@@ -22,6 +22,7 @@ import 'hammerjs';
 import {ConfirmDialog} from "./VerlaufDeleteDialog";
 import {DialogsService} from "./DialogService";
 
+
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent

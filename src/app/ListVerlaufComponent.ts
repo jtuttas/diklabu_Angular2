@@ -1,11 +1,7 @@
-import {Component, Input, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {MdSort} from '@angular/material';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
 import {Verlauf} from "./data/Verlauf";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ToastsManager} from "ng2-toastr";
@@ -13,6 +9,13 @@ import {AppComponent} from "./app.component";
 import {CourseBook} from "./data/CourseBook";
 import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import {DialogsService} from "./DialogService";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
 
 /**
  * @title List Verlauf
@@ -34,6 +37,8 @@ export class ListVerlaufComponent {
   public result: any;
 
   @ViewChild(MdSort) sort: MdSort;
+  @ViewChild('filter') filter: ElementRef;
+
 
   constructor(http: HttpClient, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogsService: DialogsService) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -44,6 +49,14 @@ export class ListVerlaufComponent {
   ngOnInit() {
 
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
+    Observable.fromEvent(this.filter.nativeElement, 'keyup')
+      .debounceTime(150)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        if (!this.dataSource) { return; }
+        console.log("key up event");
+        this.dataSource.filter = this.filter.nativeElement.value;
+      });
   }
 
   public getVerlauf(): void {
@@ -187,6 +200,13 @@ export class ExampleDatabase {
  * should be rendered.
  */
 export class ExampleDataSource extends DataSource<any> {
+  _filterChange = new BehaviorSubject('');
+  get filter(): string { return this._filterChange.value; }
+  set filter(filter: string) { this._filterChange.next(filter); }
+
+  filteredData: Verlauf[] = [];
+  renderedData: Verlauf[] = [];
+
   constructor(private _exampleDatabase: ExampleDatabase, private _sort: MdSort) {
     super();
   }
@@ -196,19 +216,34 @@ export class ExampleDataSource extends DataSource<any> {
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
       this._sort.mdSortChange,
+      this._filterChange,
     ];
 
+    console.log("connect() ")
+
+    /*
     return Observable.merge(...displayDataChanges).map(() => {
       return this.getSortedData();
     });
+  */
+    return Observable.merge(...displayDataChanges).map(() => {
+      // Filter
+      this.filteredData = this._exampleDatabase.data.slice().filter((item: Verlauf) => {
+        let searchStr = (item.STUNDE + item.ID_LERNFELD+item.INHALT+item.BEMERKUNG+item.AUFGABE+item.ID_LEHRER).toLowerCase();
+        return searchStr.indexOf(this.filter.toLowerCase()) != -1;
+      });
+      const sortedData= this.getSortedData(this.filteredData);
+      return sortedData;
+    });
+
   }
 
   disconnect() {
   }
 
   /** Returns a sorted copy of the database data. */
-  getSortedData(): Verlauf[] {
-    const data = this._exampleDatabase.data.slice();
+  getSortedData(data:Verlauf[]): Verlauf[] {
+
     if (!this._sort.active || this._sort.direction == '') {
       return data;
     }
