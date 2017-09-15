@@ -23,7 +23,7 @@ import {ConfirmDialog} from "./VerlaufDeleteDialog";
 import {DialogsService} from "./DialogService";
 import {TabComponent} from "./TabComponent";
 import {CourseBookComponent} from "./CourseBookComponent";
-import {SharedService} from "./SharedService";
+import {SharedService} from "./data/SharedService";
 
 
 @NgModule({

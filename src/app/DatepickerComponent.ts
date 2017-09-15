@@ -1,6 +1,6 @@
 ///<reference path="../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, Input} from '@angular/core';
-import {ComponentChangedListener} from "./data/ComponentChangedListener";
+
 
 @Component({
   selector: 'datepickerComponent',
@@ -9,7 +9,6 @@ import {ComponentChangedListener} from "./data/ComponentChangedListener";
 })
 export class DatepickerComponent {
   @Input() titel: string;
-  @Input() listner: ComponentChangedListener;
 
   public d: Date = new Date();
 
@@ -20,11 +19,7 @@ export class DatepickerComponent {
   onChange(event): void {
     this.d = event;
     this.d.setHours(0,0,0,0);
-    if (this.listner!=undefined) {
-      this.listner.componentChanged(this);
-    }
     console.log('changed!' + event.toString());
     console.log('d=' + this.d.toString());
-
   }
 }

@@ -1,6 +1,5 @@
 ///<reference path="../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
-import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({

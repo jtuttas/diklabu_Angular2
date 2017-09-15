@@ -1,13 +1,5 @@
-import {Component, Host, Input, ViewChild, ViewContainerRef} from "@angular/core";
-import {ComponentChangedListener} from "./data/ComponentChangedListener";
+import {Component, EventEmitter, Host, Input, Output, ViewChild, ViewContainerRef} from "@angular/core";
 import {AppComponent} from "./app.component";
-import {ToastModule, ToastsManager} from "ng2-toastr";
-import {Lernfeld} from "./data/Lernfeld";
-import {LFSelectComponent} from "./LFSelectComponent";
-import {BrowserModule} from "@angular/platform-browser";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule} from "@angular/forms";
-import {MaterialModule} from "@angular/material";
 import {Http, Headers, RequestMethod, RequestOptions, RequestOptionsArgs, ResponseContentType} from "@angular/http";
 import {Verlauf} from "./data/Verlauf";
 import {CourseBookComponent} from "./CourseBookComponent";
@@ -22,17 +14,10 @@ import {CourseBookComponent} from "./CourseBookComponent";
 })
 
 
-export class NewVerlaufComponent implements ComponentChangedListener{
-  componentChanged(c:any): void {
-  }
-
-  componentInit(c:any): void {
-    this.compDisabled=false;
-  }
-
+export class NewVerlaufComponent {
+  @Output() newVerlauf = new EventEmitter();
   @ViewChild('dateComponent') dateComponent;
   @ViewChild('lfSelectComponent') lfSelectComponent;
-  @Input() listener: ComponentChangedListener;
 
   public compDisabled: boolean = true;
   public lernsituation:string="";
@@ -45,6 +30,10 @@ export class NewVerlaufComponent implements ComponentChangedListener{
 
   constructor(http: Http) {
     this.http=http;
+  }
+
+  lfLoaded() {
+    this.compDisabled=false;
   }
 
   public toString() {
@@ -104,8 +93,8 @@ export class NewVerlaufComponent implements ComponentChangedListener{
           if (this.stundeindex<this.stunden.length-1) {
             this.stundeindex++;
           }
-
-          this.listener.componentChanged(this);
+          this.newVerlauf.emit(this.verlauf);
+          //this.listener.componentChanged(this);
         },
         (x) => {
           /* this function is executed when there's an ERROR */

@@ -1,9 +1,9 @@
 <md-tab-group>
   <md-tab label="Verlauf">
     <br/>
-    <newverlauf #newVerlaufComponent [listener]="this"></newverlauf>
+    <newverlauf #newVerlaufComponent (newVerlauf)="newVerlauf($event)"></newverlauf>
     <hr/>
-    <listverlauf #listVerlaufComponent [listener]="this"></listverlauf>
+    <listverlauf #listVerlaufComponent (editVerlauf)="editVerlauf($event)"></listverlauf>
   </md-tab>
   <md-tab label="Anwesenheit">Anwesenheit</md-tab>
 </md-tab-group>

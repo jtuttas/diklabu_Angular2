@@ -1,9 +1,8 @@
 import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import {CourseBook} from "./data/CourseBook";
-import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import {Subscription} from "rxjs/Subscription";
-import {SharedService} from "./SharedService";
+import {SharedService} from "./data/SharedService";
 
 
 
@@ -15,11 +14,11 @@ import {SharedService} from "./SharedService";
 
 })
 
-export class AppComponent implements ComponentChangedListener, OnDestroy{
+export class AppComponent implements OnDestroy{
   static toastr :ToastsManager;
+
   subscription: Subscription;
   courseBook:CourseBook;
-  message:any;
 
   static postWarning(msg: string, titel: string): void {
     this.toastr.warning(msg, titel);
@@ -50,38 +49,11 @@ export class AppComponent implements ComponentChangedListener, OnDestroy{
   }
 
 
-  componentChanged(c:any): void {
-    console.log ("App Component changed");
-    //this.tabComponent.updateView();
-  }
-
-  componentInit(c:any){
-    console.log ("------> App Component init:"+this.tabComponent);
-    if (c==this.tabComponent) {
-      console.log("is TabCompuneten");
-      this.tabComponent.updateView();
-    }
-    else {
-      console.log("is CourseBookComonent");
-      this.tabComponent.listVerlaufComponent.getVerlauf();
-    }
-  }
-
-  ngOnInit() {
-    console.log("app Component ngInit!"+this.tabComponent);
-
-  }
-
-  ngAfterViewInit() {
-    console.log("app Child Component Init!"+this.tabComponent);
-  }
-
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     console.log("ngOnDestroy()");
     this.subscription.unsubscribe();
   }
-
 
   testClick() {
     this.courseBook.toString();

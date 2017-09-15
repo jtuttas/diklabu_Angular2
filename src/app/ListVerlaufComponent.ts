@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewContainerRef} from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {MdSort} from '@angular/material';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -7,7 +7,6 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ToastsManager} from "ng2-toastr";
 import {AppComponent} from "./app.component";
 import {CourseBook} from "./data/CourseBook";
-import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import {DialogsService} from "./DialogService";
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
@@ -17,6 +16,8 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import {CourseBookComponent} from "./CourseBookComponent";
+import {SharedService} from "./data/SharedService";
+import {Subscription} from "rxjs/Subscription";
 
 /**
  * @title List Verlauf
@@ -27,8 +28,9 @@ import {CourseBookComponent} from "./CourseBookComponent";
   templateUrl: 'ListVerlaufComponent.html',
 })
 export class ListVerlaufComponent {
-  @Input() listener: ComponentChangedListener;
+  @Output() editVerlauf = new EventEmitter();
 
+  subscription: Subscription;
   displayedColumns = ['Datum', 'LK', 'LF', 'Stunde', 'Inhalt', 'Bemerkungen', 'Lernsituation'];
   exampleDatabase = new ExampleDatabase();
   dataSource: ExampleDataSource | null;
@@ -41,9 +43,13 @@ export class ListVerlaufComponent {
   @ViewChild('filter') filter: ElementRef;
 
 
-  constructor(http: HttpClient, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogsService: DialogsService) {
+  constructor(http: HttpClient, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogsService: DialogsService, private service:SharedService) {
     this.toastr.setRootViewContainerRef(vcr);
     this.http = http;
+    this.subscription = this.service.getCoursebook().subscribe(message => {
+      console.log("List Component Received !"+message.constructor.name);
+      this.getVerlauf();
+    });
   }
 
   ngOnInit() {
@@ -143,7 +149,7 @@ export class ListVerlaufComponent {
   edit(v:Verlauf) {
     this.selectedVerlauf=v;
     console.log("edit"+v.ID);
-    this.listener.componentChanged(this);
+    this.editVerlauf.emit(v);
   }
 }
 

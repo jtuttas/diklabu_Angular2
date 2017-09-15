@@ -2,7 +2,7 @@
   <div class="col-md-2 col-md-offset-1">
     <datepickerComponent #dateComponent class="mybox"></datepickerComponent>
     <div class="mybox">
-      <lfselect #lfSelectComponent [listner]="this"> </lfselect>
+      <lfselect #lfSelectComponent (lfLoaded)="lfLoaded()"> </lfselect>
     </div>
     <div class="mybox">
     <md-select placeholder="Stunde" [(ngModel)]="stundeindex" [disabled]="compDisabled" >

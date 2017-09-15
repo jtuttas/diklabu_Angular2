@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output, ViewContainerRef} from "@angular/core";
 import {Course} from "./data/Course";
-import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import {AppComponent} from "./app.component";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ToastsManager} from "ng2-toastr";
@@ -32,6 +31,7 @@ export class CourseSelectComponent{
       this.courses = data;
       this.allCourses=this.courses;
       this.compDisabled=false;
+      this.updated();
     },
 
       (err: HttpErrorResponse) => {
@@ -64,5 +64,6 @@ export class CourseSelectComponent{
     console.log("Filter Changed to "+this.filter);
     this.courses = this.allCourses.filter(x => x.KNAME.includes(this.filter));
     this.courseid=0;
+    this.updated();
   }
 }

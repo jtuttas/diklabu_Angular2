@@ -1,5 +1,6 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {ComponentChangedListener} from "./data/ComponentChangedListener";
+import {Verlauf} from "./data/Verlauf";
+
 
 /**
  * @title Basic tabs
@@ -8,38 +9,22 @@ import {ComponentChangedListener} from "./data/ComponentChangedListener";
   selector: 'tab',
   templateUrl: 'TabComponent.html',
 })
-export class TabComponent implements ComponentChangedListener{
-  @Input() listener: ComponentChangedListener;
+export class TabComponent {
 
   @ViewChild('newVerlaufComponent') verlaufComponent;
   @ViewChild('listVerlaufComponent') listVerlaufComponent;
 
+  newVerlauf(v:Verlauf) {
+    console.log("Neuer Verlauf eintragen "+v.INHALT);
+    this.listVerlaufComponent.addVerlauf(v);
+
+  }
+
+  editVerlauf(v:Verlauf) {
+    this.verlaufComponent.setVerlauf(v);
+  }
   ngAfterViewInit() {
     console.log("Tab  Init!");
   }
 
-  componentChanged(c:any): void {
-    console.log ("Tab Component changed");
-    if (c==this.listVerlaufComponent) {
-      // Gewählten Verlauf in Verlaufskomponente anzeigen
-      this.verlaufComponent.setVerlauf(this.listVerlaufComponent.selectedVerlauf);
-    }
-    else if (c==this.verlaufComponent) {
-      // neuen Verlauf in ListVerlaufkomponente hinzufügen
-      this.listVerlaufComponent.addVerlauf(this.verlaufComponent.verlauf);
-
-    }
-  }
-
-  componentInit(c:any){
-    console.log ("Tab Component init"+this.listVerlaufComponent);
-    if (c==this.listVerlaufComponent) {
-      this.listener.componentInit(this)
-    }
-  }
-
-
-  updateView() {
-    this.listVerlaufComponent.getVerlauf();
-  }
 }
