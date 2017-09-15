@@ -1,5 +1,5 @@
 ///<reference path="../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
-import {Component, Input, ViewContainerRef} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
 import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -9,7 +9,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   styleUrls: ['./durationPickerComponent.css']
 })
 export class DurationPickerComponent {
-  @Input() listner: ComponentChangedListener;
+  @Output() durationUpdated = new EventEmitter();
 
   public fromDate: Date = new Date();
   public toDate: Date = new Date();
@@ -27,7 +27,7 @@ export class DurationPickerComponent {
       //console.log("FEHLER");
       this.toastr.info('Start-Datum muss vor dem End-Datum liegen!', 'Hinweis!');
     }
-    this.listner.componentChanged(this);
+    this.durationUpdated.emit(this);
   }
   toChange(event): void {
     this.toDate = event;
@@ -37,7 +37,7 @@ export class DurationPickerComponent {
       //console.log("FEHLER");
       this.toastr.info('Start-Datum muss vor dem End-Datum liegen!', 'Hinweis!');
     }
-    this.listner.componentChanged(this);
+    this.durationUpdated.emit(this);
   }
   toString() : void {
     console.log(" from: "+this.fromDate+" to "+this.toDate);

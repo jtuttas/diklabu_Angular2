@@ -1,4 +1,5 @@
 import {AppComponent} from "../app.component";
+import {CourseBookComponent} from "../CourseBookComponent";
 
 export class Verlauf {
   AUFGABE:string="ls";
@@ -26,7 +27,7 @@ export class Verlauf {
   }
 
   isOwnEntry():boolean {
-    if (this.ID_LEHRER==AppComponent.courseBook.idLehrer) {return true;}
+    if (this.ID_LEHRER==CourseBookComponent.courseBook.idLehrer) {return true;}
     return false;
   }
 

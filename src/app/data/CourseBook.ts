@@ -8,6 +8,7 @@ export class  CourseBook {
   public idLehrer:string="TU";
 
   constructor(from:Date,to:Date,course:Course) {
+    console.log("Constructed new Coursebook!");
     this.fromDate=from;
     this.toDate=to;
     this.course=course;

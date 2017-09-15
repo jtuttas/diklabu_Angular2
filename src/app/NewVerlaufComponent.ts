@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ViewContainerRef} from "@angular/core";
+import {Component, Host, Input, ViewChild, ViewContainerRef} from "@angular/core";
 import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import {AppComponent} from "./app.component";
 import {ToastModule, ToastsManager} from "ng2-toastr";
@@ -10,6 +10,8 @@ import {FormsModule} from "@angular/forms";
 import {MaterialModule} from "@angular/material";
 import {Http, Headers, RequestMethod, RequestOptions, RequestOptionsArgs, ResponseContentType} from "@angular/http";
 import {Verlauf} from "./data/Verlauf";
+import {CourseBookComponent} from "./CourseBookComponent";
+
 
 
 
@@ -41,8 +43,7 @@ export class NewVerlaufComponent implements ComponentChangedListener{
   public http:Http;
   public verlauf:Verlauf;
 
-  constructor(http: Http, public toastr: ToastsManager, vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
+  constructor(http: Http) {
     this.http=http;
   }
 
@@ -54,7 +55,7 @@ export class NewVerlaufComponent implements ComponentChangedListener{
     this.lernsituation=v.AUFGABE;
     this.bemerkungen=v.BEMERKUNG;
     this.dateComponent.d=new Date(v.DATUM);
-    AppComponent.courseBook.course.id=v.ID_KLASSE;
+    CourseBookComponent.courseBook.course.id=v.ID_KLASSE;
     this.lfSelectComponent.lfid=this.lfSelectComponent.getLfNumber(v.ID_LERNFELD);
     console.log("SET LF Number to "+this.lfSelectComponent.lfid);
     this.inhalt=v.INHALT;
@@ -64,15 +65,15 @@ export class NewVerlaufComponent implements ComponentChangedListener{
   public addClick() {
     console.log("Add click");
     if (this.inhalt=="") {
-      this.toastr.info('Bitte geben Sie wenigstens einen Inhalt an.', 'Hinweis!');
+      AppComponent.postInfo('Bitte geben Sie wenigstens einen Inhalt an.', 'Hinweis!');
     }
     else {
       let body:any = {
         AUFGABE: this.lernsituation,
         BEMERKUNG: this.bemerkungen,
         DATUM: this.dateComponent.d,
-        ID_KLASSE: AppComponent.courseBook.course.id,
-        ID_LEHRER: AppComponent.courseBook.idLehrer,
+        ID_KLASSE: CourseBookComponent.courseBook.course.id,
+        ID_LEHRER: CourseBookComponent.courseBook.idLehrer,
         ID_LERNFELD: this.lfSelectComponent.getSelectedLernfeld().id,
         INHALT: this.inhalt,
         STUNDE: this.stunden[this.stundeindex]
@@ -94,19 +95,21 @@ export class NewVerlaufComponent implements ComponentChangedListener{
           if (data.success==false) {
             //this.toastr.warning(data.msg, 'Warnung!');
           }
-          this.verlauf=new Verlauf(this.inhalt,this.stunden[this.stundeindex],AppComponent.courseBook.idLehrer,AppComponent.courseBook.course.id,this.dateComponent.d);
+          this.verlauf=new Verlauf(this.inhalt,this.stunden[this.stundeindex],CourseBookComponent.courseBook.idLehrer,CourseBookComponent.courseBook.course.id,this.dateComponent.d);
           this.verlauf.AUFGABE=this.lernsituation;
           this.verlauf.BEMERKUNG=this.bemerkungen;
           this.verlauf.ID_LERNFELD=this.lfSelectComponent.getSelectedLernfeld().id;
           this.verlauf.INHALT=this.inhalt;
           this.verlauf.ID=data.ID;
-          this.stundeindex++;
+          if (this.stundeindex<this.stunden.length-1) {
+            this.stundeindex++;
+          }
 
           this.listener.componentChanged(this);
         },
         (x) => {
           /* this function is executed when there's an ERROR */
-          this.toastr.error(x.toString(), 'Fehler!');
+          AppComponent.postError(x.toString(), 'Fehler!');
           console.log("ERROR: "+x);
         },
         () => {

@@ -21,12 +21,15 @@ import {ListVerlaufComponent} from "./ListVerlaufComponent";
 import 'hammerjs';
 import {ConfirmDialog} from "./VerlaufDeleteDialog";
 import {DialogsService} from "./DialogService";
+import {TabComponent} from "./TabComponent";
+import {CourseBookComponent} from "./CourseBookComponent";
+import {SharedService} from "./SharedService";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
-    , ListVerlaufComponent, ConfirmDialog
+    , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
@@ -37,7 +40,7 @@ import {DialogsService} from "./DialogService";
     ConfirmDialog
   ],
   providers: [
-    DialogsService
+    SharedService,DialogsService,AppComponent
   ],
   entryComponents: [
     ConfirmDialog,

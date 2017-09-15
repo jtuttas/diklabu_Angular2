@@ -16,6 +16,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
+import {CourseBookComponent} from "./CourseBookComponent";
 
 /**
  * @title List Verlauf
@@ -43,10 +44,10 @@ export class ListVerlaufComponent {
   constructor(http: HttpClient, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogsService: DialogsService) {
     this.toastr.setRootViewContainerRef(vcr);
     this.http = http;
-
   }
 
   ngOnInit() {
+    console.log("!!!!List Verlauf Component ngInit CourseBook="+CourseBookComponent.courseBook)
 
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
@@ -59,10 +60,14 @@ export class ListVerlaufComponent {
       });
   }
 
+  ngAfterViewInit() {
+    console.log("!!!!List Verlauf Component ngAfterInit CourseBook="+CourseBookComponent.courseBook)
+  }
+
   public getVerlauf(): void {
     // Make the HTTP request:
-    console.log("URL="+AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + AppComponent.courseBook.course.KNAME + "/" + CourseBook.toSQLString(AppComponent.courseBook.fromDate) + "/" + CourseBook.toSQLString(AppComponent.courseBook.toDate));
-    this.http.get(AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + AppComponent.courseBook.course.KNAME + "/" + CourseBook.toSQLString(AppComponent.courseBook.fromDate) + "/" + CourseBook.toSQLString(AppComponent.courseBook.toDate)).subscribe(data => {
+    console.log("URL="+AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + CourseBookComponent.courseBook.course.KNAME + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate) + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.toDate));
+    this.http.get(AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + CourseBookComponent.courseBook.course.KNAME + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate) + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.toDate)).subscribe(data => {
         // Read the result field from the JSON response.
         //this.lfs = data;
         console.log("Verlauf=" + JSON.stringify(data));

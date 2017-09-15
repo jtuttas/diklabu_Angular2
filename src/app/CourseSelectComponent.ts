@@ -1,4 +1,4 @@
-import {Component, Input, ViewContainerRef} from "@angular/core";
+import {Component, EventEmitter, Input, Output, ViewContainerRef} from "@angular/core";
 import {Course} from "./data/Course";
 import {ComponentChangedListener} from "./data/ComponentChangedListener";
 import {AppComponent} from "./app.component";
@@ -13,14 +13,14 @@ import {ToastsManager} from "ng2-toastr";
 })
 
 export class CourseSelectComponent{
-  @Input() listener: ComponentChangedListener;
+  @Output() courseUpdated = new EventEmitter();
+  private course: Course;
 
   public courseid:number=0;
   public filter:string="";
   public allCourses;
   public courses;
   public compDisabled:boolean=true;
-
 
 
   constructor(http:HttpClient,public toastr: ToastsManager, vcr: ViewContainerRef){
@@ -31,7 +31,6 @@ export class CourseSelectComponent{
       // Read the result field from the JSON response.
       this.courses = data;
       this.allCourses=this.courses;
-      this.listener.componentInit(this);
       this.compDisabled=false;
     },
 
@@ -55,17 +54,15 @@ export class CourseSelectComponent{
 
 
   updated(){
-    this.listener.componentChanged(this);
+    this.course=this.courses[this.courseid];
+    console.log("CourseSelecComponent updated():"+this.course.KNAME);
+    this.courseUpdated.emit(this.course);
   }
 
-  getSelectedCourse():Course {
-    console.log("Number of Courses="+this.courses.length);
-    console.log("get selected Course="+this.courses[this.courseid].KNAME);
-    return this.courses[this.courseid];
-  }
 
   filterChanged() {
     console.log("Filter Changed to "+this.filter);
     this.courses = this.allCourses.filter(x => x.KNAME.includes(this.filter));
+    this.courseid=0;
   }
 }
