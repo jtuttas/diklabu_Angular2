@@ -7,7 +7,7 @@ Ein Client für das Diklabu auf der Basis von Angular 2
 ## Anwesenheit
 ![alt text](https://raw.githubusercontent.com/jtuttas/diklabu_Angular2/master/anwesenheit.PNG "Logo Title Text 1")
 
-## Init the App
+## Init the diklabu
 Start `npm install` to download the components.
 
 ## Start the App
