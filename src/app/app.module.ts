@@ -24,7 +24,6 @@ import {TabComponent} from "./TabComponent";
 import {CourseBookComponent} from "./CourseBookComponent";
 import {SharedService} from "./services/SharedService";
 import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
-import {HotTable, HotTableModule} from "ng2-handsontable";
 import {PupilService} from "./services/PupilService";
 import {DataTableModule, GrowlModule, SharedModule} from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
