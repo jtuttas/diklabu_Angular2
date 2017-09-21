@@ -10,7 +10,6 @@ import {
 } from '@angular/material';
 import {DatepickerComponent} from './DatepickerComponent';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {CourseSelectComponent} from "./CourseSelectComponent";
 import {DurationPickerComponent} from "./DurationPickerComponent";
 import {HttpClientModule} from "@angular/common/http";
@@ -23,24 +22,30 @@ import {ConfirmDialog} from "./VerlaufDeleteDialog";
 import {DialogsService} from "./DialogService";
 import {TabComponent} from "./TabComponent";
 import {CourseBookComponent} from "./CourseBookComponent";
-import {SharedService} from "./data/SharedService";
+import {SharedService} from "./services/SharedService";
+import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
+import {HotTable, HotTableModule} from "ng2-handsontable";
+import {PupilService} from "./services/PupilService";
+import {DataTableModule, GrowlModule, SharedModule} from "primeng/primeng";
+import {AnwesenheitsService} from "./services/AnwesenheitsService";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
-    , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent
+    , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
-    MdDatepickerModule, MaterialModule, MdNativeDateModule, BrowserAnimationsModule,ToastModule.forRoot()
-    ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule
+    MdDatepickerModule, MaterialModule, MdNativeDateModule, BrowserAnimationsModule
+    ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule, DataTableModule, SharedModule,
+    GrowlModule
   ],
   exports: [
     ConfirmDialog
   ],
   providers: [
-    SharedService,DialogsService,AppComponent
+    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService
   ],
   entryComponents: [
     ConfirmDialog,

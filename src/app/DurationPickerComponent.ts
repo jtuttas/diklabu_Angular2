@@ -1,6 +1,6 @@
 ///<reference path="../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import {MessageService} from "primeng/components/common/messageservice";
 
 @Component({
   selector: 'duration',
@@ -10,11 +10,10 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 export class DurationPickerComponent {
   @Output() durationUpdated = new EventEmitter();
 
-  public fromDate: Date = new Date();
+  public fromDate: Date = new Date(new Date().getTime()-7*24*60*60*1000);
   public toDate: Date = new Date();
 
-  constructor(public toastr: ToastsManager, vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
+  constructor(private messageService: MessageService) {
     this.fromDate.setHours(0,0,0,0);
     this.toDate.setHours(23,59,59,0);
   }
@@ -24,7 +23,7 @@ export class DurationPickerComponent {
     //console.log("from="+this.fromDate.getTime()+" to="+this.toDate.getTime());
     if (this.fromDate.getTime() > this.toDate.getTime()) {
       //console.log("FEHLER");
-      this.toastr.info('Start-Datum muss vor dem End-Datum liegen!', 'Hinweis!');
+      this.messageService.add({severity:'warning', summary:'Warnung', detail:'Start-Datum muss vor dem End-Datum liegen!'});
     }
     this.durationUpdated.emit(this);
   }
@@ -34,7 +33,7 @@ export class DurationPickerComponent {
     //console.log("from="+this.fromDate.getTime()+" to="+this.toDate.getTime());
     if (this.fromDate.getTime() > this.toDate.getTime()) {
       //console.log("FEHLER");
-      this.toastr.info('Start-Datum muss vor dem End-Datum liegen!', 'Hinweis!');
+      this.messageService.add({severity:'warning', summary:'Warnung', detail:'Start-Datum muss vor dem End-Datum liegen!'});
     }
     this.durationUpdated.emit(this);
   }

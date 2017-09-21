@@ -3,8 +3,7 @@ import {AppComponent} from "./app.component";
 import {Http, Headers, RequestMethod, RequestOptions, RequestOptionsArgs, ResponseContentType} from "@angular/http";
 import {Verlauf} from "./data/Verlauf";
 import {CourseBookComponent} from "./CourseBookComponent";
-
-
+import {MessageService} from "primeng/components/common/messageservice";
 
 
 @Component({
@@ -28,7 +27,7 @@ export class NewVerlaufComponent {
   public http:Http;
   public verlauf:Verlauf;
 
-  constructor(http: Http) {
+  constructor(http: Http,private messageService: MessageService) {
     this.http=http;
   }
 
@@ -54,7 +53,7 @@ export class NewVerlaufComponent {
   public addClick() {
     console.log("Add click");
     if (this.inhalt=="") {
-      AppComponent.postInfo('Bitte geben Sie wenigstens einen Inhalt an.', 'Hinweis!');
+      this.messageService.add({severity:'warning', summary:'Warning', detail:'Geben Sie wenigstens einen Inhalt an!'});
     }
     else {
       let body:any = {
@@ -98,7 +97,7 @@ export class NewVerlaufComponent {
         },
         (x) => {
           /* this function is executed when there's an ERROR */
-          AppComponent.postError(x.toString(), 'Fehler!');
+          this.messageService.add({severity:'error', summary:'Fehler', detail:x});
           console.log("ERROR: "+x);
         },
         () => {

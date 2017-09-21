@@ -36,6 +36,24 @@ export class  CourseBook {
     return d.getFullYear()+"-"+m+"-"+t;
   }
 
+  public static toIDString(d:Date) {
+    let m="00";
+    let t="00";
+    if ((d.getMonth()+1)<10) {
+      m="0"+(d.getMonth()+1);
+    }
+    else {
+      m=""+(d.getMonth()+1);
+    }
+    if (d.getDate()<10) {
+      t="0"+d.getDate();
+    }
+    else {
+      t=""+d.getDate();
+    }
+    return d.getFullYear()+m+t;
+  }
+
   static wochentage=["So.","Mo.","Di.","Mi.","Do.","Fr.","Sa."];
   public static toReadbleString(d:Date):string {
     return  CourseBook.wochentage[d.getDay()]+" "+d.getDate()+"."+(d.getMonth()+1)+"."+d.getFullYear();

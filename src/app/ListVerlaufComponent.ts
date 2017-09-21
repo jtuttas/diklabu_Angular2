@@ -4,7 +4,6 @@ import {MdSort} from '@angular/material';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Verlauf} from "./data/Verlauf";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {ToastsManager} from "ng2-toastr";
 import {AppComponent} from "./app.component";
 import {CourseBook} from "./data/CourseBook";
 import {DialogsService} from "./DialogService";
@@ -16,8 +15,9 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import {CourseBookComponent} from "./CourseBookComponent";
-import {SharedService} from "./data/SharedService";
+import {SharedService} from "./services/SharedService";
 import {Subscription} from "rxjs/Subscription";
+import {MessageService} from "primeng/components/common/messageservice";
 
 /**
  * @title List Verlauf
@@ -43,8 +43,7 @@ export class ListVerlaufComponent {
   @ViewChild('filter') filter: ElementRef;
 
 
-  constructor(http: HttpClient, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogsService: DialogsService, private service:SharedService) {
-    this.toastr.setRootViewContainerRef(vcr);
+  constructor(http: HttpClient,  private dialogsService: DialogsService, private service:SharedService,private messageService: MessageService) {
     this.http = http;
     this.subscription = this.service.getCoursebook().subscribe(message => {
       console.log("List Component Received !"+message.constructor.name);
@@ -89,12 +88,12 @@ export class ListVerlaufComponent {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('An error occurred:', err.error.message);
-          this.toastr.error('Kann Verlauf nicht vom Server laden! MSG=' + err.error.message, 'Fehler!');
+          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlauf nicht vom Server laden! MSG=' + err.error.message});
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-          this.toastr.error('Kann Verlauf nicht vom Server laden! (' + err.name + ')', 'Fehler!');
+          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlauf nicht vom Server laden! MSG=' + err.name});
         }
 
       });
@@ -134,12 +133,13 @@ export class ListVerlaufComponent {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('An error occurred:', err.error.message);
-          this.toastr.error('Kann Verlaufselement nicht löschen! MSG=' + err.error.message, 'Fehler!');
+          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlaufselement nicht löschen! MSG=' + err.error.message});
+
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-          this.toastr.error('Kann Verlaufelement nicht löschen! (' + err.name + ')', 'Fehler!');
+          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlaufselement nicht löschen! MSG=' + err.name});
         }
 
       });
