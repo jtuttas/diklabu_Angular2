@@ -3,6 +3,8 @@ import {Course} from "./data/Course";
 import {AppComponent} from "./app.component";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MessageService} from "primeng/components/common/messageservice";
+import {PupilService} from "./services/PupilService";
+import {Pupil} from "./data/Pupil";
 
 
 @Component({
@@ -20,14 +22,16 @@ export class CourseSelectComponent{
   public allCourses;
   public courses;
   public compDisabled:boolean=true;
+  public anzahl=0;
+  public static pupils:Pupil[];
 
-
-  constructor(http:HttpClient,private messageService: MessageService){
+  constructor(http:HttpClient,private messageService: MessageService, private pupilService:PupilService){
 
     // Make the HTTP request:
     http.get(AppComponent.SERVER+"Diklabu/api/v1/noauth/klassen").subscribe(data => {
       // Read the result field from the JSON response.
-      this.courses = data;
+      console.log("CourseSelectComponent receive: "+JSON.stringify(data));
+        this.courses = data;
       this.allCourses=this.courses;
       this.compDisabled=false;
       this.updated();
@@ -56,7 +60,13 @@ export class CourseSelectComponent{
   updated(){
     this.course=this.courses[this.courseid];
     console.log("CourseSelecComponent updated():"+this.course.KNAME);
-    this.courseUpdated.emit(this.course);
+    this.pupilService.getPupils(this.course.KNAME)
+      .subscribe(
+        pupils => {CourseSelectComponent.pupils=pupils;
+          this.anzahl=pupils.length;
+          this.courseUpdated.emit(this.course);
+          console.log ("Insgesamt "+pupils.length+" Schüler  empfangen!")}
+      )
   }
 
 

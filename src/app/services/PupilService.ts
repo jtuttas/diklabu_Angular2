@@ -13,8 +13,9 @@ export class PupilService {
   private url;
   constructor (private http: Http) {}
 
-  getPupils(): Observable<Pupil[]> {
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/klasse/"+CourseBookComponent.courseBook.course.KNAME;  // URL to web API
+  getPupils(kname:string): Observable<Pupil[]> {
+    this.url = AppComponent.SERVER+"Diklabu/api/v1/klasse/"+kname;  // URL to web API
+    console.log("get pupils URL="+this.url);
     return this.http.get(this.url)
       .map(this.extractData)
       .catch(this.handleError);

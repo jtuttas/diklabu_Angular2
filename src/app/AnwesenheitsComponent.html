@@ -1,7 +1,8 @@
 
 <p-dataTable [value]="data" [editable]="true" (onEditComplete)="edit($event)">
   <ng-container *ngFor="let col of cols">
-    <p-column  *ngIf="col.field.startsWith('id')" [editable]="true" [field]="col.field" [header]="col.header" [style]="{'width':'75px'}" ></p-column>
+    <p-column  *ngIf="col.field.startsWith('id') && (col.header.startsWith('Sa.') || col.header.startsWith('So.'))" [editable]="true" [field]="col.field" [header]="col.header" [style]="{'width':'75px','background-color':'#cccccc'}" ></p-column>
+    <p-column  *ngIf="col.field.startsWith('id') && !col.header.startsWith('Sa.') && !col.header.startsWith('So.')" [editable]="true" [field]="col.field" [header]="col.header" [style]="{'width':'75px'}" ></p-column>
     <p-column  *ngIf="col.header == 'info'" [field]="" [header]="" [style]="{'width':'75px','text-align':'left'}" >
       <ng-template let-car="rowData" pTemplate="body">
         <img class="select" src="../assets/Info.png"/>

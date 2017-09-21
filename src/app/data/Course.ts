@@ -1,10 +1,10 @@
 export class Course {
-  public KNAME: String="NoCourse";
+  public KNAME: string="NoCourse";
   public id: number=-1;
-  public ID_LEHRER:String="NN"
+  public ID_LEHRER:string="NN"
   public  idKategorie=-1;
 
-  constructor(id:number,name:String) {
+  constructor(id:number,name:string) {
     this.id=id;
     this.KNAME=name;
     this.toString();

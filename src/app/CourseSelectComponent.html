@@ -1,11 +1,10 @@
-<md-input-container class="example-full-width">
+<md-input-container class="filter">
   <input mdInput placeholder="Filter" (change)="filterChanged()" [(ngModel)]="filter">
 </md-input-container>
-
   <md-select placeholder="Klassen" [(ngModel)]="courseid" (ngModelChange)="updated()" [disabled]="compDisabled">
     <md-option *ngFor="let c of courses; let j = index" [value]="j">
       {{c.KNAME}}
     </md-option>
   </md-select>
-
+SuS:{{anzahl}}
 

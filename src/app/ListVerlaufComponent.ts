@@ -37,6 +37,7 @@ export class ListVerlaufComponent {
   http: HttpClient;
   compDisabled = true;
   selectedVerlauf:Verlauf;
+  IDLehrer:string;
   public result: any;
 
   @ViewChild(MdSort) sort: MdSort;
@@ -76,6 +77,7 @@ export class ListVerlaufComponent {
         // Read the result field from the JSON response.
         //this.lfs = data;
         console.log("Verlauf=" + JSON.stringify(data));
+        this.IDLehrer=CourseBookComponent.courseBook.idLehrer;
         this.exampleDatabase = new ExampleDatabase();
         this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
         this.exampleDatabase.setData(data);

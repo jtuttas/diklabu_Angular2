@@ -11,6 +11,7 @@ import {Anwesenheitseintrag} from "./data/Anwesenheitseintrag";
 import {AppComponent} from "./app.component";
 import {MessageService} from "primeng/components/common/messageservice";
 import {Message} from "primeng/primeng";
+import {CourseSelectComponent} from "./CourseSelectComponent";
 
 @Component({
   selector: 'anwesenheit',
@@ -27,7 +28,7 @@ export class AnwesenheitsComponent implements OnInit {
   cols: any[];
   data: any[];
 
-  constructor(private pupilService: PupilService,private service:SharedService,private anwesenheitsService: AnwesenheitsService,private messageService: MessageService) {
+  constructor(private service:SharedService,private anwesenheitsService: AnwesenheitsService,private messageService: MessageService) {
     this.subscription = this.service.getCoursebook().subscribe(message => {
       console.log("Anwesenheits Component Received !"+message.constructor.name);
       this.update();
@@ -40,10 +41,7 @@ export class AnwesenheitsComponent implements OnInit {
 
   update() {
     this.cols = new Array();
-    this.pupilService.getPupils()
-      .subscribe(
-        pupils => {this.buildCols(pupils); console.log ("Insgesamt "+pupils.length+" Schüler  empfangen!")},
-        error =>  this.errorMessage = <any>error);
+    this.buildCols(CourseSelectComponent.pupils);
   }
 
   /**
