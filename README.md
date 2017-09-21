@@ -2,10 +2,10 @@
 
 Ein Client für das Diklabu auf der Basis von Angular 2 
 ## Unterrichtsverlauf
-![alt text](verlauf.png "Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/jtuttas/diklabu_Angular2/master/verlauf.PNG "Logo Title Text 1")
 
 ## Anwesenheit
-![alt text](anwesenheit.png "Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/jtuttas/diklabu_Angular2/master/anwesenheit.PNG "Logo Title Text 1")
 
 ## Init the App
 Start `npm start` to dwnload the components.
