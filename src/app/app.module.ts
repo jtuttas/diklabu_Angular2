@@ -27,24 +27,29 @@ import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
 import {PupilService} from "./services/PupilService";
 import {DataTableModule, GrowlModule, SharedModule} from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
+import {LoginComponent} from "./LoginComponent";
+import {LoginService} from "./services/LoginService";
+import {routing} from "./Routing";
+import {diklabuComponent} from "./diklabuComponent";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
-    , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent
+    , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent, LoginComponent,
+    diklabuComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
     MdDatepickerModule, MaterialModule, MdNativeDateModule, BrowserAnimationsModule
     ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule, DataTableModule, SharedModule,
-    GrowlModule
+    GrowlModule,routing
   ],
   exports: [
     ConfirmDialog
   ],
   providers: [
-    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService
+    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService
   ],
   entryComponents: [
     ConfirmDialog,

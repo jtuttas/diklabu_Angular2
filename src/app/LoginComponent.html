@@ -1,0 +1,12 @@
+<h1>Login</h1>
+<hr>
+<br/>
+<md-form-field class="example-full-width">
+  <input mdInput placeholder="Benutzername" [(ngModel)]="username">
+</md-form-field>
+<br/>
+<md-input-container >
+  <input type="password" mdInput placeholder="Kennwort"  [(ngModel)]="password">
+</md-input-container >
+<br/>
+<button (click)="performLogin()" md-raised-button color="primary">Login</button>
