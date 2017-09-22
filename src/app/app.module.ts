@@ -31,6 +31,7 @@ import {LoginComponent} from "./LoginComponent";
 import {LoginService} from "./services/LoginService";
 import {routing} from "./Routing";
 import {diklabuComponent} from "./diklabuComponent";
+import {AuthenticationGuard} from "./authentication.guard";
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import {diklabuComponent} from "./diklabuComponent";
     ConfirmDialog
   ],
   providers: [
-    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService
+    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard
   ],
   entryComponents: [
     ConfirmDialog,

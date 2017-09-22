@@ -3,6 +3,7 @@ import {LoginComponent} from "./LoginComponent";
 import {CourseBookComponent} from "./CourseBookComponent";
 import {ModuleWithProviders} from "@angular/core";
 import {diklabuComponent} from "./diklabuComponent";
+import {AuthenticationGuard} from "./authentication.guard";
 
 const appRoutes: Routes = [
   {
@@ -11,7 +12,7 @@ const appRoutes: Routes = [
     redirectTo: 'login'
   },
   {path: 'login', component: LoginComponent},
-  {path: 'diklabu',component: diklabuComponent},
+  {path: 'diklabu',component: diklabuComponent, canActivate: [AuthenticationGuard] },
   {
     path: "**",
     redirectTo: 'login'
