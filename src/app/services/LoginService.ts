@@ -6,6 +6,9 @@ import {Login} from "../data/Login";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/Rx';
+import {CourseBookComponent} from "../CourseBookComponent";
+import {Headers} from '@angular/http';
+
 
 @Injectable()
 export class LoginService {
@@ -41,5 +44,18 @@ export class LoginService {
     }
     console.error(errMsg);
     return Observable.throw(errMsg);
+  }
+
+  performLogout(user:string,password:string): Observable<Login>  {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+
+    this.url = AppComponent.SERVER+"Diklabu/api/v1/auth/logout/";  // URL to web API
+    console.log("LooutURL:"+this.url);
+    var body = {benutzer: user,kennwort:password};
+    return this.http.post(this.url,body,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 }

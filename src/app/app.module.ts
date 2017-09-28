@@ -32,13 +32,15 @@ import {LoginService} from "./services/LoginService";
 import {routing} from "./Routing";
 import {diklabuComponent} from "./diklabuComponent";
 import {AuthenticationGuard} from "./authentication.guard";
+import {logoutComponent} from "./logoutComponent";
+import {VerlaufsService} from "./services/VerlaufsService";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
     , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent, LoginComponent,
-    diklabuComponent
+    diklabuComponent, logoutComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
@@ -50,7 +52,7 @@ import {AuthenticationGuard} from "./authentication.guard";
     ConfirmDialog
   ],
   providers: [
-    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard
+    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService
   ],
   entryComponents: [
     ConfirmDialog,

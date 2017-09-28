@@ -1,5 +1,5 @@
 import { Injectable }              from '@angular/core';
-import { Http, Response }          from '@angular/http';
+import { Http, Response, Headers }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -14,9 +14,13 @@ export class PupilService {
   constructor (private http: Http) {}
 
   getPupils(kname:string): Observable<Pupil[]> {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+
     this.url = AppComponent.SERVER+"Diklabu/api/v1/klasse/"+kname;  // URL to web API
     console.log("get pupils URL="+this.url);
-    return this.http.get(this.url)
+    return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);
   }

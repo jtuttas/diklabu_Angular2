@@ -2,17 +2,17 @@ import {AppComponent} from "../app.component";
 import {CourseBookComponent} from "../CourseBookComponent";
 
 export class Verlauf {
-  AUFGABE:string="ls";
-  BEMERKUNG:string="bem";
+  AUFGABE:string;
+  BEMERKUNG:string;
   DATUM:Date;
-  ID:number=2;
-  ID_KLASSE:number=12;
-  ID_LEHRER:string="TU";
-  ID_LERNFELD:string="LF12";
-  INHALT:string="kein Inhalt";
-  STUNDE:string="00";
-  kw:string="02";
-  wochentag:string="Mo.";
+  ID:number;
+  ID_KLASSE:number;
+  ID_LEHRER:string;
+  ID_LERNFELD:string;
+  INHALT:string;
+  STUNDE:string;
+  kw:string;
+  wochentag:string;
 
   static wochentage=["So.","Mo.","Di.","Mi.","Do.","Fr.","Sa."];
 

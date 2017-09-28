@@ -7,6 +7,9 @@ export class  CourseBook {
   public course:Course;
   public idLehrer:string="TU";
   public auth_token;
+  public username:string;
+  public password:string;
+
 
   constructor(from:Date,to:Date,course:Course) {
     console.log("Constructed new Coursebook!");

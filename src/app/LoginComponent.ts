@@ -22,6 +22,8 @@ export class LoginComponent {
         data => {console.log("Received from Login: "+JSON.stringify(data));
           CourseBookComponent.courseBook.auth_token=data.auth_token;
           CourseBookComponent.courseBook.idLehrer=data.ID;
+          CourseBookComponent.courseBook.username=this.username;
+          CourseBookComponent.courseBook.password=this.password;
           let link = [ '/diklabu'];
           this.router.navigate(link);
         },

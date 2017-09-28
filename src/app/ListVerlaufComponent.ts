@@ -18,7 +18,8 @@ import {CourseBookComponent} from "./CourseBookComponent";
 import {SharedService} from "./services/SharedService";
 import {Subscription} from "rxjs/Subscription";
 import {MessageService} from "primeng/components/common/messageservice";
-
+import {Headers} from '@angular/http';
+import {VerlaufsService} from "./services/VerlaufsService";
 /**
  * @title List Verlauf
  */
@@ -34,7 +35,6 @@ export class ListVerlaufComponent {
   displayedColumns = ['Datum', 'LK', 'LF', 'Stunde', 'Inhalt', 'Bemerkungen', 'Lernsituation'];
   exampleDatabase = new ExampleDatabase();
   dataSource: ExampleDataSource | null;
-  http: HttpClient;
   compDisabled = true;
   selectedVerlauf:Verlauf;
   IDLehrer:string;
@@ -44,8 +44,7 @@ export class ListVerlaufComponent {
   @ViewChild('filter') filter: ElementRef;
 
 
-  constructor(http: HttpClient,  private dialogsService: DialogsService, private service:SharedService,private messageService: MessageService) {
-    this.http = http;
+  constructor(private verlaufsService: VerlaufsService, private dialogsService: DialogsService, private service:SharedService,private messageService: MessageService) {
     this.subscription = this.service.getCoursebook().subscribe(message => {
       console.log("List Component Received !"+message.constructor.name);
       this.getVerlauf();
@@ -72,32 +71,23 @@ export class ListVerlaufComponent {
 
   public getVerlauf(): void {
     // Make the HTTP request:
+
+
     console.log("URL="+AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + CourseBookComponent.courseBook.course.KNAME + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate) + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.toDate));
-    this.http.get(AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + CourseBookComponent.courseBook.course.KNAME + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate) + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.toDate)).subscribe(data => {
-        // Read the result field from the JSON response.
-        //this.lfs = data;
-        console.log("Verlauf=" + JSON.stringify(data));
-        this.IDLehrer=CourseBookComponent.courseBook.idLehrer;
-        this.exampleDatabase = new ExampleDatabase();
-        this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
-        this.exampleDatabase.setData(data);
-        this.compDisabled = false;
-      },
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
 
-      (err: HttpErrorResponse) => {
-
-        this.compDisabled = true;
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log('An error occurred:', err.error.message);
-          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlauf nicht vom Server laden! MSG=' + err.error.message});
-        } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong,
-          console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlauf nicht vom Server laden! MSG=' + err.name});
-        }
-
+    this.verlaufsService.getVerlauf().subscribe(data => {
+      console.log("Verlauf=" + JSON.stringify(data));
+      this.IDLehrer=CourseBookComponent.courseBook.idLehrer;
+      this.exampleDatabase = new ExampleDatabase();
+      this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
+      this.exampleDatabase.setData(data);
+      this.compDisabled = false;
+    },
+      err=> {
+        this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlauf nicht vom Server laden! MSG=' + err});
       });
   }
 
@@ -124,26 +114,12 @@ export class ListVerlaufComponent {
 
   confimedDelete(v:Verlauf) {
     this.exampleDatabase.delete(v);
-    this.http.delete(AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + v.ID).subscribe(data => {
-        // Read the result field from the JSON response.
-        //this.lfs = data;
+    this.verlaufsService.deleteVerlauf(v).subscribe(data => {
         console.log("Delete Verlauf=" + JSON.stringify(data));
       },
 
       (err: HttpErrorResponse) => {
-
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.log('An error occurred:', err.error.message);
           this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlaufselement nicht löschen! MSG=' + err.error.message});
-
-        } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong,
-          console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Verlaufselement nicht löschen! MSG=' + err.name});
-        }
-
       });
   }
 

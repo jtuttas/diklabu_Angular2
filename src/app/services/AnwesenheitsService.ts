@@ -1,25 +1,30 @@
 import { Injectable }              from '@angular/core';
-import { Http, Response }          from '@angular/http';
+import { Http, Response, Headers }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {AppComponent} from "../app.component";
 import {CourseBookComponent} from "../CourseBookComponent";
-import {Pupil} from "../data/Pupil";
 import {CourseBook} from "../data/CourseBook";
 import {Anwesenheit} from "../data/Anwesenheit";
 import {Anwesenheitseintrag} from "../data/Anwesenheitseintrag";
+
+
 
 @Injectable()
 export class AnwesenheitsService {
 
   private url;
-  constructor (private http: Http) {}
+  constructor (private http: Http) {
+  }
 
   getAnwesenheit(): Observable<Anwesenheit[]> {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
     this.url = AppComponent.SERVER+"Diklabu/api/v1/anwesenheit/"+CourseBookComponent.courseBook.course.KNAME+"/"+CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate)+"/"+CourseBook.toSQLString(CourseBookComponent.courseBook.toDate);  // URL to web API
     console.log("URL="+this.url);
-    return this.http.get(this.url)
+    return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -45,17 +50,23 @@ export class AnwesenheitsService {
   }
 
   setAnwesenheit(anwesenheit: Anwesenheitseintrag) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
     this.url = AppComponent.SERVER+"Diklabu/api/v1/anwesenheit/";  // URL to web API
     console.log("URL="+this.url);
-    return this.http.post(this.url,anwesenheit)
+    return this.http.post(this.url,anwesenheit,{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   deleteAnwesenheit(anwesenheit: Anwesenheitseintrag) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
     this.url = AppComponent.SERVER + "Diklabu/api/v1/anwesenheit/" + anwesenheit.ID_SCHUELER + "/" + anwesenheit.DATUM.substring(0,anwesenheit.DATUM.indexOf("T"));  // URL to web API
     console.log("DELETE URL=" + this.url);
-    return this.http.delete(this.url).subscribe((res) => {
+    return this.http.delete(this.url,{headers: headers}).subscribe((res) => {
     });
   }
 }

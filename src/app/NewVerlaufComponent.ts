@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Host, Input, Output, ViewChild, ViewContainerRef} from "@angular/core";
 import {AppComponent} from "./app.component";
-import {Http, Headers, RequestMethod, RequestOptions, RequestOptionsArgs, ResponseContentType} from "@angular/http";
 import {Verlauf} from "./data/Verlauf";
 import {CourseBookComponent} from "./CourseBookComponent";
 import {MessageService} from "primeng/components/common/messageservice";
+import {VerlaufsService} from "./services/VerlaufsService";
 
 
 @Component({
@@ -24,11 +24,11 @@ export class NewVerlaufComponent {
   public bemerkungen:string="";
   public stunden = ["01","02","03","04","05","06","07","08","09","10","11","12"];
   public stundeindex:number=0;
-  public http:Http;
+
   public verlauf:Verlauf;
 
-  constructor(http: Http,private messageService: MessageService) {
-    this.http=http;
+  constructor( private verlaufsService : VerlaufsService,private messageService: MessageService) {
+
   }
 
   lfLoaded() {
@@ -56,56 +56,31 @@ export class NewVerlaufComponent {
       this.messageService.add({severity:'warning', summary:'Warning', detail:'Geben Sie wenigstens einen Inhalt an!'});
     }
     else {
-      let body:any = {
-        AUFGABE: this.lernsituation,
-        BEMERKUNG: this.bemerkungen,
-        DATUM: this.dateComponent.d,
-        ID_KLASSE: CourseBookComponent.courseBook.course.id,
-        ID_LEHRER: CourseBookComponent.courseBook.idLehrer,
-        ID_LERNFELD: this.lfSelectComponent.getSelectedLernfeld().id,
-        INHALT: this.inhalt,
-        STUNDE: this.stunden[this.stundeindex]
-      };
+      let v: Verlauf=new Verlauf(this.inhalt,this.stunden[this.stundeindex],CourseBookComponent.courseBook.idLehrer,CourseBookComponent.courseBook.course.id,this.dateComponent.d);
+      v.AUFGABE = this.lernsituation;
+      v.BEMERKUNG = this.bemerkungen;
+      v.ID_LERNFELD = this.lfSelectComponent.getSelectedLernfeld().id;
 
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-
-      console.log (JSON.stringify(body));
-
-      this.http.post(
-        AppComponent.SERVER+ 'Diklabu/api/v1/verlauf/',
-        JSON.stringify(body),
-        {headers:headers}
-      ).subscribe(
-        (res:any) => {
-          console.log("VALUE RECEIVED: ",res);
-          var data=JSON.parse(res._body);
-          if (data.success==false) {
-            //this.toastr.warning(data.msg, 'Warnung!');
-          }
-          this.verlauf=new Verlauf(this.inhalt,this.stunden[this.stundeindex],CourseBookComponent.courseBook.idLehrer,CourseBookComponent.courseBook.course.id,this.dateComponent.d);
-          this.verlauf.AUFGABE=this.lernsituation;
-          this.verlauf.BEMERKUNG=this.bemerkungen;
-          this.verlauf.ID_LERNFELD=this.lfSelectComponent.getSelectedLernfeld().id;
-          this.verlauf.INHALT=this.inhalt;
-          this.verlauf.ID=data.ID;
-          if (this.stundeindex<this.stunden.length-1) {
-            this.stundeindex++;
-          }
-          this.newVerlauf.emit(this.verlauf);
-          //this.listener.componentChanged(this);
-        },
-        (x) => {
-          /* this function is executed when there's an ERROR */
-          this.messageService.add({severity:'error', summary:'Fehler', detail:x});
-          console.log("ERROR: "+x);
-        },
-        () => {
-          /* this function is executed when the observable ends (completes) its stream */
-          console.log("Completed");
+      this.verlaufsService.newVerlauf(v).subscribe(data =>{
+        console.log("VALUE RECEIVED: ",data);
+        if (data.success==false) {
+          //this.toastr.warning(data.msg, 'Warnung!');
         }
-      );
+        this.verlauf=new Verlauf(this.inhalt,this.stunden[this.stundeindex],CourseBookComponent.courseBook.idLehrer,CourseBookComponent.courseBook.course.id,this.dateComponent.d);
+        this.verlauf.AUFGABE=this.lernsituation;
+        this.verlauf.BEMERKUNG=this.bemerkungen;
+        this.verlauf.ID_LERNFELD=this.lfSelectComponent.getSelectedLernfeld().id;
+        this.verlauf.INHALT=this.inhalt;
+        this.verlauf.ID=data.ID;
+        if (this.stundeindex<this.stunden.length-1) {
+          this.stundeindex++;
+        }
+        this.newVerlauf.emit(this.verlauf);
 
+      },
+        err => {
+          this.messageService.add({severity:'error', summary:'Fehler', detail:err});
+        });
     }
   }
 }
