@@ -1,4 +1,4 @@
-<md-tab-group>
+<md-tab-group (selectedIndexChange)="tabIndexChanged();" [(selectedIndex)]="selectedIndex">
   <md-tab label="Verlauf">
     <br/>
     <newverlauf #newVerlaufComponent (newVerlauf)="newVerlauf($event)"></newverlauf>

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from "@angular/core";
 import {Pupil} from "./data/Pupil";
-import {PupilService} from "./services/PupilService";
 import {SharedService} from "./services/SharedService";
 import {Subscription} from "rxjs/Subscription";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";

@@ -14,6 +14,8 @@ export class TabComponent {
   @ViewChild('newVerlaufComponent') verlaufComponent;
   @ViewChild('listVerlaufComponent') listVerlaufComponent;
 
+  selectedIndex:number=0;
+
   newVerlauf(v:Verlauf) {
     console.log("Neuer Verlauf eintragen "+v.INHALT);
     this.listVerlaufComponent.addVerlauf(v);
@@ -25,6 +27,11 @@ export class TabComponent {
   }
   ngAfterViewInit() {
     console.log("Tab  Init!");
+  }
+
+
+  tabIndexChanged() {
+    console.log("Tab Index changed: "+this.selectedIndex);
   }
 
 }
