@@ -5,8 +5,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import {
-  MdDatepickerModule, MaterialModule, MdNativeDateModule, MdButtonModule,
-  MdCheckboxModule, MdDialogModule
+  MdDatepickerModule, MdNativeDateModule, MdButtonModule,
+  MdCheckboxModule, MdDialogModule, MdSelectModule, MdTabsModule, MdTableModule, MdSort, MdSortModule, MdInputModule
 } from '@angular/material';
 import {DatepickerComponent} from './DatepickerComponent';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -44,15 +44,15 @@ import {VerlaufsService} from "./services/VerlaufsService";
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
-    MdDatepickerModule, MaterialModule, MdNativeDateModule, BrowserAnimationsModule
+    MdDatepickerModule,  MdNativeDateModule, BrowserAnimationsModule
     ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule, DataTableModule, SharedModule,
-    GrowlModule,routing
+    GrowlModule,routing, MdSelectModule, MdTableModule, MdTabsModule, MdSortModule, MdInputModule,
   ],
   exports: [
     ConfirmDialog
   ],
   providers: [
-    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService
+    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService, MdSort
   ],
   entryComponents: [
     ConfirmDialog,

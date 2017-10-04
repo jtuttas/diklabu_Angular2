@@ -4,6 +4,7 @@ import {decimalDigest} from "@angular/compiler/src/i18n/digest";
 import {MessageService} from "primeng/components/common/messageservice";
 import {CourseBookComponent} from "./CourseBookComponent";
 import {Router} from "@angular/router";
+import {Config} from "./data/Config";
 
 @Component({
   selector: 'login',
@@ -14,7 +15,16 @@ export class LoginComponent {
   username: string="tuttas";
   password: string="mmbbs";
 
-  constructor(private loginService:LoginService,private messageService: MessageService, private router:Router) {}
+  constructor(private loginService:LoginService,private messageService: MessageService, private router:Router) {
+    if (Config.debug) {
+      CourseBookComponent.courseBook.auth_token=1234;
+      CourseBookComponent.courseBook.idLehrer="TU";
+      CourseBookComponent.courseBook.username="TU";
+      CourseBookComponent.courseBook.password="mmbbs";
+      let link = [ '/diklabu'];
+      this.router.navigate(link);
+    }
+  }
 
   performLogin() {
     console.log("Login with "+this.username+" and PW="+this.password);

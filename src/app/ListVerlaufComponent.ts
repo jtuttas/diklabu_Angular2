@@ -55,6 +55,7 @@ export class ListVerlaufComponent {
     console.log("!!!!List Verlauf Component ngInit CourseBook="+CourseBookComponent.courseBook)
 
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
+
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
       .debounceTime(150)
       .distinctUntilChanged()
@@ -63,6 +64,7 @@ export class ListVerlaufComponent {
         console.log("key up event");
         this.dataSource.filter = this.filter.nativeElement.value;
       });
+
   }
 
   ngAfterViewInit() {
@@ -202,13 +204,15 @@ export class ExampleDataSource extends DataSource<any> {
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Verlauf[]> {
+    console.log("connect() ");
+
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
-      this._sort.mdSortChange,
+      this._sort.sortChange,
       this._filterChange,
     ];
 
-    console.log("connect() ")
+
 
     /*
     return Observable.merge(...displayDataChanges).map(() => {
@@ -224,13 +228,11 @@ export class ExampleDataSource extends DataSource<any> {
       const sortedData= this.getSortedData(this.filteredData);
       return sortedData;
     });
-
   }
 
   disconnect() {
   }
 
-  /** Returns a sorted copy of the database data. */
   getSortedData(data:Verlauf[]): Verlauf[] {
 
     if (!this._sort.active || this._sort.direction == '') {
@@ -272,5 +274,4 @@ export class ExampleDataSource extends DataSource<any> {
 
       return (valueA < valueB ? -1 : 1) * (this._sort.direction == 'asc' ? 1 : -1);
     });
-  }
-}
+  }}
