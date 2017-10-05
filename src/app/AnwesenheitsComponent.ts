@@ -11,6 +11,7 @@ import {AppComponent} from "./app.component";
 import {MessageService} from "primeng/components/common/messageservice";
 import {Message} from "primeng/primeng";
 import {CourseSelectComponent} from "./CourseSelectComponent";
+import {MailObject} from "./data/MailObject";
 
 @Component({
   selector: 'anwesenheit',
@@ -20,12 +21,14 @@ import {CourseSelectComponent} from "./CourseSelectComponent";
 })
 
 export class AnwesenheitsComponent implements OnInit {
+  @ViewChild('mailDialog') mailDialog;
 
-
+  private mailObject:MailObject=new MailObject("","","","");
   errorMessage: string;
   subscription: Subscription;
   cols: any[];
   data: any[];
+  multiSortMeta = [];
 
   constructor(private service:SharedService,private anwesenheitsService: AnwesenheitsService,private messageService: MessageService) {
     this.subscription = this.service.getCoursebook().subscribe(message => {
@@ -101,6 +104,14 @@ export class AnwesenheitsComponent implements OnInit {
       }
     }
   }
+
+  mailClick(p) {
+    console.log("0Mail click! on "+JSON.stringify(p));
+    this.mailObject = new MailObject(CourseBookComponent.courseBook.email,p.EMAIL,"","");
+    this.mailDialog.showDialog("Nachricht an "+p.VNAME+" "+p.NNAME);
+  }
+
+
 
   edit(event) {
     console.log("edit Complete: row="+event.index+" Column="+event.column.field+" Inhalt:"+JSON.stringify(event.data));

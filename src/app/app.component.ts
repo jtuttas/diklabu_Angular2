@@ -5,6 +5,8 @@ import {Subscription} from "rxjs/Subscription";
 import {SharedService} from "./services/SharedService";
 
 import {MessageService} from "primeng/components/common/messageservice";
+import {MailService} from "./services/MailService";
+import {MailObject} from "./data/MailObject";
 
 
 
@@ -28,7 +30,7 @@ export class AppComponent implements OnDestroy{
   @ViewChild('tabcomponent') tabComponent;
 
 
-  constructor(private service: SharedService) {
+  constructor(private service: SharedService, private mailService:MailService, private messageService: MessageService) {
     this.subscription = this.service.getCoursebook().subscribe(message => {
       this.courseBook=message;
       console.log("App Component Received !"+message.constructor.name);
@@ -45,6 +47,21 @@ export class AppComponent implements OnDestroy{
 
   testClick() {
     this.courseBook.toString();
+    let m:MailObject;
+    m=new MailObject("tuttas@mmbbs.de","tuttas68@gmail.com","From Mail Service34","from Mail Service");
+    this.mailService.sendMail(m).subscribe(answer => {
+      console.log("Answer from Mailservice:"+JSON.stringify(answer));
+      if (answer.success==false) {
+        this.messageService.add({severity:'error', summary:'Fehler', detail: answer.msg});
+      }
+      else {
+        this.messageService.add({severity:'info', summary:'Info', detail:'Mail erfolgreich versandt!'});
+      }
+
+    },
+      err => {
+        console.log("Error from Mailservice:"+err);
+      });
   }
 
 

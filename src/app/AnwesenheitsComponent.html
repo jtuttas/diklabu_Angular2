@@ -1,21 +1,22 @@
 
-<p-dataTable [value]="data" [editable]="true" (onEditComplete)="edit($event)">
+<p-dataTable  [value]="data" [editable]="true" (onEditComplete)="edit($event)">
   <ng-container *ngFor="let col of cols">
     <p-column  *ngIf="col.field.startsWith('id') && (col.header.startsWith('Sa.') || col.header.startsWith('So.'))" [editable]="true" [field]="col.field" [header]="col.header" [style]="{'width':'75px','background-color':'#cccccc'}" ></p-column>
     <p-column  *ngIf="col.field.startsWith('id') && !col.header.startsWith('Sa.') && !col.header.startsWith('So.')" [editable]="true" [field]="col.field" [header]="col.header" [style]="{'width':'75px'}" ></p-column>
-    <p-column  *ngIf="col.header == 'info'" [field]="" [header]="" [style]="{'width':'75px','text-align':'left'}" >
-      <ng-template let-car="rowData" pTemplate="body">
+    <p-column  *ngIf="col.header == 'info'" [id]="col.id" [field]="" [header]="" [style]="{'width':'75px','text-align':'left'}" >
+      <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
         <img class="select" src="../assets/Info.png"/>
-        <img class="select" src="../assets/mail.png"/>
+        <img (click)="mailClick(data[i])" class="select" src="../assets/mail.png"/>
       </ng-template>
     </p-column>
     <p-column  *ngIf="col.header == 'empty'" [field]="" [header]="" [style]="{'text-align':'left'}" >
       <ng-template let-car="rowData" pTemplate="body">
       </ng-template>
     </p-column>
-    <p-column  *ngIf="col.field == 'VNAME'" [sortable]="true" [field]="col.field" [header]="col.header" [style]="{'width':'150px','text-align':'left'}" ></p-column>
-    <p-column  *ngIf="col.field == 'NNAME'" [sortable]="true" [field]="col.field" [header]="col.header" [style]="{'width':'150px','text-align':'left'}" ></p-column>
+    <p-column  *ngIf="col.field == 'VNAME'" [id]="col.id"  [field]="col.field" [header]="col.header" [style]="{'width':'150px','text-align':'left'}" ></p-column>
+    <p-column  *ngIf="col.field == 'NNAME'" [id]="col.id"  [field]="col.field" [header]="col.header" [style]="{'width':'150px','text-align':'left'}" ></p-column>
   </ng-container>
 </p-dataTable>
+<sendmail #mailDialog [mail]="mailObject"></sendmail>
 
 

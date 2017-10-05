@@ -21,6 +21,7 @@ export class LoginComponent {
       CourseBookComponent.courseBook.idLehrer="TU";
       CourseBookComponent.courseBook.username="TU";
       CourseBookComponent.courseBook.password="mmbbs";
+      CourseBookComponent.courseBook.email="tuttas@mmbbs.de"
       let link = [ '/diklabu'];
       this.router.navigate(link);
     }
@@ -34,6 +35,7 @@ export class LoginComponent {
           CourseBookComponent.courseBook.idLehrer=data.ID;
           CourseBookComponent.courseBook.username=this.username;
           CourseBookComponent.courseBook.password=this.password;
+          CourseBookComponent.courseBook.email=data.email;
           let link = [ '/diklabu'];
           this.router.navigate(link);
         },

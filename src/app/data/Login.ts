@@ -5,4 +5,5 @@ export class Login {
   ID: string;
   idPlain: string;
   role: string;
+  email:string;
 }

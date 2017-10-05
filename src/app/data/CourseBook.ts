@@ -9,6 +9,7 @@ export class  CourseBook {
   public auth_token;
   public username:string;
   public password:string;
+  public email:string;
 
 
   constructor(from:Date,to:Date,course:Course) {
