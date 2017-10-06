@@ -1,10 +1,12 @@
-import {Component, EventEmitter, Input, Output, ViewContainerRef} from "@angular/core";
+import {Component, EventEmitter, Input, Output, ViewChild, ViewContainerRef} from "@angular/core";
 import {Course} from "./data/Course";
 import {AppComponent} from "./app.component";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MessageService} from "primeng/components/common/messageservice";
 import {PupilService} from "./services/PupilService";
 import {Pupil} from "./data/Pupil";
+import {MailObject} from "./data/MailObject";
+import {CourseBookComponent} from "./CourseBookComponent";
 
 
 @Component({
@@ -15,6 +17,8 @@ import {Pupil} from "./data/Pupil";
 
 export class CourseSelectComponent{
   @Output() courseUpdated = new EventEmitter();
+  @ViewChild('mailDialog') mailDialog;
+  public mailObject:MailObject=new MailObject("","","","");
   private course: Course;
 
   public courseid:number=0;
@@ -75,5 +79,31 @@ export class CourseSelectComponent{
     this.courses = this.allCourses.filter(x => x.KNAME.includes(this.filter));
     this.courseid=0;
     this.updated();
+  }
+
+  mailPupils() {
+    console.log("Mail Pupils click! ");
+    this.mailObject = new MailObject(CourseBookComponent.courseBook.email,CourseBookComponent.courseBook.email,"","");
+    for (var i=0;i<CourseSelectComponent.pupils.length;i++) {
+      this.mailObject.addCC(CourseSelectComponent.pupils[i].EMAIL);
+    }
+    this.mailDialog.showDialog("Klasse "+CourseBookComponent.courseBook.course.KNAME+" anschreiben");
+  }
+  mailCompanies() {
+    console.log("Mail Companies click! ");
+    this.mailObject = new MailObject(CourseBookComponent.courseBook.email,CourseBookComponent.courseBook.email,"","");
+    this.pupilService.getCompanies(CourseBookComponent.courseBook.course.KNAME).subscribe(
+      data => {
+          console.log("Empfange Betriebe "+JSON.stringify(data));
+          for (var i=0;i<data.length;i++) {
+            this.mailObject.addBCC(data[i].email);
+          }
+       },
+      err => {
+          console.log("Fehler Liste Betriebe"+err);
+          this.messageService.add({severity:'error', summary:'Fehler', detail:err});
+       }
+    );
+    this.mailDialog.showDialog("Betriebe der Klasse "+CourseBookComponent.courseBook.course.KNAME+" anschreiben");
   }
 }

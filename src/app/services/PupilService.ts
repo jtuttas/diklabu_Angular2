@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import {AppComponent} from "../app.component";
 import {CourseBookComponent} from "../CourseBookComponent";
 import {Pupil} from "../data/Pupil";
+import {Company} from "../data/Company";
 
 @Injectable()
 export class PupilService {
@@ -26,6 +27,17 @@ export class PupilService {
   }
 
 
+  getCompanies(kname:string): Observable<Company[]> {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+
+    this.url = AppComponent.SERVER+"Diklabu/api/v1/klasse/betriebe/"+kname;  // URL to web API
+    console.log("get companies URL="+this.url);
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
   private extractData(res: Response) {
     console.log("URL="+this.url);

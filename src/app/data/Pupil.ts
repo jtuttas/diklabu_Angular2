@@ -3,6 +3,7 @@ export class Pupil {
   GEBDAT: Date;
   ID_AUSBILDER: number;
   ID_MMBBS: number;
+  EMAIL:string;
   NNAME: string;
   VNAME: string;
   id: number;

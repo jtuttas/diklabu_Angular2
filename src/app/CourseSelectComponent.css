@@ -4,3 +4,7 @@
 .filter {
   width: 80px;
 }
+
+img {
+  cursor: pointer;
+}

@@ -12,7 +12,7 @@ import {MessageService} from "primeng/components/common/messageservice";
 
   ],
   template:
-    ' <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="300" appendTo="body"><br/>' +
+    ' <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="500" appendTo="body"><br/>' +
     '<span class="ui-float-label">'+
     '<input id="to" type="text" pInputText [(ngModel)]="mail.to"/>'+
     '<label for="to">An:</label>'+
@@ -29,7 +29,7 @@ import {MessageService} from "primeng/components/common/messageservice";
     '<input id="subject" type="text" pInputText [(ngModel)]="mail.subject"/>'+
     '<label for="subject">Betreff</label>'+
     '</span><br/>'+
-    '<strong>Imhalt</strong><br/>'+
+    '<strong>Inhalt</strong><br/>'+
     '<textarea pInputTextarea [(ngModel)]="mail.content"></textarea>'+
     '<br/>'+
     '        <p-footer>\n' +
