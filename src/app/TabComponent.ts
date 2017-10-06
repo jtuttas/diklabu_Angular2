@@ -1,5 +1,6 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {Verlauf} from "./data/Verlauf";
+import {CourseBookComponent} from "./CourseBookComponent";
 
 
 /**
@@ -14,6 +15,7 @@ export class TabComponent {
   @ViewChild('newVerlaufComponent') verlaufComponent;
   @ViewChild('listVerlaufComponent') listVerlaufComponent;
 
+  private views:string[]=["Anwesenheit","Verlauf"];
   selectedIndex:number=0;
 
   newVerlauf(v:Verlauf) {
@@ -31,7 +33,9 @@ export class TabComponent {
 
 
   tabIndexChanged() {
-    console.log("Tab Index changed: "+this.selectedIndex);
+    CourseBookComponent.courseBook.view=this.views[this.selectedIndex];
+    console.log("Tab Index changed: "+this.selectedIndex+" current View is "+CourseBookComponent.courseBook.view);
+
   }
 
 }

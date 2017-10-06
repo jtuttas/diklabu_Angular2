@@ -26,12 +26,16 @@ export class MailObject {
     b+="toMail="+this.to+"&fromMail="+this.from+"&subjectMail="+this.subject+"&emailBody="+this.content;
     if (this.cc.length!=0) {
       let ccString = this.cc.join();
-      ccString = ccString.replace(",",";");
+      var find = ',';
+      var re = new RegExp(find, 'g');
+      ccString = ccString.replace(re,";");
       b+="&cc="+ccString;
     }
     if (this.bcc.length!=0) {
       let bccString = this.bcc.join();
-      bccString = bccString.replace(",",";");
+      var find = ',';
+      var re = new RegExp(find, 'g');
+      bccString = bccString.replace(re,";");
       b+="&bcc="+bccString;
     }
     return b;

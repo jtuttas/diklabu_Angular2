@@ -26,7 +26,7 @@ import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
 import {PupilService} from "./services/PupilService";
 import {
   ButtonModule, DataTableModule, DialogModule, FileUploadModule, GrowlModule, InputTextareaModule, InputTextModule,
-  SharedModule
+  SharedModule, SplitButtonModule
 } from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
 import {LoginComponent} from "./LoginComponent";
@@ -41,27 +41,29 @@ import {MailDialog} from "./MailDialog";
 import {PupilDetailService} from "./services/PupilDetailService";
 import {PupilDetailDialog} from "./PupilDetailDialog";
 import {PupilImageComponent} from "./PupilImageComponent";
+import {DokuComponent} from "./DokuComponent";
+import {DokuService} from "./services/DokuService";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
     , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent, LoginComponent,
-    diklabuComponent, logoutComponent, MailDialog, PupilDetailDialog, PupilImageComponent
+    diklabuComponent, logoutComponent, MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
     MdDatepickerModule,  MdNativeDateModule, BrowserAnimationsModule
     ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule, DataTableModule, SharedModule,
     GrowlModule,routing, MdSelectModule, MdTableModule, MdTabsModule, MdSortModule, MdInputModule, DialogModule, ButtonModule, InputTextModule,
-    InputTextareaModule, FileUploadModule
+    InputTextareaModule, FileUploadModule,SplitButtonModule,
   ],
   exports: [
     ConfirmDialog
   ],
   providers: [
     SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService, MdSort,
-    MailService,  PupilDetailService
+    MailService,  PupilDetailService, DokuService
   ],
   entryComponents: [
     ConfirmDialog,
