@@ -38,13 +38,15 @@ import {logoutComponent} from "./logoutComponent";
 import {VerlaufsService} from "./services/VerlaufsService";
 import {MailService} from "./services/MailService";
 import {MailDialog} from "./MailDialog";
+import {PupilDetailService} from "./services/PupilDetailService";
+import {PupilDetailDialog} from "./PupilDetailDialog";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
     , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent, LoginComponent,
-    diklabuComponent, logoutComponent, MailDialog
+    diklabuComponent, logoutComponent, MailDialog, PupilDetailDialog
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
@@ -58,7 +60,7 @@ import {MailDialog} from "./MailDialog";
   ],
   providers: [
     SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService, MdSort,
-    MailService
+    MailService,  PupilDetailService
   ],
   entryComponents: [
     ConfirmDialog,

@@ -22,8 +22,10 @@ import {MailObject} from "./data/MailObject";
 
 export class AnwesenheitsComponent implements OnInit {
   @ViewChild('mailDialog') mailDialog;
+  @ViewChild('infoDialog') infoDialog;
 
-  private mailObject:MailObject=new MailObject("","","","");
+  public mailObject:MailObject=new MailObject("","","","");
+
   errorMessage: string;
   subscription: Subscription;
   cols: any[];
@@ -111,6 +113,10 @@ export class AnwesenheitsComponent implements OnInit {
     this.mailDialog.showDialog("Nachricht an "+p.VNAME+" "+p.NNAME);
   }
 
+  infoClick(p:Pupil) {
+    console.log("Info click! on "+JSON.stringify(p));
+    this.infoDialog.showDialog(p);
+  }
 
 
   edit(event) {

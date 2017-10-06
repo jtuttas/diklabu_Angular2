@@ -57,6 +57,7 @@ export class MailDialog {
         console.log("Answer from Mailservice:"+JSON.stringify(answer));
         if (answer.success==false) {
           this.messageService.add({severity:'error', summary:'Fehler', detail: answer.msg});
+          this.display=true;
         }
         else {
           this.messageService.add({severity:'info', summary:'Info', detail:'Mail erfolgreich versandt!'});
@@ -65,6 +66,7 @@ export class MailDialog {
       },
       err => {
         console.log("Error from Mailservice:"+err);
+        this.messageService.add({severity:'error', summary:'Fehler', detail: err});
       });
   }
 }

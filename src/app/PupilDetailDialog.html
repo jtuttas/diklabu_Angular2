@@ -1,0 +1,18 @@
+ <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="400" appendTo="body">
+   <strong>Geburtsdatum {{pupilDetails.gebDatum}}</strong>
+   <h3>Ausbilder</h3>
+   <p> {{pupilDetails.ausbilder.NNAME}}</p>
+   <p>Tel: {{pupilDetails.ausbilder.TELEFON}}</p>
+   <p>Fax: {{pupilDetails.ausbilder.FAX}}</p>
+   <h3>Betrieb</h3>
+   <p> {{pupilDetails.betrieb.NAME}}</p>
+   <p> {{pupilDetails.betrieb.STRASSE}}</p>
+   <p> {{pupilDetails.betrieb.PLZ}} {{pupilDetails.betrieb.PLZ}}</p>
+   <h3>Klassen/Kurse</h3>
+   <ul>
+     <li *ngFor="let c of pupilDetails.klassen; let j = index" [value]="j">
+       {{c.KNAME}}
+     </li>
+   </ul>
+
+ </p-dialog>

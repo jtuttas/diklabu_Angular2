@@ -5,7 +5,7 @@
     <p-column  *ngIf="col.field.startsWith('id') && !col.header.startsWith('Sa.') && !col.header.startsWith('So.')" [editable]="true" [field]="col.field" [header]="col.header" [style]="{'width':'75px'}" ></p-column>
     <p-column  *ngIf="col.header == 'info'" [id]="col.id" [field]="" [header]="" [style]="{'width':'75px','text-align':'left'}" >
       <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
-        <img class="select" src="../assets/Info.png"/>
+        <img (click)="infoClick(data[i])" class="select" src="../assets/Info.png"/>
         <img (click)="mailClick(data[i])" class="select" src="../assets/mail.png"/>
       </ng-template>
     </p-column>
@@ -18,5 +18,6 @@
   </ng-container>
 </p-dataTable>
 <sendmail #mailDialog [mail]="mailObject"></sendmail>
+<pupildetails #infoDialog ></pupildetails>
 
 
