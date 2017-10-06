@@ -25,7 +25,7 @@ import {SharedService} from "./services/SharedService";
 import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
 import {PupilService} from "./services/PupilService";
 import {
-  ButtonModule, DataTableModule, DialogModule, GrowlModule, InputTextareaModule, InputTextModule,
+  ButtonModule, DataTableModule, DialogModule, FileUploadModule, GrowlModule, InputTextareaModule, InputTextModule,
   SharedModule
 } from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
@@ -40,20 +40,21 @@ import {MailService} from "./services/MailService";
 import {MailDialog} from "./MailDialog";
 import {PupilDetailService} from "./services/PupilDetailService";
 import {PupilDetailDialog} from "./PupilDetailDialog";
+import {PupilImageComponent} from "./PupilImageComponent";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
     , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent, LoginComponent,
-    diklabuComponent, logoutComponent, MailDialog, PupilDetailDialog
+    diklabuComponent, logoutComponent, MailDialog, PupilDetailDialog, PupilImageComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
     MdDatepickerModule,  MdNativeDateModule, BrowserAnimationsModule
     ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule, DataTableModule, SharedModule,
     GrowlModule,routing, MdSelectModule, MdTableModule, MdTabsModule, MdSortModule, MdInputModule, DialogModule, ButtonModule, InputTextModule,
-    InputTextareaModule
+    InputTextareaModule, FileUploadModule
   ],
   exports: [
     ConfirmDialog

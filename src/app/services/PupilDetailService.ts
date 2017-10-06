@@ -43,5 +43,13 @@ export class PupilDetailService {
       .catch(this.handleError);
   }
 
-
+  getPupilImage(id:number) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/x-www-form-urlencoded;  charset=UTF-8");
+    this.url = AppComponent.SERVER+"Diklabu/api/v1/schueler/bild64/"+id;  // URL to web API
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }

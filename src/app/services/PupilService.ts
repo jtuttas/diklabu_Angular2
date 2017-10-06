@@ -25,6 +25,8 @@ export class PupilService {
       .catch(this.handleError);
   }
 
+
+
   private extractData(res: Response) {
     console.log("URL="+this.url);
     console.log("Receive Pupils: "+JSON.stringify(res.json()));

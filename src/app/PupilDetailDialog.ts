@@ -1,8 +1,9 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, ViewChild} from "@angular/core";
 import {MessageService} from "primeng/components/common/messageservice";
 import {PupilDetails} from "./data/PupilDetails";
 import {PupilDetailService} from "./services/PupilDetailService";
 import {Pupil} from "./data/Pupil";
+import {PupilImageComponent} from "./PupilImageComponent";
 
 @Component({
   selector: 'pupildetails',
@@ -15,6 +16,7 @@ import {Pupil} from "./data/Pupil";
   templateUrl: './PupilDetailDialog.html',
 })
 export class PupilDetailDialog {
+  @ViewChild('pimage') pimage:PupilImageComponent;
 
   public display:boolean=false;
   public titel:string="";
@@ -24,13 +26,16 @@ export class PupilDetailDialog {
   }
 
   showDialog(p:Pupil) {
-    this.titel=p.VNAME+" "+p.NNAME;
+    this.pimage.getImage(p);
+    this.titel = p.VNAME + " " + p.NNAME;
     this.display = true;
     this.pupilDetailService.getPupilDetails(p.id).subscribe(
-      data => {console.log("Received Details:"+JSON.stringify(data));
-        this.pupilDetails=data;},
-      err => {console.log("Error Details: +err");
-        this.messageService.add({severity:'error', summary:'Fehler', detail: err});
+      data => {
+        this.pupilDetails = data;
+      },
+      err => {
+        console.log("Error Details: +err");
+        this.messageService.add({severity: 'error', summary: 'Fehler', detail: err});
       });
   }
 }
