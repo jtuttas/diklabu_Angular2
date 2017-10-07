@@ -7,6 +7,7 @@ import {PupilService} from "./services/PupilService";
 import {Pupil} from "./data/Pupil";
 import {MailObject} from "./data/MailObject";
 import {CourseBookComponent} from "./CourseBookComponent";
+import {CourseService} from "./services/CourseService";
 
 
 @Component({
@@ -18,6 +19,9 @@ import {CourseBookComponent} from "./CourseBookComponent";
 export class CourseSelectComponent{
   @Output() courseUpdated = new EventEmitter();
   @ViewChild('mailDialog') mailDialog;
+  @ViewChild('planDialog') planDialog;
+  @ViewChild('courseInfoDialog') courseInfoDialog;
+
   public mailObject:MailObject=new MailObject("","","","");
   private course: Course;
 
@@ -29,7 +33,7 @@ export class CourseSelectComponent{
   public anzahl=0;
   public static pupils:Pupil[];
 
-  constructor(http:HttpClient,private messageService: MessageService, private pupilService:PupilService){
+  constructor(http:HttpClient,private messageService: MessageService, private pupilService:PupilService, private courseService:CourseService){
 
     // Make the HTTP request:
     http.get(AppComponent.SERVER+"Diklabu/api/v1/noauth/klassen").subscribe(data => {
@@ -88,6 +92,62 @@ export class CourseSelectComponent{
       this.mailObject.addCC(CourseSelectComponent.pupils[i].EMAIL);
     }
     this.mailDialog.showDialog("Klasse "+CourseBookComponent.courseBook.course.KNAME+" anschreiben");
+  }
+
+  stundenplan() {
+    console.log("Stundenplan anfragen!");
+
+    this.courseService.getStundenplan(CourseBookComponent.courseBook.course.KNAME).subscribe(
+      data => {
+        console.log("Receive Stundenplan:"+data);
+        if (data.length>0) {
+          this.planDialog.showDialog("Stundenplan f. die Klasse "+CourseBookComponent.courseBook.course.KNAME,data);
+        }
+        else {
+          this.messageService.add({severity:'warning', summary:'Warnung', detail:"Kein Stundenplan f. die Klasse "+CourseBookComponent.courseBook.course.KNAME+" gefunden!"});
+        }
+      },
+      err=> {
+        this.messageService.add({severity:'error', summary:'Fehler', detail:err});
+      }
+    );
+  }
+
+  vertretungsplan() {
+    console.log("Vertertungsplan anfragen!");
+
+    this.courseService.getVertretungsplan(CourseBookComponent.courseBook.course.KNAME).subscribe(
+      data => {
+        console.log("Receive Verterungsplan:"+data);
+        if (data.length>0) {
+          this.planDialog.showDialog("Vertretungsplan f. die Klasse "+CourseBookComponent.courseBook.course.KNAME,data);
+        }
+        else {
+          this.messageService.add({severity:'warning', summary:'Warnung', detail:"Kein Vertretungsplan f. die Klasse "+CourseBookComponent.courseBook.course.KNAME+" gefunden!"});
+        }
+      },
+      err=> {
+        this.messageService.add({severity:'error', summary:'Fehler', detail:err});
+      }
+    );
+  }
+
+  courseinfo() {
+    this.courseService.getCourseInfo(CourseBookComponent.courseBook.course.id).subscribe(
+      data => {
+        console.log("Receive CourseInfo:"+JSON.stringify(data));
+        this.courseInfoDialog.bem=data.NOTIZ;
+        this.courseInfoDialog.lvname=data.LEHRER_VNAME;
+        this.courseInfoDialog.lnname=data.LEHRER_NNAME;
+        this.courseInfoDialog.lemail=data.LEHRER_EMAIL;
+        this.courseInfoDialog.mailto="mailto:"+data.LEHRER_EMAIL;
+        this.courseInfoDialog.showDialog("Info f. die Klasse "+CourseBookComponent.courseBook.course.KNAME,"Info f. die Klasse "+CourseBookComponent.courseBook.course.id);
+      },
+      err=> {
+        this.messageService.add({severity:'error', summary:'Fehler', detail:err});
+      }
+    );
+
   }
   mailCompanies() {
     console.log("Mail Companies click! ");

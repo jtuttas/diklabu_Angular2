@@ -43,27 +43,31 @@ import {PupilDetailDialog} from "./PupilDetailDialog";
 import {PupilImageComponent} from "./PupilImageComponent";
 import {DokuComponent} from "./DokuComponent";
 import {DokuService} from "./services/DokuService";
+import {CourseService} from "./services/CourseService";
+import {PlanDialog} from "./PlanDialog";
+import {CourseInfoDialog} from "./CourseInfoDialog";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
     , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent, LoginComponent,
-    diklabuComponent, logoutComponent, MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent
+    diklabuComponent, logoutComponent, MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,
+    CourseInfoDialog
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
     MdDatepickerModule,  MdNativeDateModule, BrowserAnimationsModule
     ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule, DataTableModule, SharedModule,
     GrowlModule,routing, MdSelectModule, MdTableModule, MdTabsModule, MdSortModule, MdInputModule, DialogModule, ButtonModule, InputTextModule,
-    InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule
+    InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule,
   ],
   exports: [
     ConfirmDialog
   ],
   providers: [
     SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService, MdSort,
-    MailService,  PupilDetailService, DokuService
+    MailService,  PupilDetailService, DokuService, CourseService
   ],
   entryComponents: [
     ConfirmDialog,
