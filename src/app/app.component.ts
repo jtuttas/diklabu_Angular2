@@ -5,8 +5,7 @@ import {Subscription} from "rxjs/Subscription";
 import {SharedService} from "./services/SharedService";
 
 import {MessageService} from "primeng/components/common/messageservice";
-import {MailService} from "./services/MailService";
-import {MailObject} from "./data/MailObject";
+
 import {PupilDetailService} from "./services/PupilDetailService";
 
 
@@ -25,7 +24,7 @@ export class AppComponent implements OnDestroy{
   subscription: Subscription;
   courseBook:CourseBook;
 
-  public static SERVER="http://localhost:8080/";
+  public static SERVER="http://service.joerg-tuttas.de:8081/";
 
   @ViewChild('courseBookComponent') courseBookComponent;
   @ViewChild('tabcomponent') tabComponent;
@@ -47,9 +46,7 @@ export class AppComponent implements OnDestroy{
   }
 
   testClick() {
-      this.pupilDetailService.getPupilDetails(1581).subscribe(
-        data => {console.log("Received Details:"+JSON.stringify(data))},
-        err => {console.log("Error Details: +err")});
+
   }
 
 }

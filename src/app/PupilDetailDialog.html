@@ -12,7 +12,7 @@
        <h3>Betrieb</h3>
        <p> {{pupilDetails.betrieb.NAME}}</p>
        <p> {{pupilDetails.betrieb.STRASSE}}</p>
-       <p> {{pupilDetails.betrieb.PLZ}} {{pupilDetails.betrieb.PLZ}}</p>
+       <p> {{pupilDetails.betrieb.PLZ}} {{pupilDetails.betrieb.NAME}}</p>
        <h3>Klassen/Kurse</h3>
        <ul>
          <li *ngFor="let c of pupilDetails.klassen; let j = index" [value]="j">
