@@ -13,7 +13,7 @@ import {MessageService} from "primeng/components/common/messageservice";
   'right: 5px;' +
   '}'],
   template:
-    '<img (click)="performLogout()" src="../assets/logout.png" />'
+    '<img (click)="performLogout()" src="../assets/logout.png" pTooltip="abmelden" tooltipPosition="left"/>'
 })
 
 export class logoutComponent {

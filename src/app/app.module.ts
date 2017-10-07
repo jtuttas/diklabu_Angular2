@@ -26,7 +26,7 @@ import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
 import {PupilService} from "./services/PupilService";
 import {
   ButtonModule, DataTableModule, DialogModule, FileUploadModule, GrowlModule, InputTextareaModule, InputTextModule,
-  SharedModule, SplitButtonModule
+  SharedModule, SplitButtonModule, TooltipModule
 } from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
 import {LoginComponent} from "./LoginComponent";
@@ -56,7 +56,7 @@ import {DokuService} from "./services/DokuService";
     MdDatepickerModule,  MdNativeDateModule, BrowserAnimationsModule
     ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule, DataTableModule, SharedModule,
     GrowlModule,routing, MdSelectModule, MdTableModule, MdTabsModule, MdSortModule, MdInputModule, DialogModule, ButtonModule, InputTextModule,
-    InputTextareaModule, FileUploadModule,SplitButtonModule,
+    InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule
   ],
   exports: [
     ConfirmDialog

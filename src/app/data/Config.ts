@@ -1,3 +1,3 @@
 export class Config {
-  static debug: boolean = false;
+  static debug: boolean = true;
 }

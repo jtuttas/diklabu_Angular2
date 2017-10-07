@@ -24,7 +24,7 @@ export class AppComponent implements OnDestroy{
   subscription: Subscription;
   courseBook:CourseBook;
 
-  public static SERVER="http://service.joerg-tuttas.de:8081/";
+  public static SERVER="http://localhost:8080/";
 
   @ViewChild('courseBookComponent') courseBookComponent;
   @ViewChild('tabcomponent') tabComponent;
