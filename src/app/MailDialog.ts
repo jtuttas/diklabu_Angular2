@@ -41,8 +41,8 @@ import {MessageService} from "primeng/components/common/messageservice";
 export class MailDialog {
   @Input() mail: MailObject;
 
-  private display:boolean=false;
-  private titel:string="";
+  public display:boolean=false;
+  public titel:string="";
 
   constructor(private mailService:MailService,private messageService: MessageService) {}
 

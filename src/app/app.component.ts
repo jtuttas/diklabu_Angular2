@@ -20,7 +20,7 @@ import {PupilDetailService} from "./services/PupilDetailService";
 
 export class AppComponent implements OnDestroy{
 
-
+  public msgs;
   subscription: Subscription;
   courseBook:CourseBook;
 
