@@ -16,7 +16,7 @@ import {MailObject} from "./data/MailObject";
 @Component({
   selector: 'anwesenheit',
   templateUrl: './AnwesenheitsComponent.html',
-  styleUrls: ['./AnwesenheitsComponent.css'],
+  styleUrls: ['AnwesenheitsComponent.css'],
 
 })
 
