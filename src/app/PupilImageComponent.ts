@@ -4,6 +4,7 @@ import {PupilDetailService} from "./services/PupilDetailService";
 import {Pupil} from "./data/Pupil";
 import {CourseBookComponent} from "./CourseBookComponent";
 import {AppComponent} from "./app.component";
+import {Config} from "./data/Config";
 
 @Component({
   selector: 'pupilimage',
@@ -20,7 +21,7 @@ import {AppComponent} from "./app.component";
 export class PupilImageComponent {
 
   public imgSrc="../assets/anonym.gif";
-  public uploadUrl:string = AppComponent.SERVER+"/Diklabu/api/v1/schueler/bild/";
+  public uploadUrl:string = Config.SERVER+"/Diklabu/api/v1/schueler/bild/";
   private currentPupil:Pupil;
 
   constructor(private pupilDetailService:PupilDetailService,private messageService: MessageService) {
@@ -29,7 +30,7 @@ export class PupilImageComponent {
   getImage(p:Pupil) {
     this.currentPupil=p;
     this.imgSrc="../assets/anonym.gif";
-    this.uploadUrl=AppComponent.SERVER+"/Diklabu/api/v1/schueler/bild/"+p.id;
+    this.uploadUrl=Config.SERVER+"/Diklabu/api/v1/schueler/bild/"+p.id;
     this.pupilDetailService.getPupilImage(p.id).subscribe(
       data => {
       if (data) {

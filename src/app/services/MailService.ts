@@ -6,6 +6,7 @@ import {AppComponent} from "../app.component";
 import {MailObject} from "../data/MailObject";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import {Config} from "../data/Config";
 
 @Injectable()
 export class MailService {
@@ -43,7 +44,7 @@ export class MailService {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/x-www-form-urlencoded;  charset=UTF-8");
-    this.url = AppComponent.SERVER+"Diklabu/MailServlet";  // URL to web API
+    this.url = Config.SERVER+"Diklabu/MailServlet";  // URL to web API
     var body = mail.getBody();
     console.log("body="+body);
     return this.http.post(this.url,body,{headers: headers})

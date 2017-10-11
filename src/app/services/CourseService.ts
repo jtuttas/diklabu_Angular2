@@ -5,6 +5,7 @@ import {CourseBookComponent} from "../CourseBookComponent";
 import {AppComponent} from "../app.component";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import {Config} from "../data/Config";
 
 @Injectable()
 export class CourseService {
@@ -20,7 +21,7 @@ export class CourseService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/noauth/plan/stundenplan/"+kname;  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/noauth/plan/stundenplan/"+kname;  // URL to web API
     console.log("get stundenplan URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractPlainData)
@@ -32,7 +33,7 @@ export class CourseService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/noauth/plan/vertertungsplan/"+kname;  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/noauth/plan/vertertungsplan/"+kname;  // URL to web API
     console.log("get Vertretungsplan  URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractPlainData)
@@ -44,7 +45,7 @@ export class CourseService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/klasse/details/"+idKlasse;  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/klasse/details/"+idKlasse;  // URL to web API
     console.log("get CourseInfo  URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
@@ -56,7 +57,7 @@ export class CourseService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/klasse/details/"+idKlasse;  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/klasse/details/"+idKlasse;  // URL to web API
     console.log("set CourseInfo  URL="+this.url);
     var body={"NOTIZ":notiz};
     return this.http.post(this.url,JSON.stringify(body),{headers: headers})

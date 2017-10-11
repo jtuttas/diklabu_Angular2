@@ -1,10 +1,3 @@
-.smallColumn{
-  flex: 0 0 85px;
-}
-
-md-cell {
-  text-align: left;
-}
 
 .del {
   cursor: pointer;
@@ -15,7 +8,6 @@ md-cell {
 
 }
 
-.example-header {
+.links {
   text-align: left;
-  margin-left: 25px;
 }

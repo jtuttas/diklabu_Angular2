@@ -31,19 +31,30 @@ export class AnwesenheitsComponent implements OnInit {
   cols: any[];
   data: any[];
   multiSortMeta = [];
+  KName: string;
+  von: Date;
+  bis: Date;
 
   constructor(private service:SharedService,private anwesenheitsService: AnwesenheitsService,private messageService: MessageService) {
     this.subscription = this.service.getCoursebook().subscribe(message => {
-      console.log("Anwesenheits Component Received !"+message.constructor.name);
+      console.log("Anwesenheits Component constructor !"+message.constructor.name);
       this.update();
     });
   }
 
   ngOnInit() {
     console.log("INIT Anwesenheitskomponente");
+    this.update();
+  }
+
+  ngAfterViewInit() {
+    console.log("After View INIT Anwesenheitskomponente");
   }
 
   update() {
+    this.KName=CourseBookComponent.courseBook.course.KNAME;
+    this.von=CourseBookComponent.courseBook.fromDate;
+    this.bis=CourseBookComponent.courseBook.toDate;
     this.cols = new Array();
     this.buildCols(CourseSelectComponent.pupils);
   }
@@ -122,7 +133,7 @@ export class AnwesenheitsComponent implements OnInit {
   edit(event) {
     console.log("edit Complete: row="+event.index+" Column="+event.column.field+" Inhalt:"+JSON.stringify(event.data));
     let anwesenheit:Anwesenheitseintrag = new Anwesenheitseintrag();
-    anwesenheit.ID_LEHERER=CourseBookComponent.courseBook.idLehrer;
+    anwesenheit.ID_LEHRER=CourseBookComponent.courseBook.idLehrer;
     anwesenheit.ID_KLASSE=CourseBookComponent.courseBook.course.id;
     anwesenheit.ID_SCHUELER=event.data.id;
     anwesenheit.VERMERK=event.data[event.column.field];

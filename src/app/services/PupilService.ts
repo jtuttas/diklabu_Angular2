@@ -7,6 +7,7 @@ import {AppComponent} from "../app.component";
 import {CourseBookComponent} from "../CourseBookComponent";
 import {Pupil} from "../data/Pupil";
 import {Company} from "../data/Company";
+import {Config} from "../data/Config";
 
 @Injectable()
 export class PupilService {
@@ -19,7 +20,7 @@ export class PupilService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/klasse/"+kname;  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/klasse/"+kname;  // URL to web API
     console.log("get pupils URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
@@ -32,7 +33,7 @@ export class PupilService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/klasse/betriebe/"+kname;  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/klasse/betriebe/"+kname;  // URL to web API
     console.log("get companies URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)

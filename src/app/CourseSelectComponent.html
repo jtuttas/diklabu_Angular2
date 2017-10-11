@@ -1,18 +1,18 @@
-<md-input-container class="filter">
-  <input mdInput placeholder="Filter" (change)="filterChanged()" [(ngModel)]="filter">
-</md-input-container>
-  <md-select placeholder="Klassen" [(ngModel)]="courseid" (ngModelChange)="updated()" [disabled]="compDisabled">
-    <md-option *ngFor="let c of courses; let j = index" [value]="j">
-      {{c.KNAME}}
-    </md-option>
-  </md-select>
-SuS:{{anzahl}}
-<img style="padding-left: 10px;" (click)="mailPupils()" src="../assets/groupmail.png" pTooltip="Klasse anschreiben" tooltipPosition="top">
-<img (click)="mailCompanies()" src="../assets/Boss.png" pTooltip="Betriebe anschreiben" tooltipPosition="top">
-<img (click)="stundenplan()" src="../assets/calendar.png" pTooltip="Stundenplan" tooltipPosition="top">
-<img (click)="vertretungsplan()" src="../assets/calendar.png" pTooltip="Vertretungsplan" tooltipPosition="top">
-<img (click)="courseinfo()" src="../assets/infoIcon.png" pTooltip="Klasseninfo" tooltipPosition="top">
-<logout></logout>
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12 ui-md-2 special">
+    <strong>SuS:{{anzahl}}</strong><br/>
+    <p-dropdown [filter]="true" filterBy="label,value.name" [autoWidth]="false" (onChange)="updated()" [options]="courses" [(ngModel)]="selectedCourse" placeholder="Klassen" [disabled]="compDisabled"></p-dropdown>
+  </div>
+  <div class="ui-md-6 special">
+    <br/>
+    <img style="padding-left: 10px;" (click)="mailPupils()" src="../assets/groupmail.png" pTooltip="Klasse anschreiben" tooltipPosition="top">
+    <img (click)="mailCompanies()" src="../assets/Boss.png" pTooltip="Betriebe anschreiben" tooltipPosition="top">
+    <img (click)="stundenplan()" src="../assets/calendar.png" pTooltip="Stundenplan" tooltipPosition="top">
+    <img (click)="vertretungsplan()" src="../assets/calendar.png" pTooltip="Vertretungsplan" tooltipPosition="top">
+    <img (click)="courseinfo()" src="../assets/infoIcon.png" pTooltip="Klasseninfo" tooltipPosition="top">
+
+  </div>
+</div>
 <sendmail #mailDialog [mail]="mailObject"></sendmail>
 <plan #planDialog ></plan>
 <courseinfo #courseInfoDialog></courseinfo>

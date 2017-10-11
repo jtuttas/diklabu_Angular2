@@ -11,9 +11,9 @@ import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'doku',
-  styles: ['img {padding-left: 30px;}'],
-  template: '<img [src]="imgSrc">' +
-  '<p-splitButton label="Doku" icon="fa-check" (onClick)="create()" [model]="items" pTooltip="Dokumentation erstellen" tooltipPosition="top"></p-splitButton>'
+  styles: ['.doku{position: absolute; top: 4px; right: 4px;} img {padding-left: 30px;}'],
+  template: '<div class="doku"><img [src]="imgSrc">' +
+  '<p-splitButton label="Doku" icon="fa-check" (onClick)="create()" [model]="items" ></p-splitButton></div>'
 })
 export class DokuComponent {
   private type: string = "pdf";

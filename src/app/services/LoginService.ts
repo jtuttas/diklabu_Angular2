@@ -8,6 +8,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/Rx';
 import {CourseBookComponent} from "../CourseBookComponent";
 import {Headers} from '@angular/http';
+import {Config} from "../data/Config";
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class LoginService {
   constructor (private http: Http) {}
 
   performLogin(user:string,password:string): Observable<Login> {
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/auth/login/";  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/auth/login/";  // URL to web API
     console.log("LoginURL:"+this.url);
     var body = {benutzer: user,kennwort:password};
     return this.http.post(this.url,body)
@@ -51,7 +52,7 @@ export class LoginService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/auth/logout/";  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/auth/logout/";  // URL to web API
     console.log("LooutURL:"+this.url);
     var body = {benutzer: user,kennwort:password};
     return this.http.post(this.url,body,{headers: headers})

@@ -1,5 +1,4 @@
-<md-form-field>
-  <input  [value]="d" mdInput [mdDatepicker]="picker" placeholder="Datum">
-  <md-datepicker-toggle id="special" mdSuffix [for]="picker"></md-datepicker-toggle>
-  <md-datepicker #picker (selectedChanged)="onChange($event)"  ></md-datepicker>
-</md-form-field>
+<div class="special">
+<strong>am..</strong>
+<p-calendar onchange="onChange($event)" [(ngModel)]="d" [showIcon]="true"  dateFormat="dd.mm.yy"></p-calendar>
+</div>

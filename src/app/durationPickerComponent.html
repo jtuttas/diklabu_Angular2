@@ -1,11 +1,10 @@
-<md-form-field>
-  <input [value]="fromDate" mdInput [mdDatepicker]="picker1" placeholder="von">
-  <md-datepicker-toggle class="special" mdSuffix [for]="picker1"></md-datepicker-toggle>
-  <md-datepicker #picker1 (selectedChanged)="fromChange($event)"></md-datepicker>
-</md-form-field>
-<md-form-field>
-  <input [value]="toDate" mdInput [mdDatepicker]="picker2" placeholder="bis">
-  <md-datepicker-toggle class="special" mdSuffix [for]="picker2"></md-datepicker-toggle>
-  <md-datepicker #picker2 (selectedChanged)="toChange($event)"></md-datepicker>
-</md-form-field>
-
+<div class="ui-g ui-fluid special">
+  <div class="ui-g-12 ui-md-6 ">
+  <strong>von:</strong><br/>
+  <p-calendar (onSelect)="fromChange($event)" [(ngModel)]="fromDate" [showIcon]="true"  dateFormat="dd.mm.yy"></p-calendar>
+  </div>
+  <div class="ui-md-6 ">
+  <strong>bis:</strong><br/>
+  <p-calendar (onSelect)="toChange($event)" [(ngModel)]="toDate" [showIcon]="true"  dateFormat="dd.mm.yy"></p-calendar>
+  </div>
+</div>

@@ -6,38 +6,48 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 
 import {Lernfeld} from "./data/Lernfeld";
 import {MessageService} from "primeng/components/common/messageservice";
+import {SelectItem} from "primeng/primeng";
+import {Config} from "./data/Config";
 
 
 @Component({
   selector: 'lfselect',
-  templateUrl: './LFSelectComponent.html',
-  styleUrls: ['./LFSelectComponent.css']
+  template: '<strong>Lernfeld:</strong><br/>\n' +
+  '<p-dropdown [autoWidth]="false" [options]="lfs" [(ngModel)]="selectedLF" placeholder="Lernfelder" [disabled]="compDisabled"></p-dropdown>\n',
+
 })
 
 export class LFSelectComponent{
   @Output() lfLoaded = new EventEmitter();
 
-  public lfid:number=0;
-  public lfs;
+  public lfs:SelectItem[];
+  public selectedLF="LF1";
   public compDisabled:boolean=true;
+
 
   public getLfNumber(s:string):number {
     for (var i=0;i<this.lfs.length;i++) {
-      console.log( "test ("+s+") ist "+this.lfs[i].BEZEICHNUNG);
-      if (this.lfs[i].BEZEICHNUNG==s) {
+      console.log( "test ("+s+") ist "+this.lfs[i].label);
+      if (this.lfs[i].label==s) {
         return i;
       }
     }
     return -1;
   }
 
+
   constructor(http:HttpClient,private messageService: MessageService){
 
 
     // Make the HTTP request:
-    http.get(AppComponent.SERVER+"Diklabu/api/v1/noauth/lernfelder").subscribe(data => {
+    http.get(Config.SERVER+"Diklabu/api/v1/noauth/lernfelder").subscribe(data => {
       // Read the result field from the JSON response.
-      this.lfs = data;
+      console.log("reviced ld:"+JSON.stringify(data));
+      let lfd:any=data;
+      this.lfs =  [];
+      for (var i=0;i<lfd.length;i++) {
+        this.lfs.push({label: lfd[i].id, value: lfd[i].id});
+      }
       this.compDisabled=false;
       this.lfLoaded.emit();
     },
@@ -61,8 +71,8 @@ export class LFSelectComponent{
   }
 
 
-  getSelectedLernfeld():Lernfeld {
-    return this.lfs[this.lfid];
+  getSelectedLernfeld() {
+    return this.selectedLF;
   }
 
 }

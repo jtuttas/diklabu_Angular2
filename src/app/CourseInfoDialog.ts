@@ -26,14 +26,12 @@ export class CourseInfoDialog {
   public lnname: string = "";
   public lemail: string = "";
   public mailto: string = "";
-  private idCourse:number;
 
   constructor(private courseService: CourseService) {}
 
-  showDialog(titel: string, id:number) {
+  showDialog(titel: string) {
     this.titel = titel;
     this.display = true;
-    this.idCourse=id;
   }
 
   bemChanged() {

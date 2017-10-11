@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Http, Headers, ResponseContentType, RequestOptions} from "@angular/http";
 import {AppComponent} from "../app.component";
 import {CourseBookComponent} from "../CourseBookComponent";
+import {Config} from "../data/Config";
 
 @Injectable()
 export class DokuService {
@@ -19,7 +20,7 @@ export class DokuService {
 // Ensure you set the responseType to Blob.
     options.responseType = ResponseContentType.Blob;
 
-    return this.http.post(AppComponent.SERVER+"Diklabu/DokuServlet",body,options)
+    return this.http.post(Config.SERVER+"Diklabu/DokuServlet",body,options)
       .map((res) => {
         console.log("-->"+JSON.stringify(res));
         let fileBlob = res.blob();

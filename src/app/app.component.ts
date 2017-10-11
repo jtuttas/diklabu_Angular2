@@ -7,6 +7,7 @@ import {SharedService} from "./services/SharedService";
 import {MessageService} from "primeng/components/common/messageservice";
 
 import {PupilDetailService} from "./services/PupilDetailService";
+import {AnwesenheitsService} from "./services/AnwesenheitsService";
 
 
 
@@ -24,7 +25,6 @@ export class AppComponent implements OnDestroy{
   subscription: Subscription;
   courseBook:CourseBook;
 
-  public static SERVER="http://localhost:8080/";
 
   @ViewChild('courseBookComponent') courseBookComponent;
   @ViewChild('tabcomponent') tabComponent;
@@ -45,8 +45,5 @@ export class AppComponent implements OnDestroy{
     this.subscription.unsubscribe();
   }
 
-  testClick() {
-
-  }
 
 }

@@ -7,6 +7,7 @@ import {AppComponent} from "../app.component";
 import {CourseBook} from "../data/CourseBook";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import {Config} from "../data/Config";
 
 @Injectable()
 export class VerlaufsService {
@@ -20,7 +21,7 @@ export class VerlaufsService {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
-    this.url = AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + CourseBookComponent.courseBook.course.KNAME + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate) + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.toDate);
+    this.url = Config.SERVER + "/Diklabu/api/v1/verlauf/" + CourseBookComponent.courseBook.course.KNAME + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate) + "/" + CourseBook.toSQLString(CourseBookComponent.courseBook.toDate);
     console.log("URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
@@ -31,7 +32,7 @@ export class VerlaufsService {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
-    this.url = AppComponent.SERVER + "/Diklabu/api/v1/verlauf/" + v.ID
+    this.url = Config.SERVER + "/Diklabu/api/v1/verlauf/" + v.ID
     console.log("URL="+this.url);
     return this.http.delete(this.url,{headers: headers})
       .map(this.extractData)
@@ -63,7 +64,7 @@ export class VerlaufsService {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
-    this.url = AppComponent.SERVER+ 'Diklabu/api/v1/verlauf/'
+    this.url = Config.SERVER+ 'Diklabu/api/v1/verlauf/'
     console.log("URL="+this.url);
     return this.http.post(this.url,JSON.stringify(v),{headers: headers})
       .map(this.extractData)

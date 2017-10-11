@@ -1,55 +1,54 @@
-<div class="example-container mat-elevation-z8">
-  <div class="example-header">
-    <md-form-field floatPlaceholder="never">
-      <input mdInput #filter placeholder="Verlaufsfilter">
-    </md-form-field>
-  </div>
-  <md-table #table [dataSource]="dataSource" mdSort>
+<p-dataList [value]="verlauf" >
+  <p-header>
+    <h3>Unterrichtverlauf der Klasse {{KName}} von {{from | date: 'dd.MM.yyyy'}} bis {{to | date: 'dd.MM.yyyy'}}</h3>
+    <span class="ui-inputgroup-addon"><i class="fa fa-filter"></i></span>
+    <input type="text" (keyup)="filterChanged()"  [(ngModel)]="filter" pInputText placeholder="Filter">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-1 links" >
+        <strong>Datum</strong>
+      </div>
+      <div class="ui-md-1 links" >
+        <strong>Lehrer</strong>
+      </div>
+      <div class="ui-md-1 links" >
+        <strong>Std./ LF</strong>
+      </div>
+      <div class="ui-md-3 links" >
+        <strong>Inhalt</strong>
+      </div>
+      <div class="ui-md-3 links" >
+        <strong>Bemerkungen</strong>
+      </div>
+      <div class="ui-md-3 links" >
+        <strong>Lernsituation</strong>
+      </div>
+    </div>
+  </p-header>
+  <ng-template let-verlauf pTemplate="item" let-i="index">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-1 links" >
+        {{verlauf.wochentag}}{{verlauf.DATUM |  date: 'dd.MM.yyyy'}}
+      </div>
+      <div class="ui-md-1 links" >
+        {{verlauf.ID_LEHRER}}
+        <img *ngIf="verlauf.ID_LEHRER==IDLehrer" (click)="delete(verlauf,i)" class="del" src="/assets/del.png" width="16" height="16">
+        <img *ngIf="verlauf.ID_LEHRER==IDLehrer" (click)="edit(verlauf,i)" class="edit" src="/assets/edit.png" width="16" height="16">
 
-    <ng-container mdColumnDef="Datum" >
-      <md-header-cell *mdHeaderCellDef md-sort-header  [ngClass]="'smallColumn'"> Datum </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField"  [ngClass]="'smallColumn'"> {{row.wochentag+" "+(row.DATUM | date: 'dd.MM.yyyy')}} </md-cell>
-    </ng-container>
+      </div>
+      <div class="ui-md-1 links" >
+        {{verlauf.STUNDE}} / {{verlauf.ID_LERNFELD}}
+      </div>
+      <div class="ui-md-3 links" >
+        {{verlauf.INHALT}}
+      </div>
+      <div class="ui-md-3 links" >
+        {{verlauf.BEMERKUNG}}
+      </div>
+      <div class="ui-md-3 links" >
+        {{verlauf.AUFGABE}}
+      </div>
+    </div>
+  </ng-template>
+</p-dataList>
+<deleteverlauf (deleteVerlauf)="confirmDelete($event)" #deleteDialog></deleteverlauf>
 
-    <ng-container mdColumnDef="LK" cdkColumnDef="LK">
-      <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> LK </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.ID_LEHRER}}
-        <img *ngIf="row.ID_LEHRER==IDLehrer" (click)="delete(row)" class="del" src="/assets/del.png" width="16" height="16">
-        <img *ngIf="row.ID_LEHRER==IDLehrer" (click)="edit(row)" class="edit" src="/assets/edit.png" width="16" height="16">
-      </md-cell>
-    </ng-container>
-
-    <ng-container mdColumnDef="LF"  >
-      <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> LF </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.ID_LERNFELD}}
-      </md-cell>
-    </ng-container>
-
-    <ng-container mdColumnDef="Stunde">
-      <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'smallColumn'"> Stunde </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField" [ngClass]="'smallColumn'"> {{row.STUNDE}}
-
-      </md-cell>
-    </ng-container>
-
-    <ng-container mdColumnDef="Inhalt">
-      <md-header-cell *mdHeaderCellDef md-sort-header> Inhalt </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField"> {{row.INHALT}} </md-cell>
-    </ng-container>
-
-    <ng-container mdColumnDef="Bemerkungen">
-      <md-header-cell *mdHeaderCellDef md-sort-header> Bemerkungen </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField"> {{row.BEMERKUNG}} </md-cell>
-    </ng-container>
-
-    <ng-container mdColumnDef="Lernsituation">
-      <md-header-cell *mdHeaderCellDef md-sort-header> Lernsituation </md-header-cell>
-      <md-cell *mdCellDef="let row" class="smallField"> {{row.AUFGABE}}
-
-      </md-cell>
-    </ng-container>
-
-    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-  </md-table>
-</div>

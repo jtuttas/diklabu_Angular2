@@ -1,9 +1,12 @@
-.full {
-  width: 80%;
+input {
+  padding: 4px;
 }
 
-.mybox {
-  padding-top: 30px;
+.box {
   text-align: left;
+  width: 30%;
+}
 
+.rechts {
+  text-align: right;
 }

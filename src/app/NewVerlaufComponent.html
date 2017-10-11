@@ -1,29 +1,36 @@
-<div class="row">
-  <div class="col-md-2 col-md-offset-1">
-    <datepickerComponent #dateComponent class="mybox"></datepickerComponent>
-    <div class="mybox">
-      <lfselect #lfSelectComponent (lfLoaded)="lfLoaded()"> </lfselect>
+<div class="ui-g ui-fluid">
+  <div class="ui-md-9 ui-md-offset-1">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-2">
+        <datepickerComponent #dateComponent></datepickerComponent>
+      </div>
+      <div class="ui-md-3 box ui-md-offset-1">
+        <lfselect #lfSelectComponent (lfLoaded)="lfLoaded()"></lfselect>
+      </div>
+      <div class="ui-md-2 box">
+        <strong>Stunde:</strong><br/>
+        <p-dropdown (onChange)="stundeChanged()" [options]="stunden" [(ngModel)]="selectedStunde" placeholder="Stunde"></p-dropdown>
+      </div>
+      <div class="ui-md-1 rechts" >
+        <br/>
+        <button pButton (click)="addClick()" icon="fa-plus" label="Add" class="ui-button-warning"></button>
+      </div>
     </div>
-    <div class="mybox">
-    <md-select placeholder="Stunde" [(ngModel)]="stundeindex" [disabled]="compDisabled" >
-      <md-option *ngFor="let c of stunden; let j = index" [value]="j">
-        {{c}}
-      </md-option>
-    </md-select>
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon"><i class="fa fa-edit"></i></span>
+      <input pInputText placeholder="Lernsituation" [(ngModel)]="lernsituation" [disabled]="compDisabled">
     </div>
-  </div>
-  <div class="col-md-7">
-    <md-input-container class="example-full-width full">
-      <input  mdInput placeholder="Lernsituation" [(ngModel)]="lernsituation" [disabled]="compDisabled">
-    </md-input-container>
-    <md-input-container class="example-full-width full">
-      <input mdInput placeholder="Inhalt" [(ngModel)]="inhalt" [disabled]="compDisabled">
-    </md-input-container>
-    <md-input-container class="example-full-width full">
-      <input mdInput placeholder="Bemerkungen" [(ngModel)]="bemerkungen" [disabled]="compDisabled">
-    </md-input-container>
-  </div>
-  <div class="col-md-1">
-    <button md-fab (click)="addClick()">Add</button>
+    <br/>
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon"><i class="fa fa-edit"></i></span>
+      <input pInputText placeholder="Inhalt" [(ngModel)]="inhalt" [disabled]="compDisabled">
+    </div>
+    <br/>
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon"><i class="fa fa-edit"></i></span>
+      <input pInputText placeholder="Bemerkungen" [(ngModel)]="bemerkungen" [disabled]="compDisabled">
+    </div>
+    <br/>
   </div>
 </div>
+

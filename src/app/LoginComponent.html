@@ -1,12 +1,25 @@
-<h1>Login</h1>
+<h1 >DiKlaBu</h1>
+<h3>Digitales Klassenbuch</h3>
+<strong>realisiert mit..</strong><br/><br/>
+<img src="../assets/angular2typescript.png">
+<img src="../assets/primeng-2.png">
+<br/>
 <hr>
 <br/>
-<md-form-field class="example-full-width">
-  <input mdInput placeholder="Benutzername" [(ngModel)]="username">
-</md-form-field>
-<br/>
-<md-input-container >
-  <input type="password" mdInput placeholder="Kennwort"  [(ngModel)]="password">
-</md-input-container >
-<br/>
-<button (click)="performLogin()" md-raised-button color="primary">Login</button>
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12 ui-md-2 ui-md-offset-5">
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+      <input [(ngModel)]="username" type="text" pInputText placeholder="Username">
+    </div>
+    <br/>
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
+      <input [(ngModel)]="password" type="password"  pInputText placeholder="Kennwort">
+    </div>
+    <br/>
+    <br/>
+    <button pButton type="button" (click)="performLogin()" label="Login"></button>
+  </div>
+</div>
+

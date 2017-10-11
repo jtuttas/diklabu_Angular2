@@ -8,12 +8,14 @@ import {CourseBookComponent} from "../CourseBookComponent";
 import {CourseBook} from "../data/CourseBook";
 import {Anwesenheit} from "../data/Anwesenheit";
 import {Anwesenheitseintrag} from "../data/Anwesenheitseintrag";
+import {Config} from "../data/Config";
 
 
 
 @Injectable()
 export class AnwesenheitsService {
 
+  public static anwesenheit;
   private url;
   constructor (private http: Http) {
   }
@@ -22,10 +24,11 @@ export class AnwesenheitsService {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/anwesenheit/"+CourseBookComponent.courseBook.course.KNAME+"/"+CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate)+"/"+CourseBook.toSQLString(CourseBookComponent.courseBook.toDate);  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/anwesenheit/"+CourseBookComponent.courseBook.course.KNAME+"/"+CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate)+"/"+CourseBook.toSQLString(CourseBookComponent.courseBook.toDate);  // URL to web API
     console.log("URL="+this.url);
+
     return this.http.get(this.url,{headers: headers})
-      .map(this.extractData)
+      .map(data => {AnwesenheitsService.anwesenheit=data.json();return data.json()})
       .catch(this.handleError);
   }
 
@@ -50,10 +53,11 @@ export class AnwesenheitsService {
   }
 
   setAnwesenheit(anwesenheit: Anwesenheitseintrag) {
+    console.log("set Anwesneheit: "+JSON.stringify(anwesenheit));
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
-    this.url = AppComponent.SERVER+"Diklabu/api/v1/anwesenheit/";  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/anwesenheit/";  // URL to web API
     console.log("URL="+this.url);
     return this.http.post(this.url,anwesenheit,{headers: headers})
       .map(this.extractData)
@@ -64,7 +68,7 @@ export class AnwesenheitsService {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
-    this.url = AppComponent.SERVER + "Diklabu/api/v1/anwesenheit/" + anwesenheit.ID_SCHUELER + "/" + anwesenheit.DATUM.substring(0,anwesenheit.DATUM.indexOf("T"));  // URL to web API
+    this.url = Config.SERVER + "Diklabu/api/v1/anwesenheit/" + anwesenheit.ID_SCHUELER + "/" + anwesenheit.DATUM.substring(0,anwesenheit.DATUM.indexOf("T"));  // URL to web API
     console.log("DELETE URL=" + this.url);
     return this.http.delete(this.url,{headers: headers}).subscribe((res) => {
     });

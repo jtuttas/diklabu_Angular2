@@ -5,7 +5,7 @@ import {Component} from "@angular/core";
   template:
   '<coursebook #courseBookComponent></coursebook>\n' +
   '  <hr/>\n' +
-  '  <tab #tabcomponent ></tab>',
+  '  <router-outlet name=\"sub\"></router-outlet>',
 })
 
 export class diklabuComponent {

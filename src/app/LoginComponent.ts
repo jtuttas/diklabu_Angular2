@@ -12,7 +12,7 @@ import {Config} from "./data/Config";
   templateUrl: 'LoginComponent.html',
 })
 export class LoginComponent {
-  username: string="tuttas";
+  username: string="TU";
   password: string="mmbbs";
 
   constructor(private loginService:LoginService,private messageService: MessageService, private router:Router) {
@@ -37,7 +37,8 @@ export class LoginComponent {
           CourseBookComponent.courseBook.password=this.password;
           CourseBookComponent.courseBook.email=data.email;
           let link = [ '/diklabu'];
-          this.router.navigate(link);
+          //this.router.navigate(link);
+          this.router.navigate(['/diklabu', { outlets: { sub: 'verlauf' } }]);
         },
         err => {console.log("got Error:"+JSON.stringify(err));
           var data = JSON.parse(err);

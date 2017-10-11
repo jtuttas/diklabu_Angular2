@@ -3,10 +3,7 @@ import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import {
-  MdDatepickerModule, MdNativeDateModule, MdButtonModule,
-  MdCheckboxModule, MdDialogModule, MdSelectModule, MdTabsModule, MdTableModule, MdSort, MdSortModule, MdInputModule
-} from '@angular/material';
+
 import {DatepickerComponent} from './DatepickerComponent';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CourseSelectComponent} from "./CourseSelectComponent";
@@ -17,15 +14,18 @@ import {NewVerlaufComponent} from "./NewVerlaufComponent";
 import {HttpModule} from "@angular/http";
 import {ListVerlaufComponent} from "./ListVerlaufComponent";
 import 'hammerjs';
-import {ConfirmDialog} from "./VerlaufDeleteDialog";
-import {DialogsService} from "./DialogService";
-import {TabComponent} from "./TabComponent";
+
+
+
 import {CourseBookComponent} from "./CourseBookComponent";
 import {SharedService} from "./services/SharedService";
 import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
 import {PupilService} from "./services/PupilService";
 import {
-  ButtonModule, DataTableModule, DialogModule, FileUploadModule, GrowlModule, InputTextareaModule, InputTextModule,
+  ButtonModule, CalendarModule, DataListModule, DataTableModule, DialogModule, FileUploadModule, GrowlModule,
+  InputTextareaModule,
+  InputTextModule,
+  MenuModule, OrderListModule, PasswordModule,
   SharedModule, SplitButtonModule, TooltipModule
 } from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
@@ -34,7 +34,7 @@ import {LoginService} from "./services/LoginService";
 import {routing} from "./Routing";
 import {diklabuComponent} from "./diklabuComponent";
 import {AuthenticationGuard} from "./authentication.guard";
-import {logoutComponent} from "./logoutComponent";
+
 import {VerlaufsService} from "./services/VerlaufsService";
 import {MailService} from "./services/MailService";
 import {MailDialog} from "./MailDialog";
@@ -46,31 +46,36 @@ import {DokuService} from "./services/DokuService";
 import {CourseService} from "./services/CourseService";
 import {PlanDialog} from "./PlanDialog";
 import {CourseInfoDialog} from "./CourseInfoDialog";
+import {MenuComponent} from "./MenuComponent";
+import {VerlaufComponent} from "./VerlaufComponent";
+import {DropdownModule} from "primeng/components/dropdown/dropdown";
+import {VerlaufDeleteDialog} from "./VerlaufDeleteDialog";
 
 
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
-    , ListVerlaufComponent, ConfirmDialog, TabComponent, CourseBookComponent, AnwesenheitsComponent, LoginComponent,
-    diklabuComponent, logoutComponent, MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,
-    CourseInfoDialog
+    , ListVerlaufComponent,   CourseBookComponent, AnwesenheitsComponent, LoginComponent,
+    diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
+    CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
-    MdDatepickerModule,  MdNativeDateModule, BrowserAnimationsModule
-    ,HttpClientModule,HttpModule,MdButtonModule, MdCheckboxModule, MdDialogModule, MdButtonModule, DataTableModule, SharedModule,
-    GrowlModule,routing, MdSelectModule, MdTableModule, MdTabsModule, MdSortModule, MdInputModule, DialogModule, ButtonModule, InputTextModule,
-    InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule,
+    BrowserAnimationsModule
+    ,HttpClientModule,HttpModule, DataTableModule, SharedModule,
+    GrowlModule,routing, DialogModule, ButtonModule, InputTextModule,
+    InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule,MenuModule,PasswordModule, CalendarModule, DropdownModule,
+    DataListModule, OrderListModule
   ],
   exports: [
-    ConfirmDialog
+
   ],
   providers: [
-    SharedService,DialogsService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService, MdSort,
+    SharedService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService,
     MailService,  PupilDetailService, DokuService, CourseService
   ],
   entryComponents: [
-    ConfirmDialog,
+
   ],
   bootstrap: [AppComponent]
 })
