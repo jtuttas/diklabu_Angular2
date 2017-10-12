@@ -27,4 +27,5 @@ export class PupilDetails {
   klassen:Course[] = new Array();
   name: string = "";
   vorname: string = "";
+  info: string = "";
 }

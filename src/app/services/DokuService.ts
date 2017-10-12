@@ -8,6 +8,15 @@ import {Config} from "../data/Config";
 export class DokuService {
 
   private url;
+  public static displayDoku:boolean=false;
+
+  setDisplayDoku(b:boolean) {
+    DokuService.displayDoku=b;
+  }
+
+  isVisible():boolean {
+    return DokuService.displayDoku;
+  }
 
   constructor(private http: Http) {
   }

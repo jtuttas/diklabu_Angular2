@@ -1,0 +1,25 @@
+<p-dataGrid [value]="pupils" >
+  <p-header>
+    <h3>Anwesenheit am {{today| date: 'dd.MM.yyyy'}}</h3>
+  </p-header>
+  <ng-template let-pupil pTemplate="item">
+    <div style="padding:3px" class="ui-g-12 ui-md-3">
+      <p-panel [header]="pupil.VNAME+' '+pupil.NNAME" [style]="{'text-align':'center'}">
+        <img [style.border-color]="getImageBorder(pupil)" [src]="pupil.imageSrc" height="100" style="cursor:pointer" (click)="changeAnwesenheit(pupil)">
+        <hr class="ui-widget-content" style="border-top:0">
+        <div class="car-detail">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon" ><i class="fa fa-user"></i></span>
+            <input (focusout)="vermerkFokusChanged(pupil)" (keydown)="vermekChanged($event,pupil)" [(ngModel)]="pupil.vermerk" type="text" pInputText placeholder="Vermerk">
+          </div>
+            <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="fa fa-comment"></i></span>
+            <input (focusout)="bemerkungFokusChanged(pupil)" (keydown)="bemerkungChanged($event,pupil)"  [(ngModel)]="pupil.vermerkBemerkung" type="text" pInputText placeholder="Bemerkung">
+          </div>
+        </div>
+        <i class="fa fa-search" (click)="selectPupil(pupil)" style="cursor:pointer"></i>
+      </p-panel>
+    </div>
+  </ng-template>
+</p-dataGrid>
+<pupildetails #infoDialog ></pupildetails>

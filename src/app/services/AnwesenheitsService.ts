@@ -32,6 +32,19 @@ export class AnwesenheitsService {
       .catch(this.handleError);
   }
 
+  getTodaysAnwesenheit(): Observable<Anwesenheit[]> {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/anwesenheit/"+CourseBookComponent.courseBook.course.KNAME;  // URL to web API
+    console.log("URL="+this.url);
+
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+
   private extractData(res: Response) {
     console.log("Receive Anwesenheit: "+JSON.stringify(res.json()));
     let body = res.json();

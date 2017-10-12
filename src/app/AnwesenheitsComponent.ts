@@ -12,6 +12,7 @@ import {MessageService} from "primeng/components/common/messageservice";
 import {Message} from "primeng/primeng";
 import {CourseSelectComponent} from "./CourseSelectComponent";
 import {MailObject} from "./data/MailObject";
+import {DokuService} from "./services/DokuService";
 
 @Component({
   selector: 'anwesenheit',
@@ -35,16 +36,21 @@ export class AnwesenheitsComponent implements OnInit {
   von: Date;
   bis: Date;
 
-  constructor(private service:SharedService,private anwesenheitsService: AnwesenheitsService,private messageService: MessageService) {
-    this.subscription = this.service.getCoursebook().subscribe(message => {
-      console.log("Anwesenheits Component constructor !"+message.constructor.name);
-      this.update();
-    });
+  constructor(private service:SharedService,private anwesenheitsService: AnwesenheitsService,private messageService: MessageService,private dokuService:DokuService) {
   }
 
   ngOnInit() {
     console.log("INIT Anwesenheitskomponente");
+    this.subscription = this.service.getCoursebook().subscribe(message => {
+      console.log("Anwesenheits Component constructor !"+message.constructor.name);
+      this.update();
+    });
+    this.dokuService.setDisplayDoku(true);
     this.update();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -113,9 +119,14 @@ export class AnwesenheitsComponent implements OnInit {
         let eintrag: Anwesenheitseintrag = a[i].eintraege[k];
           //console.log("Vergleiche "+this.cols[s].DATUM+" mit "+eintrag.DATUM);
         this.data[j-1]['id'+CourseBook.toSQLString(new Date(eintrag.DATUM))]= eintrag.VERMERK;
+        this.data[j-1]['idkuk'+CourseBook.toSQLString(new Date(eintrag.DATUM))]= eintrag.ID_LEHRER;
+        this.data[j-1]['idb'+CourseBook.toSQLString(new Date(eintrag.DATUM))]= eintrag.BEMERKUNG;
 
       }
     }
+
+    console.log ("Data is:"+JSON.stringify(this.data));
+    console.log ("cols is:"+JSON.stringify(this.cols));
   }
 
   mailClick(p) {
@@ -132,6 +143,7 @@ export class AnwesenheitsComponent implements OnInit {
 
   edit(event) {
     console.log("edit Complete: row="+event.index+" Column="+event.column.field+" Inhalt:"+JSON.stringify(event.data));
+    this.data[event.index]['idkuk'+event.column.field.substring(2)]= CourseBookComponent.courseBook.idLehrer;
     let anwesenheit:Anwesenheitseintrag = new Anwesenheitseintrag();
     anwesenheit.ID_LEHRER=CourseBookComponent.courseBook.idLehrer;
     anwesenheit.ID_KLASSE=CourseBookComponent.courseBook.course.id;

@@ -38,4 +38,16 @@ export class PupilDetailDialog {
         this.messageService.add({severity: 'error', summary: 'Fehler', detail: err});
       });
   }
+
+  updateBem() {
+    this.display=false;
+    this.pupilDetailService.setInfo(this.pupilDetails.id,this.pupilDetails.info).subscribe(
+      data => {
+        console.log ("Recieved:"+JSON.stringify(data));
+      },
+      err => {
+        console.log ("ERR Recieved:"+JSON.stringify(err));
+      }
+    );
+  }
 }

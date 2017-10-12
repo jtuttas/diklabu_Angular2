@@ -53,10 +53,18 @@ export class NewVerlaufComponent {
     this.stunden.push({label: '15. ', value: '15'});
     this.selectedStundeIndex=0;
     this.selectedStunde=this.stunden[this.selectedStundeIndex].value
+
+  }
+
+  ngOnInit() {
     this.subscription = this.service.getCoursebook().subscribe(message => {
       console.log("New Verlauf Component Received !"+message.constructor.name);
       delete this.verlauf.ID;
     });
+  }
+
+  ngOnDelete() {
+    this.subscription.unsubscribe();
   }
 
   stundeChanged() {

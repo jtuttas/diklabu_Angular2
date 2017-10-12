@@ -4,5 +4,6 @@ export class Anwesenheitseintrag {
   ID_LEHRER: string;
   ID_SCHUELER: number;
   VERMERK: string;
+  BEMERKUNG:string;
   parseError: boolean;
 }

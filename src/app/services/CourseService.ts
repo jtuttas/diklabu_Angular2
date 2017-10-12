@@ -6,6 +6,7 @@ import {AppComponent} from "../app.component";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {Config} from "../data/Config";
+import {DokuComponent} from "../DokuComponent";
 
 @Injectable()
 export class CourseService {
@@ -47,6 +48,18 @@ export class CourseService {
 
     this.url = Config.SERVER+"Diklabu/api/v1/klasse/details/"+idKlasse;  // URL to web API
     console.log("get CourseInfo  URL="+this.url);
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getCoursePictures(kname:string,height:number) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+
+    this.url = Config.SERVER+"Diklabu/api/v1/klasse/"+kname+"/bilder64/"+height;  // URL to web API
+    console.log("get CoursePictures  URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);

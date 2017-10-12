@@ -1,5 +1,6 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {Verlauf} from "./data/Verlauf";
+import {DokuService} from "./services/DokuService";
 
 
 /**
@@ -16,10 +17,13 @@ export class VerlaufComponent {
   @ViewChild('newVerlaufComponent') verlaufComponent;
   @ViewChild('listVerlaufComponent') listVerlaufComponent;
 
-  constructor() {
+  constructor(private dokuService:DokuService) {
     console.log ("construktor verlaufkomponente");
   }
 
+  ngOnInit() {
+    this.dokuService.setDisplayDoku(true);
+  }
   newVerlauf(v:Verlauf) {
     //console.log("Neuer Verlauf eintragen "+v.INHALT);
     this.listVerlaufComponent.addVerlauf(v);

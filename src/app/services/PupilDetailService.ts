@@ -53,4 +53,15 @@ export class PupilDetailService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  setInfo(id, bem) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json; charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/schueler/"+id;  // URL to web API
+    var body={id: id,info: bem};
+    return this.http.post(this.url,JSON.stringify(body),{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 }

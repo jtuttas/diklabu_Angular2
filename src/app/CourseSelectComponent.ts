@@ -42,7 +42,11 @@ export class CourseSelectComponent {
         this.courses = [];
         let co: any = data;
         for (var i = 0; i < co.length; i++) {
-          this.courses.push({label: co[i].KNAME, value: co[i]});
+          var label=co[i].KNAME;
+          if (co[i].ID_LEHRER) {
+            label+="("+co[i].ID_LEHRER+")";
+          }
+          this.courses.push({label: label, value: co[i]});
         }
         this.selectedCourse=co[0];
         this.compDisabled = false;

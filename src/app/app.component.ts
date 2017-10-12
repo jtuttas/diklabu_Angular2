@@ -31,18 +31,12 @@ export class AppComponent implements OnDestroy{
 
 
   constructor(private service: SharedService, private pupilDetailService:PupilDetailService, private messageService: MessageService) {
-    this.subscription = this.service.getCoursebook().subscribe(message => {
-      this.courseBook=message;
-      console.log("App Component Received !"+message.constructor.name);
-      this.courseBook.toString();
-    });
+
   }
 
 
   ngOnDestroy() {
-    // unsubscribe to ensure no memory leaks
-    console.log("ngOnDestroy()");
-    this.subscription.unsubscribe();
+
   }
 
 

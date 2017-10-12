@@ -22,11 +22,12 @@ import {SharedService} from "./services/SharedService";
 import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
 import {PupilService} from "./services/PupilService";
 import {
-  ButtonModule, CalendarModule, DataListModule, DataTableModule, DialogModule, FileUploadModule, GrowlModule,
+  ButtonModule, CalendarModule, DataGridModule, DataListModule, DataTableModule, DialogModule, FileUploadModule,
+  GrowlModule,
   InputTextareaModule,
   InputTextModule,
-  MenuModule, OrderListModule, PasswordModule,
-  SharedModule, SplitButtonModule, TooltipModule
+  MenuModule, OrderListModule, PanelModule, PasswordModule,
+  SharedModule, SplitButtonModule, TieredMenuModule, TooltipModule
 } from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
 import {LoginComponent} from "./LoginComponent";
@@ -50,6 +51,7 @@ import {MenuComponent} from "./MenuComponent";
 import {VerlaufComponent} from "./VerlaufComponent";
 import {DropdownModule} from "primeng/components/dropdown/dropdown";
 import {VerlaufDeleteDialog} from "./VerlaufDeleteDialog";
+import {TodayAnwesenheitsComponente} from "./TodayAnwesenheitsComponente";
 
 
 @NgModule({
@@ -57,7 +59,7 @@ import {VerlaufDeleteDialog} from "./VerlaufDeleteDialog";
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
     , ListVerlaufComponent,   CourseBookComponent, AnwesenheitsComponent, LoginComponent,
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
-    CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog
+    CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
@@ -65,7 +67,7 @@ import {VerlaufDeleteDialog} from "./VerlaufDeleteDialog";
     ,HttpClientModule,HttpModule, DataTableModule, SharedModule,
     GrowlModule,routing, DialogModule, ButtonModule, InputTextModule,
     InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule,MenuModule,PasswordModule, CalendarModule, DropdownModule,
-    DataListModule, OrderListModule
+    DataListModule, OrderListModule, TieredMenuModule, DataGridModule, PanelModule
   ],
   exports: [
 

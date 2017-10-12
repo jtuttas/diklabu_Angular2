@@ -1,7 +1,7 @@
 <div class="ui-g ui-fluid">
-  <div class="ui-g-12 ui-md-2 special">
+  <div class="ui-g-12 ui-md-3 special">
     <strong>SuS:{{anzahl}}</strong><br/>
-    <p-dropdown [filter]="true" filterBy="label,value.name" [autoWidth]="false" (onChange)="updated()" [options]="courses" [(ngModel)]="selectedCourse" placeholder="Klassen" [disabled]="compDisabled"></p-dropdown>
+    <p-dropdown  [filter]="true" filterBy="label,value.name" [autoWidth]="false" (onChange)="updated()" [options]="courses" [(ngModel)]="selectedCourse" placeholder="Klassen" [disabled]="compDisabled"></p-dropdown>
   </div>
   <div class="ui-md-6 special">
     <br/>

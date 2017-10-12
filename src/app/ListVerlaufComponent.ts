@@ -45,16 +45,20 @@ export class ListVerlaufComponent {
 
 
   constructor(private verlaufsService: VerlaufsService, private service: SharedService, private messageService: MessageService) {
-    this.subscription = this.service.getCoursebook().subscribe(message => {
-      console.log("List Component Received !" + message.constructor.name);
-      this.getVerlauf();
-    });
     this.IDLehrer = CourseBookComponent.courseBook.idLehrer;
   }
 
   ngOnInit() {
     console.log("!!!!List Verlauf Component ngInit CourseBook=" + CourseBookComponent.courseBook)
+    this.subscription = this.service.getCoursebook().subscribe(message => {
+      console.log("List Component Received !" + message.constructor.name);
+      this.getVerlauf();
+    });
     this.getVerlauf();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   ngAfterViewInit() {

@@ -2,6 +2,9 @@
    <div class="row">
      <div class="col-md-5">
       <pupilimage #pimage ></pupilimage>
+       <strong>Bemerkungen</strong>
+       <textarea pInputTextarea [(ngModel)]="pupilDetails.info"></textarea>
+       <button pButton type="button" (click)="updateBem()" icon="fa-check" label="Aktualisieren" class="ui-button-success"></button>
      </div>
      <div class="col-md-7">
        <strong>Geburtsdatum {{pupilDetails.gebDatum}}</strong>
