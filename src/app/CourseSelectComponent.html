@@ -1,10 +1,12 @@
 <div class="ui-g ui-fluid">
   <div class="ui-g-12 ui-md-3 special">
+
     <strong>SuS:{{anzahl}}</strong><br/>
     <p-dropdown  [filter]="true" filterBy="label,value.name" [autoWidth]="false" (onChange)="updated()" [options]="courses" [(ngModel)]="selectedCourse" placeholder="Klassen" [disabled]="compDisabled"></p-dropdown>
   </div>
   <div class="ui-md-6 special">
-    <br/>
+
+
     <img style="padding-left: 10px;" (click)="mailPupils()" src="../assets/groupmail.png" pTooltip="Klasse anschreiben" tooltipPosition="top">
     <img (click)="mailCompanies()" src="../assets/Boss.png" pTooltip="Betriebe anschreiben" tooltipPosition="top">
     <img (click)="stundenplan()" src="../assets/calendar.png" pTooltip="Stundenplan" tooltipPosition="top">

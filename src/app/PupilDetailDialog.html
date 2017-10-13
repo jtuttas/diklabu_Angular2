@@ -1,12 +1,12 @@
  <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="600" appendTo="body">
-   <div class="row">
-     <div class="col-md-5">
+   <div class="ui-g ui-fluid ui-g-12">
+     <div class="ui-md-5">
       <pupilimage #pimage ></pupilimage>
        <strong>Bemerkungen</strong>
        <textarea pInputTextarea [(ngModel)]="pupilDetails.info"></textarea>
        <button pButton type="button" (click)="updateBem()" icon="fa-check" label="Aktualisieren" class="ui-button-success"></button>
      </div>
-     <div class="col-md-7">
+     <div class="ui-md-7">
        <strong>Geburtsdatum {{pupilDetails.gebDatum}}</strong>
        <h3>Ausbilder</h3>
        <p> {{pupilDetails.ausbilder.NNAME}}</p>
