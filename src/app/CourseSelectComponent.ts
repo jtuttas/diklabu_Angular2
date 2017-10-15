@@ -186,4 +186,12 @@ export class CourseSelectComponent {
     );
     this.mailDialog.showDialog("Betriebe der Klasse " + CourseBookComponent.courseBook.course.KNAME + " anschreiben");
   }
+
+  static getPupil(id: number) {
+   for (var i=0;i<CourseSelectComponent.pupils.length;i++) {
+     if (this.pupils[i].id==id) {
+       return this.pupils[i];
+     }
+   }
+  }
 }

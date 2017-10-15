@@ -52,6 +52,7 @@ import {VerlaufComponent} from "./VerlaufComponent";
 import {DropdownModule} from "primeng/components/dropdown/dropdown";
 import {VerlaufDeleteDialog} from "./VerlaufDeleteDialog";
 import {TodayAnwesenheitsComponente} from "./TodayAnwesenheitsComponente";
+import {FehlzeitenComponent} from "./FehlzeitenComponent";
 
 
 @NgModule({
@@ -59,7 +60,7 @@ import {TodayAnwesenheitsComponente} from "./TodayAnwesenheitsComponente";
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
     , ListVerlaufComponent,   CourseBookComponent, AnwesenheitsComponent, LoginComponent,
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
-    CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente
+    CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente, FehlzeitenComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,

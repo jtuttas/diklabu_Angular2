@@ -16,7 +16,7 @@ import {MessageService} from "primeng/components/common/messageservice";
     '<span class="ui-float-label">'+
     '<input id="to" type="text" pInputText [(ngModel)]="mail.to"/>'+
     '<label for="to">An:</label>'+
-    '</span>'+
+    '</span><br/>'+
     '<div *ngIf="mail.cc.length>0"><br/> <span class="ui-float-label" >'+
     '<input id="cc" type="text" pInputText [(ngModel)]="mail.cc"/>'+
     '<label for="cc">CC:</label>'+

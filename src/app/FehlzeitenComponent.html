@@ -1,0 +1,63 @@
+<p-dataList [value]="anwesenheit">
+  <p-header>
+    <h3>Fehlzeiten der Klasse {{KName}} von {{from | date: 'dd.MM.yyyy'}} bis {{to | date: 'dd.MM.yyyy'}}</h3>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-2 links">
+        <strong>Name</strong>
+      </div>
+      <div class="ui-md-2 links">
+        <strong>Fehltage / entschuldigt</strong>
+      </div>
+      <div class="ui-md-3 links">
+        <strong>Tage</strong>
+      </div>
+      <div class="ui-md-1 links">
+        <strong>Verspätungen (Minuten)</strong>
+      </div>
+      <div class="ui-md-1 links">
+        <strong>Minuten entschuldigt</strong>
+      </div>
+      <div class="ui-md-3 links">
+        <strong>Eintragsfehler</strong>
+      </div>
+    </div>
+  </p-header>
+  <ng-template let-anwesenheit pTemplate="item" let-i="index">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-2 links">
+        <img (click)="infoClick(anwesenheit)" class="select" src="../assets/Info.png"/>
+        <img (click)="mailClick(anwesenheit)" class="select" src="../assets/mail.png"/>
+        <strong style="vertical-align: top;">{{getPupilName(anwesenheit.id_Schueler)}}</strong>
+      </div>
+      <div class="ui-md-1">
+        <span style="float: left;padding-top: 5px;">{{anwesenheit.summeFehltage}}  / </span><span class="fehltagEntschuldigt">{{anwesenheit.summeFehltageEntschuldigt}} </span>
+      </div>
+      <div class="ui-md-1">
+        <button pButton type="button" (click)="sendReport(anwesenheit)" iconPos="left" icon="fa-mail-reply" class="ui-button-warning" label="Bericht"></button>
+      </div>
+      <div class="ui-md-3 links">
+        <div *ngFor="let ae of anwesenheit.fehltageEntschuldigt">
+          <span class="fehltagEntschuldigt" pTooltip='{{ae.ID_LEHRER}}' tooltipPosition="top">{{ae.DATUM | date: 'dd.MM.yyyy'}}</span>
+        </div>
+        <div *ngFor="let ae of anwesenheit.fehltageUnentschuldigt">
+          <span class="fehltagUnentschuldigt" pTooltip='{{ae.ID_LEHRER}}' tooltipPosition="top">{{ae.DATUM | date: 'dd.MM.yyyy'}}</span>
+        </div>
+      </div>
+      <div class="ui-md-1 links" style="padding-top: 15px;">
+        {{anwesenheit.anzahlVerspaetungen}} ({{anwesenheit.summeMinutenVerspaetungen}} min.)
+      </div>
+      <div class="ui-md-1 links" style="padding-top: 15px;">
+        {{anwesenheit.summeMinutenVerspaetungenEntschuldigt}} min.
+      </div>
+      <div class="ui-md-3 links">
+        <div *ngFor="let ae of anwesenheit.parseErrors">
+          <span class="parseErrors" pTooltip='{{ae.ID_LEHRER}} ({{ae.VERMERK}})' tooltipPosition="top">{{ae.DATUM | date: 'dd.MM.yyyy'}}</span>
+        </div>
+      </div>
+
+    </div>
+  </ng-template>
+</p-dataList>
+<sendmail #mailDialog [mail]="mailObject"></sendmail>
+<pupildetails #infoDialog></pupildetails>
+

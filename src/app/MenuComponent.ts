@@ -30,6 +30,11 @@ export class MenuComponent {
           {label: 'heute', icon: 'fa-user-plus',command: event2 => this.showTodayAnwesenheit(event2)}
         ]
       },
+      {label: 'Fehlzeiten', icon: 'fa-hotel',
+        items: [
+          {label: 'Übersicht', icon: 'fa-table', command: event2 => this.showFehlzeiten(event2)}
+        ]
+      },
       {label: 'Logout', icon: 'fa-times', command: event2 => this.logout(event2)}
     ];
   }
@@ -43,6 +48,11 @@ export class MenuComponent {
     CourseBookComponent.courseBook.view="Anwesenheit";
     console.log("show Anwesenheit");
     this.router.navigate(['/diklabu', { outlets: { sub: 'anwesenheit' } }]);
+  }
+  showFehlzeiten(e) {
+    CourseBookComponent.courseBook.view="Fehlzeiten";
+    console.log("show Fehlzeiten");
+    this.router.navigate(['/diklabu', { outlets: { sub: 'fehlzeiten' } }]);
   }
   showTodayAnwesenheit(e) {
     console.log("show Today Anwesenheit");

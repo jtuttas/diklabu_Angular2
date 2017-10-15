@@ -8,6 +8,7 @@ import {VerlaufComponent} from "./VerlaufComponent";
 import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
 import {NewVerlaufComponent} from "./NewVerlaufComponent";
 import {TodayAnwesenheitsComponente} from "./TodayAnwesenheitsComponente";
+import {FehlzeitenComponent} from "./FehlzeitenComponent";
 
 const appRoutes: Routes = [
   {
@@ -22,7 +23,8 @@ const appRoutes: Routes = [
     children: [
       {path: 'verlauf', component: VerlaufComponent, outlet: 'sub'},
       {path: 'anwesenheit', component: AnwesenheitsComponent, outlet: 'sub'},
-      {path: 'todayanwesenheit', component: TodayAnwesenheitsComponente, outlet: 'sub'}
+      {path: 'todayanwesenheit', component: TodayAnwesenheitsComponente, outlet: 'sub'},
+      {path: 'fehlzeiten', component: FehlzeitenComponent, outlet: 'sub'}
     ]
   },
   {

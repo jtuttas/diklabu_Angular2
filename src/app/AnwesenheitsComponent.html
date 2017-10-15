@@ -4,13 +4,13 @@
     <h3>Anwesenheit der Klasse {{KName}} von {{von | date: 'dd.MM.yyyy'}} bis {{bis | date: 'dd.MM.yyyy'}}</h3>
   </p-header>
   <ng-container *ngFor="let col of cols">
-    <p-column  *ngIf="col.field.startsWith('id') && (col.header.startsWith('Sa.') || col.header.startsWith('So.'))" [editable]="true" [field]="col.field" [header]="col.header" class="wochentag" [style]="{'width':'120px','height':'44px','background-color':'#cccccc'}" >
+    <p-column  *ngIf="col.field.startsWith('id') && (col.header.startsWith('Sa.') || col.header.startsWith('So.'))" [editable]="true" [field]="col.field" [header]="col.header" class="wochentag" [style]="{'width':'120px','height':'30px','background-color':'#cccccc'}" >
       <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
         <a *ngIf="data[i]['id'+col.field.substr(2)]" class="select" [pTooltip]="data[i]['idkuk'+col.field.substr(2)]" tooltipPosition="top" >{{data[i]['id'+col.field.substr(2)]}}</a>
         <img *ngIf="data[i]['idb'+col.field.substr(2)]" src="../assets/flag.png" class="select" [pTooltip]="data[i]['idb'+col.field.substr(2)]" tooltipPosition="top" />
       </ng-template>
     </p-column>
-    <p-column  *ngIf="col.field.startsWith('id') && (!col.header.startsWith('Sa.') && !col.header.startsWith('So.'))" [editable]="true" [field]="col.field" [header]="col.header" class="wochentag" [style]="{'width':'120px','height':'44px'}" >
+    <p-column  *ngIf="col.field.startsWith('id') && (!col.header.startsWith('Sa.') && !col.header.startsWith('So.'))" [editable]="true" [field]="col.field" [header]="col.header" class="wochentag" [style]="{'width':'120px','height':'30px'}" >
       <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
         <a *ngIf="data[i]['id'+col.field.substr(2)]" class="select" [pTooltip]="data[i]['idkuk'+col.field.substr(2)]" tooltipPosition="top" >{{data[i]['id'+col.field.substr(2)]}}</a>
         <img *ngIf="data[i]['idb'+col.field.substr(2)]" src="../assets/flag.png" class="select" [pTooltip]="data[i]['idb'+col.field.substr(2)]" tooltipPosition="top" />
@@ -26,8 +26,8 @@
       <ng-template let-car="rowData" pTemplate="body">
       </ng-template>
     </p-column>
-    <p-column  *ngIf="col.field == 'VNAME'" [id]="col.id" frozen="true" [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'44px','text-align':'left'}" ></p-column>
-    <p-column  *ngIf="col.field == 'NNAME'" [id]="col.id" frozen="true"  [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'44px','text-align':'left'}" ></p-column>
+    <p-column  *ngIf="col.field == 'VNAME'" [id]="col.id" frozen="true" [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'30px','text-align':'left'}" ></p-column>
+    <p-column  *ngIf="col.field == 'NNAME'" [id]="col.id" frozen="true"  [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'30px','text-align':'left'}" ></p-column>
   </ng-container>
 </p-dataTable>
 <sendmail #mailDialog [mail]="mailObject"></sendmail>
