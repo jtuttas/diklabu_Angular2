@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Inject, Injectable} from "@angular/core";
 import {Http,Response, Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {CourseBookComponent} from "../CourseBookComponent";
@@ -7,6 +7,7 @@ import {MailObject} from "../data/MailObject";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {Config} from "../data/Config";
+import {DOCUMENT} from "@angular/platform-browser/src/dom/dom_tokens";
 
 @Injectable()
 export class MailService {
@@ -53,4 +54,10 @@ export class MailService {
   }
 
 
+  getTemplate(s: string, url:string) {
+    url = url +"/"+s;  // URL to web API
+    return this.http.get(url)
+      .map(res => {return res.text();})
+      .catch(this.handleError);
+  }
 }

@@ -12,7 +12,7 @@ import {MessageService} from "primeng/components/common/messageservice";
 
   ],
   template:
-    ' <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="500" appendTo="body"><br/>' +
+    ' <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="dialogWidth" appendTo="body"><br/>' +
     '<span class="ui-float-label">'+
     '<input id="to" type="text" pInputText [(ngModel)]="mail.to"/>'+
     '<label for="to">An:</label>'+
@@ -20,17 +20,17 @@ import {MessageService} from "primeng/components/common/messageservice";
     '<div *ngIf="mail.cc.length>0"><br/> <span class="ui-float-label" >'+
     '<input id="cc" type="text" pInputText [(ngModel)]="mail.cc"/>'+
     '<label for="cc">CC:</label>'+
-    '</span></div>'+
+    '</span><br/></div>'+
     '<div *ngIf="mail.bcc.length>0"><br/> <span class="ui-float-label" >'+
     '<input id="bcc" type="text"  pInputText [(ngModel)]="mail.bcc"/>'+
     '<label for="bcc">BCC:</label>'+
-    '</span></div><br/>'+
-    '<span class="ui-float-label">'+
+    '</span><br/></div>'+
+    '<br/><span class="ui-float-label">'+
     '<input id="subject" type="text" pInputText [(ngModel)]="mail.subject"/>'+
     '<label for="subject">Betreff</label>'+
     '</span><br/>'+
     '<strong>Inhalt</strong><br/>'+
-    '<textarea pInputTextarea [(ngModel)]="mail.content"></textarea>'+
+    '<textarea rows="{{getRows()}}" pInputTextarea [(ngModel)]="mail.content"></textarea>'+
     '<br/>'+
     '        <p-footer>\n' +
     '            <button type="button" class="ui-button-success" pButton icon="fa-check" (click)="sendMail()" label="Absenden"></button>\n' +
@@ -43,12 +43,20 @@ export class MailDialog {
 
   public display:boolean=false;
   public titel:string="";
+  public dialogWidth=500;
 
-  constructor(private mailService:MailService,private messageService: MessageService) {}
+  constructor(public mailService:MailService,public messageService: MessageService) {}
 
   showDialog(titel:string) {
     this.titel=titel;
     this.display = true;
+  }
+
+  getRows() {
+    let r:number=this.mail.content.split("\n").length;
+    if (r>25) {r=25};
+    if (r<3) {r=3;}
+    return r;
   }
 
   sendMail() {

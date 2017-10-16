@@ -9,6 +9,10 @@ import {CourseBook} from "../data/CourseBook";
 import {Anwesenheit} from "../data/Anwesenheit";
 import {Anwesenheitseintrag} from "../data/Anwesenheitseintrag";
 import {Config} from "../data/Config";
+import {PupilDetails} from "../data/PupilDetails";
+import {PupilDetailService} from "./PupilDetailService";
+import {MessageService} from "primeng/components/common/messageservice";
+import {Subject} from "rxjs/Subject";
 
 
 
@@ -17,7 +21,7 @@ export class AnwesenheitsService {
 
   public static anwesenheit;
   private url;
-  constructor (private http: Http) {
+  constructor (private http: Http,private pupilDetailService:PupilDetailService) {
   }
 
   getAnwesenheit(): Observable<Anwesenheit[]> {
@@ -86,4 +90,50 @@ export class AnwesenheitsService {
     return this.http.delete(this.url,{headers: headers}).subscribe((res) => {
     });
   }
+
+  fillFehlzeitenbericht (template:string, a: Anwesenheit, filledOut: (content:string,recipient:string)=>void) {
+    let content = "";
+    this.pupilDetailService.getPupilDetails(a.id_Schueler).subscribe(data => {
+        content = <string>template;
+        let pd: PupilDetails = data;
+        content = content.replace("[[BETRIEB_NAME]]", pd.betrieb.NAME);
+        content = content.replace("[[BETRIEB_STRASSE]]", pd.betrieb.STRASSE);
+        content = content.replace("[[BETRIEB_PLZ]]", pd.betrieb.PLZ);
+        content = content.replace("[[BETRIEB_ORT]]", pd.betrieb.ORT);
+        content = content.replace("[[AUSBILDER_NNAME]]", pd.ausbilder.NNAME);
+        content = content.replace("[[SCHUELER_NAME]]", pd.vorname + " " + pd.name);
+        content = content.replace("[[SCHUELER_KLASSE]]", CourseBookComponent.courseBook.course.KNAME);
+
+        content = content.replace("[[START_DATUM]]", CourseBook.toReadbleString(CourseBookComponent.courseBook.fromDate));
+        content = content.replace("[[END_DATUM]]", CourseBook.toReadbleString(CourseBookComponent.courseBook.toDate));
+        content = content.replace("[[ANZAHL_FEHLTAGE]]", ""+a.summeFehltage);
+
+        let eintraege="";
+        for (var i=0;i<a.fehltageEntschuldigt.length;i++) {
+          eintraege+=CourseBook.toReadbleString(new Date(a.fehltageEntschuldigt[i].DATUM));
+          if (i!=a.fehltageEntschuldigt.length-1) {
+            eintraege+=", ";
+          }
+        }
+        content = content.replace("[[DATUM_ENTSCHULDIGT]]", eintraege);
+
+        eintraege="";
+        for (var i=0;i<a.fehltageUnentschuldigt.length;i++) {
+          eintraege+=CourseBook.toReadbleString(new Date(a.fehltageUnentschuldigt[i].DATUM))+" ";
+          if (i!=a.fehltageUnentschuldigt.length-1) {
+            eintraege+=", ";
+          }
+        }
+        content = content.replace("[[DATUM_UNENTSCHULDIGT]]", eintraege);
+
+        content = content.replace("[[LEHRER_NNAME]]", ""+CourseBookComponent.courseBook.username);
+        content = content.replace("[[LEHRER_EMAIL]]", ""+CourseBookComponent.courseBook.email);
+
+        filledOut(content,pd.ausbilder.EMAIL);
+      },
+      err => {
+        console.log("Fehler beim Laden der Details von Schüler mit ID="+a.id_Schueler);
+      });
+  }
+
 }

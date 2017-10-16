@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import {CourseBookComponent} from "../CourseBookComponent";
 import {AppComponent} from "../app.component";
 import {Config} from "../data/Config";
+import {PupilDetails} from "../data/PupilDetails";
 
 @Injectable()
 export class PupilDetailService {

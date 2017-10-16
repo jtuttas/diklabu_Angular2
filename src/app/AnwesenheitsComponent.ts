@@ -45,7 +45,7 @@ export class AnwesenheitsComponent implements OnInit {
       console.log("Anwesenheits Component constructor !"+message.constructor.name);
       this.update();
     });
-    this.dokuService.setDisplayDoku(true);
+    this.dokuService.setDisplayDoku(true,"Anwesenheit");
     this.update();
   }
 

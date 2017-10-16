@@ -9,9 +9,11 @@ export class DokuService {
 
   private url;
   public static displayDoku:boolean=false;
+  public static view:string="Verlauf";
 
-  setDisplayDoku(b:boolean) {
+  setDisplayDoku(b:boolean, view?:string) {
     DokuService.displayDoku=b;
+    DokuService.view=view;
   }
 
   isVisible():boolean {

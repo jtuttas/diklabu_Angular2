@@ -37,6 +37,7 @@ export class FehlzeitenComponent {
   @ViewChild('mailDialog') mailDialog;
   @ViewChild('infoDialog') infoDialog;
 
+
   subscription: Subscription;
   anwesenheit:Anwesenheit[];
   KName: string;
@@ -44,11 +45,12 @@ export class FehlzeitenComponent {
   to: Date;
   public mailObject:MailObject=new MailObject("","","","");
 
+
   constructor(private dokuService:DokuService, private anwesenheitsService: AnwesenheitsService, private service: SharedService, private messageService: MessageService) {
   }
 
   ngOnInit() {
-    this.dokuService.setDisplayDoku(true);
+    this.dokuService.setDisplayDoku(true,"Fehlzeiten");
     this.subscription = this.service.getCoursebook().subscribe(message => {
       console.log("List Component Received !" + message.constructor.name);
       this.getAnwesenheit();
@@ -79,6 +81,25 @@ export class FehlzeitenComponent {
 
   sendReport(a:Anwesenheit) {
     console.log("Send Bericht!");
+    let p:Pupil= CourseSelectComponent.getPupil(a.id_Schueler);
+    this.mailDialog.mailService.getTemplate("assets/template.txt",window.location.origin).subscribe(
+      data => {
+        let template = data;
+        this.anwesenheitsService.fillFehlzeitenbericht(template,a,(content,recipient) => {
+          console.log("Bericht ="+content);
+          this.mailObject = new MailObject(CourseBookComponent.courseBook.email,recipient,"","");
+          this.mailObject.content=content;
+          this.mailDialog.dialogWidth=800;
+          this.mailObject.addCC(CourseBookComponent.courseBook.email);
+          this.mailObject.subject="Fehlzeitenbericht für "+p.VNAME+" "+p.NNAME+" vom "+CourseBook.toReadbleString(CourseBookComponent.courseBook.fromDate)+" bis "+CourseBook.toReadbleString(CourseBookComponent.courseBook.toDate);
+          this.mailDialog.showDialog("Fehlzeitenbericht für "+p.VNAME+" "+p.NNAME+" vom "+CourseBook.toReadbleString(CourseBookComponent.courseBook.fromDate)+" bis "+CourseBook.toReadbleString(CourseBookComponent.courseBook.toDate));
+        });
+      },
+      err => {
+        this.messageService.add({severity:'error', summary:'Fehler', detail: "Failed to load Template!"});
+      }
+    );
+
   }
 
   getPupilName(id:number):string {

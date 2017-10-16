@@ -10,7 +10,7 @@ export class  CourseBook {
   public username:string;
   public password:string;
   public email:string;
-  public view:string="Verlauf";
+
 
   constructor(from:Date,to:Date,course:Course) {
     console.log("Constructed new Coursebook!");

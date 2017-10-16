@@ -41,16 +41,13 @@ export class MenuComponent {
 
   showVerlauf(e) {
     console.log("show Verlauf");
-    CourseBookComponent.courseBook.view="Verlauf";
     this.router.navigate(['/diklabu', { outlets: { sub: 'verlauf' } }]);
   }
   showAnwesenheit(e) {
-    CourseBookComponent.courseBook.view="Anwesenheit";
     console.log("show Anwesenheit");
     this.router.navigate(['/diklabu', { outlets: { sub: 'anwesenheit' } }]);
   }
   showFehlzeiten(e) {
-    CourseBookComponent.courseBook.view="Fehlzeiten";
     console.log("show Fehlzeiten");
     this.router.navigate(['/diklabu', { outlets: { sub: 'fehlzeiten' } }]);
   }

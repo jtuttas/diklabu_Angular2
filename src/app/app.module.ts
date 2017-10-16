@@ -55,12 +55,14 @@ import {TodayAnwesenheitsComponente} from "./TodayAnwesenheitsComponente";
 import {FehlzeitenComponent} from "./FehlzeitenComponent";
 
 
+
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
     , ListVerlaufComponent,   CourseBookComponent, AnwesenheitsComponent, LoginComponent,
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
-    CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente, FehlzeitenComponent
+    CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente,
+    FehlzeitenComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,

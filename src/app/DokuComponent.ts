@@ -67,21 +67,21 @@ export class DokuComponent {
     body += "&anwfilter1=" + this.anwfilter1;
     body += "&anwfilter2=" + this.anwfilter2;
     body += "&type=" + this.type;
-    body += "&cmd="+CourseBookComponent.courseBook.view;
+    body += "&cmd="+DokuService.view;
     console.log("body-->" + body);
     this.dokuService.getDoku(body).subscribe(res => {
       if (this.type=="pdf") {
         let blob = new Blob([res], {
           type: 'application/pdf' // must match the Accept type
         });
-        let filename = CourseBookComponent.courseBook.course.KNAME+"_"+CourseBookComponent.courseBook.view+"_"+CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate)+"_"+CourseBook.toSQLString(CourseBookComponent.courseBook.toDate)+".pdf";
+        let filename = CourseBookComponent.courseBook.course.KNAME+"_"+DokuService.view+"_"+CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate)+"_"+CourseBook.toSQLString(CourseBookComponent.courseBook.toDate)+".pdf";
         FileSaver.saveAs(blob, filename);
       }
       else {
         let blob = new Blob([res], {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // must match the Accept type
         });
-        let filename = CourseBookComponent.courseBook.course.KNAME+"_"+CourseBookComponent.courseBook.view+"_"+CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate)+"_"+CourseBook.toSQLString(CourseBookComponent.courseBook.toDate)+".xlsx";
+        let filename = CourseBookComponent.courseBook.course.KNAME+"_"+DokuService.view+"_"+CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate)+"_"+CourseBook.toSQLString(CourseBookComponent.courseBook.toDate)+".xlsx";
         FileSaver.saveAs(blob, filename);
       }
 

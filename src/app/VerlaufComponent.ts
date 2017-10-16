@@ -22,7 +22,7 @@ export class VerlaufComponent {
   }
 
   ngOnInit() {
-    this.dokuService.setDisplayDoku(true);
+    this.dokuService.setDisplayDoku(true,"Verlauf");
   }
   newVerlauf(v:Verlauf) {
     //console.log("Neuer Verlauf eintragen "+v.INHALT);
