@@ -1,80 +1,62 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers, Response} from "@angular/http";
+import {Http,Headers,Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {CourseBookComponent} from "../CourseBookComponent";
-import {AppComponent} from "../app.component";
+import {Config} from "../data/Config";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import {Config} from "../data/Config";
-import {DokuComponent} from "../DokuComponent";
+import {Grade} from "../data/Grades";
 
 @Injectable()
-export class CourseService {
+export class NotenService {
 
-  private url;
+  private url:string;
 
   constructor(private http: Http) {
   }
 
-
-  getStundenplan(kname:string) {
+  getCurrentYear() {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = Config.SERVER+"Diklabu/api/v1/noauth/plan/stundenplan/"+kname;  // URL to web API
-    console.log("get stundenplan URL="+this.url);
-    return this.http.get(this.url,{headers: headers})
-      .map(this.extractPlainData)
-      .catch(this.handleError);
-  }
-
-  getVertretungsplan(kname:string) {
-    var headers = new Headers();
-    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
-    headers.append("Content-Type","application/json;  charset=UTF-8");
-
-    this.url = Config.SERVER+"Diklabu/api/v1/noauth/plan/vertertungsplan/"+kname;  // URL to web API
-    console.log("get Vertretungsplan  URL="+this.url);
-    return this.http.get(this.url,{headers: headers})
-      .map(this.extractPlainData)
-      .catch(this.handleError);
-  }
-
-  getCourseInfo(idKlasse:number) {
-    var headers = new Headers();
-    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
-    headers.append("Content-Type","application/json;  charset=UTF-8");
-
-    this.url = Config.SERVER+"Diklabu/api/v1/klasse/details/"+idKlasse;  // URL to web API
-    console.log("get CourseInfo  URL="+this.url);
+    this.url = Config.SERVER+"Diklabu/api/v1/schuljahr";  // URL to web API
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-
-  getCoursePictures(kname:string,height:number) {
+  getGrades(kname:string,idSchuljahr:number) {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = Config.SERVER+"Diklabu/api/v1/klasse/"+kname+"/bilder64/"+height;  // URL to web API
-    console.log("get CoursePictures  URL="+this.url);
+    this.url = Config.SERVER+"Diklabu/api/v1/noten/"+kname+"/"+idSchuljahr;  // URL to web API
+    console.log("get Grades  URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  setCourseInfo(idKlasse:number,notiz:string) {
+  setGrade(grade:Grade,idCourse:number) {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = Config.SERVER+"Diklabu/api/v1/klasse/details/"+idKlasse;  // URL to web API
-    console.log("set CourseInfo  URL="+this.url);
-    var body={"NOTIZ":notiz};
-    return this.http.post(this.url,JSON.stringify(body),{headers: headers})
+    this.url = Config.SERVER+"Diklabu/api/v1/noten/"+idCourse;  // URL to web API
+    console.log("get Grades  URL="+this.url);
+    return this.http.post(this.url,JSON.stringify(grade),{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  deleteGrade(grade:Grade) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/noten/"+grade.ID_LERNFELD+"/"+grade.ID_SCHUELER;  // URL to web API
+    console.log("get Grades  URL="+this.url);
+    return this.http.delete(this.url,{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);
   }

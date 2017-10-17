@@ -10,6 +10,7 @@ export class  CourseBook {
   public username:string;
   public password:string;
   public email:string;
+  public idSchuljahr: number;
 
 
   constructor(from:Date,to:Date,course:Course) {

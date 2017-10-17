@@ -71,7 +71,7 @@ export class FehlzeitenComponent {
         this.anwesenheit=<Anwesenheit[]>data;
         console.log("Fehlzeiten empfangen:"+this.anwesenheit.length);
         console.log(JSON.stringify(this.anwesenheit));
-        console.log("ID 0 ="+this.anwesenheit[0].id_Schueler);
+
       },
       err => {
         this.messageService.add({severity:'error', summary:'Fehler', detail:err});

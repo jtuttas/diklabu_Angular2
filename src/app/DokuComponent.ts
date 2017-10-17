@@ -60,6 +60,7 @@ export class DokuComponent {
 
     var body = "auth_token=" + CourseBookComponent.courseBook.auth_token;
     body += "&idklasse=" + CourseBookComponent.courseBook.course.id;
+    body += "&idSchuljahr=" + CourseBookComponent.courseBook.idSchuljahr;
     body += "&from=" + CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate);
     body += "&to=" + CourseBook.toSQLString(CourseBookComponent.courseBook.toDate);
     body += "&dokufilter1=" + this.dokufilter1;

@@ -53,6 +53,8 @@ import {DropdownModule} from "primeng/components/dropdown/dropdown";
 import {VerlaufDeleteDialog} from "./VerlaufDeleteDialog";
 import {TodayAnwesenheitsComponente} from "./TodayAnwesenheitsComponente";
 import {FehlzeitenComponent} from "./FehlzeitenComponent";
+import {NotenComponent} from "./NotenComponent";
+import {NotenService} from "./services/NotenService";
 
 
 
@@ -62,7 +64,7 @@ import {FehlzeitenComponent} from "./FehlzeitenComponent";
     , ListVerlaufComponent,   CourseBookComponent, AnwesenheitsComponent, LoginComponent,
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
     CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente,
-    FehlzeitenComponent
+    FehlzeitenComponent, NotenComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
@@ -77,7 +79,7 @@ import {FehlzeitenComponent} from "./FehlzeitenComponent";
   ],
   providers: [
     SharedService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService,
-    MailService,  PupilDetailService, DokuService, CourseService
+    MailService,  PupilDetailService, DokuService, CourseService, NotenService
   ],
   entryComponents: [
 

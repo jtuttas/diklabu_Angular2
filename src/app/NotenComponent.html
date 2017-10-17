@@ -1,0 +1,38 @@
+<p-dataTable [value]="data" [editable]="true" (onEditComplete)="edit($event)">
+  <p-header>
+    <h3>Noten der Klasse {{KName}}</h3>
+  </p-header>
+  <ng-container *ngFor="let col of cols">
+    <p-column *ngIf="col.header == 'info'" frozen="true" [id]="col.id" [field]="" [header]=""
+              [style]="{'width':'75px','text-align':'left'}">
+      <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
+        <img (click)="infoClick(data[i])" class="select" src="../assets/Info.png"
+             [pTooltip]='"Details "+data[i].VNAME+" "+data[i].NNAME' tooltipPosition="right"/>
+        <img (click)="mailClick(data[i])" class="select" src="../assets/mail.png"
+             [pTooltip]='"Mail an "+data[i].VNAME+" "+data[i].NNAME' tooltipPosition="right"/>
+      </ng-template>
+    </p-column>
+    <p-column *ngIf="col.field == 'VNAME'" [id]="col.id" frozen="true" [field]="col.field" [header]="col.header"
+              [style]="{'width':'150px','height':'30px','text-align':'left'}"></p-column>
+    <p-column *ngIf="col.field == 'NNAME'" [id]="col.id" frozen="true" [field]="col.field" [header]="col.header"
+              [style]="{'width':'150px','height':'30px','text-align':'left'}"></p-column>
+    <p-column *ngIf="col.field.startsWith('lf') && col.idlk==getIdTeacher()" [editable]="true" [id]="col.id" [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'30px','text-align':'left'}">
+      <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
+        <a *ngIf="data[i][col.field]"><strong style="color: green;">{{data[i][col.field]}}</strong></a>
+      </ng-template>
+    </p-column>
+    <p-column *ngIf="col.field.startsWith('lf') && col.idlk!=getIdTeacher()" [id]="col.id" [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'30px','text-align':'left'}">
+      <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
+        <a *ngIf="data[i][col.field]"><strong>{{data[i][col.field]}}</strong></a>
+      </ng-template>
+    </p-column>
+    <p-column *ngIf="col.header == 'empty'" [field]="" [header]="" [style]="{'text-align':'left'}">
+      <ng-template let-car="rowData" pTemplate="body">
+      </ng-template>
+    </p-column>
+  </ng-container>
+</p-dataTable>
+<sendmail #mailDialog [mail]="mailObject"></sendmail>
+<pupildetails #infoDialog></pupildetails>
+
+

@@ -35,6 +35,7 @@ export class MenuComponent {
           {label: 'Übersicht', icon: 'fa-table', command: event2 => this.showFehlzeiten(event2)}
         ]
       },
+      {label: 'Noten', icon: 'fa-graduation-cap', command: event2 => this.showGrades(event2)},
       {label: 'Logout', icon: 'fa-times', command: event2 => this.logout(event2)}
     ];
   }
@@ -50,6 +51,10 @@ export class MenuComponent {
   showFehlzeiten(e) {
     console.log("show Fehlzeiten");
     this.router.navigate(['/diklabu', { outlets: { sub: 'fehlzeiten' } }]);
+  }
+  showGrades(e) {
+    console.log("show Noten");
+    this.router.navigate(['/diklabu', { outlets: { sub: 'noten' } }]);
   }
   showTodayAnwesenheit(e) {
     console.log("show Today Anwesenheit");

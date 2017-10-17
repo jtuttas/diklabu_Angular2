@@ -9,6 +9,7 @@ import {AnwesenheitsComponent} from "./AnwesenheitsComponent";
 import {NewVerlaufComponent} from "./NewVerlaufComponent";
 import {TodayAnwesenheitsComponente} from "./TodayAnwesenheitsComponente";
 import {FehlzeitenComponent} from "./FehlzeitenComponent";
+import {NotenComponent} from "./NotenComponent";
 
 const appRoutes: Routes = [
   {
@@ -24,7 +25,8 @@ const appRoutes: Routes = [
       {path: 'verlauf', component: VerlaufComponent, outlet: 'sub'},
       {path: 'anwesenheit', component: AnwesenheitsComponent, outlet: 'sub'},
       {path: 'todayanwesenheit', component: TodayAnwesenheitsComponente, outlet: 'sub'},
-      {path: 'fehlzeiten', component: FehlzeitenComponent, outlet: 'sub'}
+      {path: 'fehlzeiten', component: FehlzeitenComponent, outlet: 'sub'},
+      {path: 'noten', component: NotenComponent, outlet: 'sub'}
     ]
   },
   {
