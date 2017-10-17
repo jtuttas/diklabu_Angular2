@@ -24,8 +24,14 @@ import {DokuService} from "./services/DokuService";
 export class AnwesenheitsComponent implements OnInit {
   @ViewChild('mailDialog') mailDialog;
   @ViewChild('infoDialog') infoDialog;
+  @ViewChild('dataTable') dataTable;
 
   public mailObject:MailObject=new MailObject("","","","");
+
+  public editedAnwesenheit:Anwesenheitseintrag=new Anwesenheitseintrag();
+
+  event_data;
+  event_column;
 
   errorMessage: string;
   subscription: Subscription;
@@ -119,6 +125,9 @@ export class AnwesenheitsComponent implements OnInit {
         let eintrag: Anwesenheitseintrag = a[i].eintraege[k];
           //console.log("Vergleiche "+this.cols[s].DATUM+" mit "+eintrag.DATUM);
         this.data[j-1]['id'+CourseBook.toSQLString(new Date(eintrag.DATUM))]= eintrag.VERMERK;
+        if (eintrag.BEMERKUNG) {
+          this.data[j - 1]['bem' + CourseBook.toSQLString(new Date(eintrag.DATUM))] = eintrag.BEMERKUNG;
+        }
         this.data[j-1]['idkuk'+CourseBook.toSQLString(new Date(eintrag.DATUM))]= eintrag.ID_LEHRER;
         this.data[j-1]['idb'+CourseBook.toSQLString(new Date(eintrag.DATUM))]= eintrag.BEMERKUNG;
 
@@ -140,28 +149,53 @@ export class AnwesenheitsComponent implements OnInit {
     this.infoDialog.showDialog(p);
   }
 
+  editStart(event) {
+    console.log("edit Start: row="+event.index+" Column="+event.column.field+" Inhalt:"+JSON.stringify(event.data));
+    this.event_column=event.column.field;
+    this.event_data=event.data;
+    this.editedAnwesenheit.ID_LEHRER=CourseBookComponent.courseBook.idLehrer;
+    this.editedAnwesenheit.ID_KLASSE=CourseBookComponent.courseBook.course.id;
+    this.editedAnwesenheit.ID_SCHUELER=event.data.id;
+    this.editedAnwesenheit.VERMERK=event.data[event.column.field];
+    this.editedAnwesenheit.BEMERKUNG=event.data["bem"+event.column.field.substr(2)];
+    this.editedAnwesenheit.DATUM=event.column.field.substring(2)+"T00:00:00";
+  }
+  editCanceled(event) {
+    console.log("edit Canceled: row="+event.index+" Column="+event.column.field+" Inhalt:"+JSON.stringify(event.data));
+  }
+
+  keyDown(event) {
+    console.log("Key Down"+event.which);
+    if (event.which === 13 || event.which === 9) {
+      this.submitAnwesenheit();
+    }
+  }
 
   edit(event) {
-    console.log("edit Complete: row="+event.index+" Column="+event.column.field+" Inhalt:"+JSON.stringify(event.data));
-    this.data[event.index]['idkuk'+event.column.field.substring(2)]= CourseBookComponent.courseBook.idLehrer;
-    let anwesenheit:Anwesenheitseintrag = new Anwesenheitseintrag();
-    anwesenheit.ID_LEHRER=CourseBookComponent.courseBook.idLehrer;
-    anwesenheit.ID_KLASSE=CourseBookComponent.courseBook.course.id;
-    anwesenheit.ID_SCHUELER=event.data.id;
-    anwesenheit.VERMERK=event.data[event.column.field];
-    anwesenheit.DATUM=event.column.field.substring(2)+"T00:00:00";
-    console.log("Sende zum Server =>"+JSON.stringify(anwesenheit));
-    if (anwesenheit.VERMERK=="") {
+    console.log("edit Complete: row=" + event.index + " Column=" + event.column.field + " Inhalt:" + JSON.stringify(event.data));
+  }
+
+  submitAnwesenheit() {
+    console.log("Sende zum Server =>"+JSON.stringify(this.editedAnwesenheit));
+    if (this.editedAnwesenheit.VERMERK=="") {
       console.log("Lösche Anwesenheitseintrag!");
-      this.anwesenheitsService.deleteAnwesenheit(anwesenheit);
+      this.anwesenheitsService.deleteAnwesenheit(this.editedAnwesenheit);
+      delete this.event_data[this.event_column];
+      delete this.event_data["bem"+this.event_column.substr(2)];
+      delete this.event_data["idb"+this.event_column.substr(2)];
+      this.dataTable.closeCell();
     }
     else {
-      this.anwesenheitsService.setAnwesenheit(anwesenheit).subscribe(
+      this.anwesenheitsService.setAnwesenheit(this.editedAnwesenheit).subscribe(
         anwesenheit => {
           console.log("Empfange " + JSON.stringify(anwesenheit))
           if (anwesenheit.parseError) {
             this.messageService.add({severity:'error', summary:'Fehler', detail:'Formatierungfehler im Vermerk '+anwesenheit.VERMERK});
           }
+          this.event_data[this.event_column]=this.editedAnwesenheit.VERMERK;
+          this.event_data["bem"+this.event_column.substr(2)]=this.editedAnwesenheit.BEMERKUNG;
+          this.event_data["idb"+this.event_column.substr(2)]=this.editedAnwesenheit.BEMERKUNG;
+          this.dataTable.closeCell();
         }
       );
     }
