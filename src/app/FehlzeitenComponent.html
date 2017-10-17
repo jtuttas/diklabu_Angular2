@@ -30,10 +30,10 @@
         <strong style="vertical-align: top;">{{getPupilName(anwesenheit.id_Schueler)}}</strong>
       </div>
       <div class="ui-md-1">
-        <span style="float: left;padding-top: 5px;">{{anwesenheit.summeFehltage}}  / </span><span class="fehltagEntschuldigt">{{anwesenheit.summeFehltageEntschuldigt}} </span>
+        <span  style="float: left;padding-top: 5px;">{{anwesenheit.summeFehltage}}  / </span><span class="fehltagEntschuldigt">{{anwesenheit.summeFehltageEntschuldigt}} </span>
       </div>
       <div class="ui-md-1">
-        <button pButton type="button" (click)="sendReport(anwesenheit)" iconPos="left" icon="fa-mail-reply" class="ui-button-warning" label="Bericht"></button>
+        <button *ngIf="anwesenheit.summeFehltage>0" pButton type="button" (click)="sendReport(anwesenheit)" iconPos="left" icon="fa-mail-reply" class="ui-button-warning" label="Bericht"></button>
       </div>
       <div class="ui-md-3 links">
         <div *ngFor="let ae of anwesenheit.fehltageEntschuldigt">

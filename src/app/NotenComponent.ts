@@ -27,6 +27,7 @@ import {Grades, Grade} from "./data/Grades";
 export class NotenComponent {
   @ViewChild('mailDialog') mailDialog;
   @ViewChild('infoDialog') infoDialog;
+  @ViewChild('lfselectComponent') lfSelectComponent;
 
   public mailObject:MailObject=new MailObject("","","","");
 
@@ -49,6 +50,21 @@ export class NotenComponent {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  lfLoaded() {
+    for (var i=0;i<this.cols.length;i++) {
+      if (this.cols[i].field.startsWith("lf")) {
+        this.lfSelectComponent.removeLf(this.cols[i].field.substr(2));
+      }
+    }
+  }
+
+  addLf(e) {
+    console.log("Add LF:"+JSON.stringify(e));
+    console.log("Selected LF="+this.lfSelectComponent.getSelectedLernfeld())
+    this.cols.splice(this.cols.length-1,0, {field: "lf"+this.lfSelectComponent.getSelectedLernfeld(), header: this.lfSelectComponent.getSelectedLernfeld()+" ("+CourseBookComponent.courseBook.idLehrer+")", idlk: CourseBookComponent.courseBook.idLehrer});
+    this.lfSelectComponent.removeLf(this.lfSelectComponent.getSelectedLernfeld());
   }
 
   getIdTeacher():string {

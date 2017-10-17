@@ -12,13 +12,14 @@ import {Config} from "./data/Config";
 
 @Component({
   selector: 'lfselect',
-  template: '<strong>Lernfeld:</strong><br/>\n' +
+  template: '<strong>Lernfelder:</strong><br/>\n' +
   '<p-dropdown [autoWidth]="false" [options]="lfs" [(ngModel)]="selectedLF" placeholder="Lernfelder" [disabled]="compDisabled"></p-dropdown>\n',
 
 })
 
 export class LFSelectComponent{
   @Output() lfLoaded = new EventEmitter();
+
 
   public lfs:SelectItem[];
   public selectedLF="LF1";
@@ -49,6 +50,7 @@ export class LFSelectComponent{
         this.lfs.push({label: lfd[i].id, value: lfd[i].id});
       }
       this.compDisabled=false;
+      this.selectedLF=this.lfs[0].value;
       this.lfLoaded.emit();
     },
 
@@ -71,8 +73,21 @@ export class LFSelectComponent{
   }
 
 
+  removeLf(excluded:string) {
+    console.log(" Entferne LF Eintrag "+excluded+" Da bereits Note(n) vorhanden!");
+    console.log(" Bisherige einträge:"+JSON.stringify(this.lfs));
+    for (var j=0;j<this.lfs.length;j++) {
+      if (this.lfs[j].label==excluded) {
+        this.lfs.splice(j, 1);
+        this.selectedLF=this.lfs[0].label;
+        return;
+      }
+    }
+  }
+
   getSelectedLernfeld() {
     return this.selectedLF;
   }
+
 
 }

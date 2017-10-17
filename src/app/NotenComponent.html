@@ -16,17 +16,21 @@
               [style]="{'width':'150px','height':'30px','text-align':'left'}"></p-column>
     <p-column *ngIf="col.field == 'NNAME'" [id]="col.id" frozen="true" [field]="col.field" [header]="col.header"
               [style]="{'width':'150px','height':'30px','text-align':'left'}"></p-column>
-    <p-column *ngIf="col.field.startsWith('lf') && col.idlk==getIdTeacher()" [editable]="true" [id]="col.id" [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'30px','text-align':'left'}">
+    <p-column *ngIf="col.field.startsWith('lf') && col.idlk==getIdTeacher()" [editable]="true" [id]="col.id" [field]="col.field" [header]="col.header" [style]="{'width':'100px','height':'30px','text-align':'left'}">
       <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
         <a *ngIf="data[i][col.field]"><strong style="color: green;">{{data[i][col.field]}}</strong></a>
       </ng-template>
     </p-column>
-    <p-column *ngIf="col.field.startsWith('lf') && col.idlk!=getIdTeacher()" [id]="col.id" [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'30px','text-align':'left'}">
+    <p-column *ngIf="col.field.startsWith('lf') && col.idlk!=getIdTeacher()" [id]="col.id" [field]="col.field" [header]="col.header" [style]="{'width':'100px','height':'30px','text-align':'left'}">
       <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
         <a *ngIf="data[i][col.field]"><strong>{{data[i][col.field]}}</strong></a>
       </ng-template>
     </p-column>
     <p-column *ngIf="col.header == 'empty'" [field]="" [header]="" [style]="{'text-align':'left'}">
+      <ng-template pTemplate="header">
+        <lfselect #lfselectComponent (lfLoaded)="lfLoaded()" ></lfselect>
+        <button type="button" (click)="addLf($event)" pButton icon="fa-plus"></button>
+      </ng-template>
       <ng-template let-car="rowData" pTemplate="body">
       </ng-template>
     </p-column>
