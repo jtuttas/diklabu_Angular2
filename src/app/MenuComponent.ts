@@ -30,11 +30,8 @@ export class MenuComponent {
           {label: 'heute', icon: 'fa-user-plus',command: event2 => this.showTodayAnwesenheit(event2)}
         ]
       },
-      {label: 'Fehlzeiten', icon: 'fa-hotel',
-        items: [
-          {label: 'Übersicht', icon: 'fa-table', command: event2 => this.showFehlzeiten(event2)}
-        ]
-      },
+      {label: 'Fehlzeiten', icon: 'fa-hotel', command: event2 => this.showFehlzeiten(event2)},
+      {label: 'Klasse/Betriebe', icon: 'fa-info-circle', command: event2 => this.showBetriebe(event2)},
       {label: 'Noten', icon: 'fa-graduation-cap', command: event2 => this.showGrades(event2)},
       {label: 'Logout', icon: 'fa-times', command: event2 => this.logout(event2)}
     ];
@@ -59,6 +56,10 @@ export class MenuComponent {
   showTodayAnwesenheit(e) {
     console.log("show Today Anwesenheit");
     this.router.navigate(['/diklabu', { outlets: { sub: 'todayanwesenheit' } }]);
+  }
+  showBetriebe(e) {
+    console.log("show Betriebe");
+    this.router.navigate(['/diklabu', { outlets: { sub: 'betriebe' } }]);
   }
 
   logout(e) {

@@ -1,0 +1,54 @@
+<p-dataList [value]="betriebe" >
+  <p-header>
+    <h3>Übersicht Klasse {{KName}}</h3>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-2 links" >
+        <strong>Name</strong>
+      </div>
+      <div class="ui-md-3 links" >
+        <strong>Bemerkungen</strong>
+      </div>
+      <div class="ui-md-3 links" >
+        <strong>Firma</strong>
+      </div>
+      <div class="ui-md-2 links" >
+        <strong>Ansprechpartner</strong>
+      </div>
+      <div class="ui-md-1 links" >
+        <strong>Telefon</strong>
+      </div>
+      <div class="ui-md-1 links" >
+        <strong>Fax</strong>
+      </div>
+    </div>
+  </p-header>
+  <ng-template let-betrieb pTemplate="item" let-i="index">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-2 links" >
+        <img src="../assets/Info.png" (click)="infoClick(betrieb.id_schueler)" />
+        <img src="../assets/mail.png" (click)="mailClick(betrieb.id_schueler)" />
+        <strong style="vertical-align: top;">{{getName(betrieb.id_schueler)}}</strong>
+      </div>
+      <div class="ui-md-3 links" >
+        {{getInfo(betrieb.id_schueler)}}
+      </div>
+      <div class="ui-md-3 links" >
+        {{betrieb.name}},{{betrieb.strasse}},{{betrieb.plz}} {{betrieb.ort}}
+      </div>
+      <div class="ui-md-2 links" >
+        <img src="../assets/mail.png" (click)="mailClickBetrieb(betrieb)" />
+        <strong style="vertical-align: top;">{{betrieb.nName}}</strong>
+      </div>
+      <div class="ui-md-1 links" >
+        {{betrieb.telefon}}
+      </div>
+
+      <div class="ui-md-1 links" >
+        {{betrieb.fax}}
+      </div>
+    </div>
+  </ng-template>
+</p-dataList>
+<sendmail #mailDialog [mail]="mailObject"></sendmail>
+<pupildetails #infoDialog ></pupildetails>
+

@@ -7,4 +7,5 @@ export class Pupil {
   NNAME: string;
   VNAME: string;
   id: number;
+  INFO: string;
 }

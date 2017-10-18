@@ -53,6 +53,17 @@ export class CourseService {
       .catch(this.handleError);
   }
 
+  getCompanies(kname:string) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+
+    this.url = Config.SERVER+"Diklabu/api/v1/klasse/betriebe/"+kname;  // URL to web API
+    console.log("get Companies  URL="+this.url);
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
   getCoursePictures(kname:string,height:number) {
     var headers = new Headers();
