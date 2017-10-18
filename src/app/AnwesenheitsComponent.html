@@ -1,4 +1,6 @@
-
+<afilter (filterChanged)="filterChanged($event)"></afilter><br/>
+<div class="ui-g ui-g-12">
+  <div class="ui-mg-12">
 <p-dataTable   scrollable="true" frozenWidth="375px"  unfrozenWidth="842px"  [value]="data" [editable]="true"  on  (onEditCancel)="editCanceled($event)" (onEditInit)="editStart($event)" (onEditComplete)="edit($event)" #dataTable>
   <p-header>
     <h3>Anwesenheit der Klasse {{KName}} von {{von | date: 'dd.MM.yyyy'}} bis {{bis | date: 'dd.MM.yyyy'}}</h3>
@@ -34,6 +36,8 @@
     <p-column  *ngIf="col.field == 'NNAME'" [id]="col.id" frozen="true"  [field]="col.field" [header]="col.header" [style]="{'width':'150px','height':'32px','text-align':'left'}" ></p-column>
   </ng-container>
 </p-dataTable>
+  </div>
+</div>
 <sendmail #mailDialog [mail]="mailObject"></sendmail>
 <pupildetails #infoDialog ></pupildetails>
 

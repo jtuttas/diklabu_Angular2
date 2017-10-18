@@ -48,6 +48,28 @@ export class AnwesenheitsService {
       .catch(this.handleError);
   }
 
+  getTermiondaten(idFilter1:number,idFilter2:number) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/noauth/termine/"+CourseBook.toSQLString(CourseBookComponent.courseBook.fromDate)+"/"+CourseBook.toSQLString(CourseBookComponent.courseBook.toDate)+"/"+idFilter1+"/"+idFilter2;  // URL to web API
+    console.log("URL="+this.url);
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getTermine() {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/noauth/termine/"
+    console.log("URL="+this.url);
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
 
   private extractData(res: Response) {
     console.log("Receive Anwesenheit: "+JSON.stringify(res.json()));

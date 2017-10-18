@@ -13,6 +13,7 @@ import {Message} from "primeng/primeng";
 import {CourseSelectComponent} from "./CourseSelectComponent";
 import {MailObject} from "./data/MailObject";
 import {DokuService} from "./services/DokuService";
+import {Termindaten} from "./data/Termin";
 
 @Component({
   selector: 'anwesenheit',
@@ -33,9 +34,12 @@ export class AnwesenheitsComponent implements OnInit {
   event_data;
   event_column;
 
+  termindaten:Termindaten[];
+
   errorMessage: string;
   subscription: Subscription;
   cols: any[];
+  colsOrg: any[];
   data: any[];
   multiSortMeta = [];
   KName: string;
@@ -68,7 +72,9 @@ export class AnwesenheitsComponent implements OnInit {
     this.von=CourseBookComponent.courseBook.fromDate;
     this.bis=CourseBookComponent.courseBook.toDate;
     this.cols = new Array();
+    this.colsOrg = new Array();
     this.buildCols(CourseSelectComponent.pupils);
+    this.applyFilter();
   }
 
   /**
@@ -81,10 +87,14 @@ export class AnwesenheitsComponent implements OnInit {
     this.cols.push({field: "info",header: "info"});
     this.cols.push({field: "VNAME",header: "Vorname"});
     this.cols.push({field: "NNAME",header: "Nachname"});
+    this.colsOrg.push({field: "info",header: "info"});
+    this.colsOrg.push({field: "VNAME",header: "Vorname"});
+    this.colsOrg.push({field: "NNAME",header: "Nachname"});
     let from= CourseBookComponent.courseBook.fromDate;
     let to = CourseBookComponent.courseBook.toDate;
     while (from <= to) {
       this.cols.push({field: "id"+CourseBook.toSQLString(from),header: CourseBook.toReadbleString(from)});
+      this.colsOrg.push({field: "id"+CourseBook.toSQLString(from),header: CourseBook.toReadbleString(from)});
       //this.cols.push({DATUM: CourseBook.toSQLString(from)+"T00:00:00",field:"dummy"});
       console.log ("Erzeuge Spalte: id"+CourseBook.toIDString(from));
       from=new Date(from.getTime()+1000*60*60*24);
@@ -198,6 +208,38 @@ export class AnwesenheitsComponent implements OnInit {
           this.dataTable.closeCell();
         }
       );
+    }
+  }
+
+  filterChanged(e) {
+    console.log("Filter changed: "+JSON.stringify(e));
+    this.anwesenheitsService.getTermiondaten(e.filter1.id,e.filter2.id).subscribe(
+      data => {
+        console.log("Received Terminadaten:"+JSON.stringify(data));
+        this.termindaten=data;
+        this.applyFilter();
+      },
+      err => {
+        this.messageService.add({severity:'error', summary:'Fehler', detail:'Fehler beim Laden der Termindaten:'+err});
+      }
+    );
+  }
+
+  applyFilter() {
+    if (this.termindaten) {
+      this.cols = this.colsOrg.filter(elements => {
+        if (elements.field.startsWith("id")) {
+          for (var i = 0; i < this.termindaten.length; i++) {
+            if (elements.field.substr(2) == this.termindaten[i].date.substr(0, this.termindaten[i].date.indexOf("T"))) {
+              return true;
+            }
+          }
+          return false;
+        }
+        else return true;
+      });
+
+      console.log("Filtered cols: " + JSON.stringify(this.cols));
     }
   }
 }
