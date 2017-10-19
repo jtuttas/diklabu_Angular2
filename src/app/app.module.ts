@@ -57,6 +57,7 @@ import {NotenComponent} from "./NotenComponent";
 import {NotenService} from "./services/NotenService";
 import {AnwesenheitsFilterComponent} from "./AnwesenheitsFilterComponent";
 import {BetriebeComponent} from "./BetriebeComponent";
+import {PupilLoginComponent} from "./PupilLoginComponent";
 
 
 
@@ -66,7 +67,7 @@ import {BetriebeComponent} from "./BetriebeComponent";
     , ListVerlaufComponent,   CourseBookComponent, AnwesenheitsComponent, LoginComponent,
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
     CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente,
-    FehlzeitenComponent, NotenComponent, AnwesenheitsFilterComponent, BetriebeComponent
+    FehlzeitenComponent, NotenComponent, AnwesenheitsFilterComponent, BetriebeComponent,PupilLoginComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,

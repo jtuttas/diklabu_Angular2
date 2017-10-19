@@ -1,4 +1,4 @@
-import {CanActivate, Router} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {Injectable} from "@angular/core";
 import {CourseBookComponent} from "./CourseBookComponent";
 
@@ -6,11 +6,13 @@ import {CourseBookComponent} from "./CourseBookComponent";
 export class AuthenticationGuard implements CanActivate {
   constructor(private router: Router) { }
 
-  canActivate(): boolean {
+  canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): boolean {
+    let roles = route.data["roles"] as Array<string>;
+    console.log("AuthGuard canActivate! roles="+JSON.stringify(roles));
     if (CourseBookComponent.courseBook.auth_token) {
-      return true;
+      console.log("AuthGuard canActivate! Result "+(roles == null || roles.indexOf("Admin")!=-1));
+      return (roles == null || roles.indexOf("Admin") != -1 || roles.indexOf("Schueler") != -1);
     }
-
     this.router.navigate(['/login']);
     return false;
   }

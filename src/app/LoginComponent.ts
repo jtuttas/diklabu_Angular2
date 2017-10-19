@@ -12,8 +12,8 @@ import {Config} from "./data/Config";
   templateUrl: 'LoginComponent.html',
 })
 export class LoginComponent {
-  username: string="TU";
-  password: string="mmbbs";
+  username: string="";
+  password: string="";
 
   constructor(private loginService:LoginService,private messageService: MessageService, private router:Router) {
     if (Config.debug) {
@@ -36,9 +36,15 @@ export class LoginComponent {
           CourseBookComponent.courseBook.username=this.username;
           CourseBookComponent.courseBook.password=this.password;
           CourseBookComponent.courseBook.email=data.email;
-          let link = [ '/diklabu'];
-          //this.router.navigate(link);
-          this.router.navigate(['/diklabu', { outlets: { sub: 'verlauf' } }]);
+          CourseBookComponent.courseBook.role=data.role;
+          CourseBookComponent.courseBook.ID=data.ID;
+
+          if (data.role=="Schueler") {
+            this.router.navigate(['/schueler']);
+          }
+          else {
+            this.router.navigate(['/diklabu', { outlets: { sub: 'verlauf' } }]);
+          }
         },
         err => {console.log("got Error:"+JSON.stringify(err));
           var data = JSON.parse(err);

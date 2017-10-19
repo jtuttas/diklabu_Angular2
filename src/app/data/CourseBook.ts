@@ -5,8 +5,10 @@ export class  CourseBook {
   public fromDate:Date;
   public toDate:Date;
   public course:Course;
-  public idLehrer:string="TU";
+  public idLehrer:string;
   public auth_token;
+  public role: string;
+  public ID: string;
   public username:string;
   public password:string;
   public email:string;

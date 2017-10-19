@@ -11,6 +11,7 @@ import {TodayAnwesenheitsComponente} from "./TodayAnwesenheitsComponente";
 import {FehlzeitenComponent} from "./FehlzeitenComponent";
 import {NotenComponent} from "./NotenComponent";
 import {BetriebeComponent} from "./BetriebeComponent";
+import {PupilLoginComponent} from "./PupilLoginComponent";
 
 const appRoutes: Routes = [
   {
@@ -20,7 +21,7 @@ const appRoutes: Routes = [
   },
   {path: 'login', component: LoginComponent},
   {
-    path: 'diklabu', component: diklabuComponent, canActivate: [AuthenticationGuard],
+    path: 'diklabu', component: diklabuComponent, canActivate: [AuthenticationGuard], data: {roles: ['Admin','Lehrer']},
 
     children: [
       {path: 'verlauf', component: VerlaufComponent, outlet: 'sub'},
@@ -30,6 +31,9 @@ const appRoutes: Routes = [
       {path: 'noten', component: NotenComponent, outlet: 'sub'},
       {path: 'betriebe', component: BetriebeComponent, outlet: 'sub'}
     ]
+  },
+  {
+    path: 'schueler', component: PupilLoginComponent, canActivate: [AuthenticationGuard], data: {roles: ['Schueler']},
   },
   {
     path: "**",

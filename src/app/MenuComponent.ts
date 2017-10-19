@@ -69,6 +69,7 @@ export class MenuComponent {
         delete CourseBookComponent.courseBook.auth_token;
         delete CourseBookComponent.courseBook.username;
         delete CourseBookComponent.courseBook.password;
+        delete CourseBookComponent.courseBook.role;
         let link = ['/login'];
         this.router.navigate(link);
       },
