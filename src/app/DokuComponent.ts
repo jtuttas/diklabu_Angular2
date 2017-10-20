@@ -19,8 +19,6 @@ export class DokuComponent {
   private type: string = "pdf";
   private dokufilter1 = "alle";
   private dokufilter2 = "alle";
-  private anwfilter1 = "0";
-  private anwfilter2 = "0";
 
   constructor(public dokuService:DokuService) {
   }
@@ -65,8 +63,8 @@ export class DokuComponent {
     body += "&to=" + CourseBook.toSQLString(CourseBookComponent.courseBook.toDate);
     body += "&dokufilter1=" + this.dokufilter1;
     body += "&dokufilter2=" + this.dokufilter2;
-    body += "&anwfilter1=" + this.anwfilter1;
-    body += "&anwfilter2=" + this.anwfilter2;
+    body += "&anwfilter1=" + DokuService.anwFilter1;
+    body += "&anwfilter2=" + DokuService.anwFilter2;
     body += "&type=" + this.type;
     body += "&cmd="+DokuService.view;
     console.log("body-->" + body);

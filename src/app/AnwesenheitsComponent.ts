@@ -213,6 +213,7 @@ export class AnwesenheitsComponent implements OnInit {
 
   filterChanged(e) {
     console.log("Filter changed: "+JSON.stringify(e));
+    this.dokuService.setDokuFilter(e.filter1,e.filter1);
     this.anwesenheitsService.getTermiondaten(e.filter1.id,e.filter2.id).subscribe(
       data => {
         console.log("Received Terminadaten:"+JSON.stringify(data));

@@ -7,6 +7,10 @@
   </p-header>
   <ng-container *ngFor="let col of cols">
     <p-column  *ngIf="col.field.startsWith('id') && (col.header.startsWith('Sa.') || col.header.startsWith('So.'))" [editable]="true" [field]="col.field" [header]="col.header" class="wochentag" [style]="{'width':'120px','height':'32px','background-color':'#cccccc'}" >
+      <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex" pTemplate="editor">
+        <input (keydown)="keyDown($event)" style="width: 40px;" type="text" pInputText [(ngModel)]="editedAnwesenheit.VERMERK" placeholder="Verm." />
+        <input (keydown)="keyDown($event)" style="width: 60px;" type="text" pInputText [(ngModel)]="editedAnwesenheit.BEMERKUNG" placeholder="Bem." />
+      </ng-template>
       <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
         <a *ngIf="data[i]['id'+col.field.substr(2)]" class="select" [pTooltip]="data[i]['idkuk'+col.field.substr(2)]" tooltipPosition="top" >{{data[i]['id'+col.field.substr(2)]}}</a>
         <img *ngIf="data[i]['idb'+col.field.substr(2)]" src="../assets/flag.png" class="select" [pTooltip]="data[i]['idb'+col.field.substr(2)]" tooltipPosition="top" />
