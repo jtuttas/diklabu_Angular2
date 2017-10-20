@@ -14,6 +14,7 @@ import {Config} from "./data/Config";
 export class LoginComponent {
   username: string="";
   password: string="";
+  version: string=Config.version
 
   constructor(private loginService:LoginService,private messageService: MessageService, private router:Router) {
     if (Config.debug) {

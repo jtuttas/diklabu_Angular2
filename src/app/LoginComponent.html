@@ -1,25 +1,33 @@
-<h1 >DiKlaBu</h1>
-<h3>Digitales Klassenbuch</h3>
-<strong>realisiert mit..</strong><br/><br/>
-<img src="../assets/angular2typescript.png">
-<img src="../assets/primeng-2.png">
-<br/>
-<hr>
-<br/>
-<div class="ui-g ui-fluid">
-  <div class="ui-g-12 ui-md-2 ui-md-offset-5">
-    <div class="ui-inputgroup">
-      <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-      <input [(ngModel)]="username" type="text" pInputText placeholder="Username">
-    </div>
+<div id="wrapper">
+  <div id="first">
+    <h1>DiKlaBu</h1>
+    <h3>Digitales Klassenbuch</h3>
+    <strong>realisiert mit..</strong><br/><br/>
+    <img src="../assets/angular2typescript.png">
+    <img src="../assets/primeng-2.png">
     <br/>
-    <div class="ui-inputgroup">
-      <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
-      <input [(ngModel)]="password" type="password"  pInputText placeholder="Kennwort">
-    </div>
-    <br/>
-    <br/>
-    <button pButton type="button" (click)="performLogin()" label="Login"></button>
   </div>
-</div>
+  <div class="content">
+    <div class="ui-g ui-fluid box">
+      <div class="ui-g-12 ui-md-11 ui-md-offset-1">
+        <h3>Anmeldung</h3>
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+          <input [(ngModel)]="username" type="text" pInputText placeholder="Username">
+        </div>
+        <br/>
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
+          <input [(ngModel)]="password" type="password" pInputText placeholder="Kennwort">
+        </div>
+        <br/>
+        <br/>
+      </div>
+    </div>
+    <button pButton type="button" (click)="performLogin()" label="Login" icon="fa-check" ></button>
+  </div>
 
+</div>
+<div class="footer">
+  <strong>Version {{version}}</strong>
+</div>
