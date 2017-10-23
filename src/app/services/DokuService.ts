@@ -24,6 +24,7 @@ export class DokuService {
     DokuService.anwFilter2=t2.id;
   }
 
+
   isVisible():boolean {
     return DokuService.displayDoku;
   }
@@ -46,4 +47,5 @@ export class DokuService {
         return fileBlob;
     })
   }
+
 }

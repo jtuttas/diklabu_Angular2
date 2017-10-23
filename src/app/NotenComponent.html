@@ -1,7 +1,5 @@
 <p-dataTable [value]="data" [editable]="true" (onEditComplete)="edit($event)">
-  <p-header>
-    <h3>Noten der Klasse {{KName}}</h3>
-  </p-header>
+  <p-header><h3>Noten der Klasse {{KName}}</h3></p-header>
   <ng-container *ngFor="let col of cols">
     <p-column *ngIf="col.header == 'info'" frozen="true" [id]="col.id" [field]="" [header]=""
               [style]="{'width':'75px','text-align':'left'}">
@@ -38,5 +36,3 @@
 </p-dataTable>
 <sendmail #mailDialog [mail]="mailObject"></sendmail>
 <pupildetails #infoDialog></pupildetails>
-
-

@@ -13,7 +13,7 @@ import {Message} from "primeng/primeng";
 import {CourseSelectComponent} from "./CourseSelectComponent";
 import {MailObject} from "./data/MailObject";
 import {DokuService} from "./services/DokuService";
-import {Termindaten} from "./data/Termin";
+import {Termin, Termindaten} from "./data/Termin";
 
 @Component({
   selector: 'anwesenheit',
@@ -36,6 +36,8 @@ export class AnwesenheitsComponent implements OnInit {
 
   termindaten:Termindaten[];
 
+  selectedFilter1: Termin=new Termin("alle",0);
+  selectedFilter2: Termin=new Termin("alle",0);
   errorMessage: string;
   subscription: Subscription;
   cols: any[];
@@ -74,6 +76,7 @@ export class AnwesenheitsComponent implements OnInit {
     this.cols = new Array();
     this.colsOrg = new Array();
     this.buildCols(CourseSelectComponent.pupils);
+    this.filterChanged({filter1: this.selectedFilter1,filter2: this.selectedFilter2})
     this.applyFilter();
   }
 
@@ -214,6 +217,8 @@ export class AnwesenheitsComponent implements OnInit {
   filterChanged(e) {
     console.log("Filter changed: "+JSON.stringify(e));
     this.dokuService.setDokuFilter(e.filter1,e.filter1);
+    this.selectedFilter1=e.filter1;
+    this.selectedFilter2=e.filter2;
     this.anwesenheitsService.getTermiondaten(e.filter1.id,e.filter2.id).subscribe(
       data => {
         console.log("Received Terminadaten:"+JSON.stringify(data));

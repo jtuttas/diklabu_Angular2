@@ -8,7 +8,7 @@ import {DokuService} from "./services/DokuService";
  */
 @Component({
   selector: 'verlauf',
-  template: '<newverlauf #newVerlaufComponent (newVerlauf)="newVerlauf($event)"></newverlauf>\n' +
+  template: '<newverlauf #newVerlaufComponent (newVerlauf)="newVerlauf($event)"></newverlauf>' +
 
   '    <listverlauf #listVerlaufComponent (editVerlauf)="editVerlauf($event)"></listverlauf>',
 })

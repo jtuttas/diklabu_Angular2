@@ -20,7 +20,7 @@ import {Grades, Grade} from "./data/Grades";
 @Component({
   selector: 'noten',
   templateUrl: './NotenComponent.html',
-  styleUrls: [],
+  styles: [],
 
 })
 
