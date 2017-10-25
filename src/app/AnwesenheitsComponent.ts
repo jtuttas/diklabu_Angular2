@@ -77,7 +77,7 @@ export class AnwesenheitsComponent implements OnInit {
     this.colsOrg = new Array();
     this.buildCols(CourseSelectComponent.pupils);
     this.filterChanged({filter1: this.selectedFilter1,filter2: this.selectedFilter2})
-    this.applyFilter();
+    //this.applyFilter();
   }
 
   /**
@@ -207,6 +207,7 @@ export class AnwesenheitsComponent implements OnInit {
           }
           this.event_data[this.event_column]=this.editedAnwesenheit.VERMERK;
           this.event_data["bem"+this.event_column.substr(2)]=this.editedAnwesenheit.BEMERKUNG;
+          this.event_data["idkuk"+this.event_column.substr(2)]=this.editedAnwesenheit.ID_LEHRER;
           this.event_data["idb"+this.event_column.substr(2)]=this.editedAnwesenheit.BEMERKUNG;
           this.dataTable.closeCell();
         }

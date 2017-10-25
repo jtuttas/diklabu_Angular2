@@ -2,3 +2,13 @@
   cursor: pointer;
 }
 
+.fehlend {
+  border-radius: 8px;
+  background: #ac2925;
+  padding: 1px;
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
