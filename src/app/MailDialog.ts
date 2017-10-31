@@ -14,15 +14,15 @@ import {MessageService} from "primeng/components/common/messageservice";
   template:
     ' <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="dialogWidth" appendTo="body"><br/>' +
     '<span class="ui-float-label">'+
-    '<input id="to" type="text" pInputText [(ngModel)]="mail.to"/>'+
+    '<input id="to" type="text" pInputText [(ngModel)]="mail.recipientString"/>'+
     '<label for="to">An:</label>'+
     '</span><br/>'+
     '<div *ngIf="mail.cc.length>0"><br/> <span class="ui-float-label" >'+
-    '<input id="cc" type="text" pInputText [(ngModel)]="mail.cc"/>'+
+    '<input id="cc" type="text" pInputText [(ngModel)]="mail.ccString"/>'+
     '<label for="cc">CC:</label>'+
     '</span><br/></div>'+
     '<div *ngIf="mail.bcc.length>0"><br/> <span class="ui-float-label" >'+
-    '<input id="bcc" type="text"  pInputText [(ngModel)]="mail.bcc"/>'+
+    '<input id="bcc" type="text"  pInputText [(ngModel)]="mail.bccString"/>'+
     '<label for="bcc">BCC:</label>'+
     '</span><br/></div>'+
     '<br/><span class="ui-float-label">'+
