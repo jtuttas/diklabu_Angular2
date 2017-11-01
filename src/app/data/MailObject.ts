@@ -1,5 +1,6 @@
 import {CourseSelectComponent} from "../CourseSelectComponent";
 import {CourseBookComponent} from "../CourseBookComponent";
+import { URLSearchParams } from '@angular/http';
 
 export class MailObject {
   from:string;
@@ -30,31 +31,34 @@ export class MailObject {
     this.bccString=this.bcc.join(",");
   }
 
-  getBody():string {
-    let b:string="";
-    b+="fromMail="+this.from+"&subjectMail="+this.subject+"&emailBody="+this.content+"&auth_token="+CourseBookComponent.courseBook.auth_token;
+  getBody():URLSearchParams {
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('fromMail', this.from);
+    urlSearchParams.append('subjectMail', this.subject);
+    urlSearchParams.append('emailBody', this.content);
+    urlSearchParams.append('auth_token', CourseBookComponent.courseBook.auth_token);
     if (this.recipientString.length!=0) {
       let recipientBodyString = this.recipientString.replace(" ","");
       var find = ',';
       var re = new RegExp(find, 'g');
       recipientBodyString = recipientBodyString.replace(re,";");
-      b+="&toMail="+recipientBodyString;
+      urlSearchParams.append('toMail', recipientBodyString);
     }
     if (this.ccString.length!=0) {
       let ccBodyString = this.ccString.replace(" ","");
       var find = ',';
       var re = new RegExp(find, 'g');
       ccBodyString = ccBodyString.replace(re,";");
-      b+="&cc="+ccBodyString;
+      urlSearchParams.append('cc', ccBodyString);
     }
     if (this.bccString.length!=0) {
       let bccBodyString = this.bccString.replace(" ","");
       var find = ',';
       var re = new RegExp(find, 'g');
       bccBodyString = bccBodyString.replace(re,";");
-      b+="&bcc="+bccBodyString;
+      urlSearchParams.append('bcc', bccBodyString);
     }
-    return b;
+    return urlSearchParams;
   }
 }
 

@@ -46,9 +46,9 @@ export class MailService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/x-www-form-urlencoded;  charset=UTF-8");
     this.url = Config.SERVER+"Diklabu/MailServlet";  // URL to web API
-    var body = mail.getBody();
-    console.log("body="+body);
-    return this.http.post(this.url,body,{headers: headers})
+
+    console.log("body="+mail.getBody());
+    return this.http.post(this.url,mail.getBody(),{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);
   }
