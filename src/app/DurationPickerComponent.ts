@@ -1,6 +1,7 @@
 ///<reference path="../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
 import {MessageService} from "primeng/components/common/messageservice";
+import {CourseBookComponent} from "./CourseBookComponent";
 
 @Component({
   selector: 'duration',
@@ -10,8 +11,8 @@ import {MessageService} from "primeng/components/common/messageservice";
 export class DurationPickerComponent {
   @Output() durationUpdated = new EventEmitter();
 
-  public fromDate: Date = new Date(new Date().getTime()-6*24*60*60*1000);
-  public toDate: Date = new Date();
+  public fromDate: Date = CourseBookComponent.courseBook.fromDate;
+  public toDate: Date = CourseBookComponent.courseBook.toDate;
 
   constructor(private messageService: MessageService) {
     this.fromDate.setHours(0,0,0,0);

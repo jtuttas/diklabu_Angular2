@@ -11,8 +11,8 @@ export class DokuService {
   private url;
   public static displayDoku:boolean=false;
   public static view:string="Verlauf";
-  public static anwFilter1:number;
-  public static anwFilter2:number;
+  public static anwFilter1:number=0;
+  public static anwFilter2:number=0;
 
   setDisplayDoku(b:boolean, view?:string) {
     DokuService.displayDoku=b;
