@@ -6,6 +6,8 @@ import {CourseBookComponent} from "./CourseBookComponent";
 import {Router} from "@angular/router";
 import {Config} from "./data/Config";
 
+declare var VERSION: any ;
+
 @Component({
   selector: 'login',
   styleUrls: ['LoginComponent.css'],
@@ -15,6 +17,9 @@ export class LoginComponent {
   username: string="";
   password: string="";
   version: string=Config.version
+  serverVersion: string="";
+  loadAPI: Promise<any>;
+
 
   constructor(private loginService:LoginService,private messageService: MessageService, private router:Router) {
     if (Config.debug) {
@@ -26,6 +31,19 @@ export class LoginComponent {
       let link = [ '/diklabu'];
       this.router.navigate(link);
     }
+    this.addJsToElement(Config.SERVER+"/Diklabu/ClientConfig").onload = () => {
+      console.log('ClientConfig Tag loaded');
+      this.serverVersion=VERSION;
+    }
+
+  }
+
+  addJsToElement(src: string): HTMLScriptElement {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = src;
+    document.getElementsByTagName('head')[0].appendChild(script);
+    return script;
   }
 
   performLogin() {

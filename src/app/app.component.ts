@@ -8,6 +8,7 @@ import {MessageService} from "primeng/components/common/messageservice";
 
 import {PupilDetailService} from "./services/PupilDetailService";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
+import {Config} from "./data/Config";
 
 
 
@@ -25,7 +26,6 @@ export class AppComponent implements OnDestroy{
   subscription: Subscription;
   courseBook:CourseBook;
 
-
   @ViewChild('courseBookComponent') courseBookComponent;
   @ViewChild('tabcomponent') tabComponent;
 
@@ -33,6 +33,7 @@ export class AppComponent implements OnDestroy{
   constructor(private service: SharedService, private pupilDetailService:PupilDetailService, private messageService: MessageService) {
 
   }
+
 
 
   ngOnDestroy() {
