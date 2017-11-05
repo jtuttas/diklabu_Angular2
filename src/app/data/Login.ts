@@ -6,4 +6,5 @@ export class Login {
   idPlain: string;
   role: string;
   email:string;
+  uid:string;
 }

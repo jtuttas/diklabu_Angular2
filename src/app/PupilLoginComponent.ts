@@ -24,7 +24,7 @@ export class PupilLoginComponent {
   }
 
   ngOnInit() {
-    this.pupilDetailService.getPupilDetails(+CourseBookComponent.courseBook.ID).subscribe(
+    this.pupilDetailService.getSPupilDetails(+CourseBookComponent.courseBook.ID).subscribe(
       data => {
         this.pupilDetails = data;
         console.log("Eempfange: "+JSON.stringify(data));
@@ -35,7 +35,7 @@ export class PupilLoginComponent {
       });
     this.imgSrc="../assets/anonym.gif";
 
-    this.pupilDetailService.getPupilImage(+CourseBookComponent.courseBook.ID).subscribe(
+    this.pupilDetailService.getSPupilImage(+CourseBookComponent.courseBook.ID).subscribe(
       data => {
         if (data) {
           console.log("Bild vorhanden");

@@ -7,7 +7,7 @@
     <img src="../assets/primeng-2.png">
     <br/>
   </div>
-  <div class="content">
+  <div  *ngIf="phase==0"  class="content">
     <div class="ui-g ui-fluid box">
       <div class="ui-g-12 ui-md-11 ui-md-offset-1">
         <h3>Anmeldung</h3>
@@ -25,6 +25,21 @@
       </div>
     </div>
     <button pButton type="button" (click)="performLogin()" label="Login" icon="fa-check" ></button>
+  </div>
+  <div  *ngIf="phase==1"  class="content">
+    <div class="ui-g ui-fluid box">
+      <div class="ui-g-12 ui-md-11 ui-md-offset-1">
+        <h3>Anmeldung (Phase 2)</h3>
+        <br/>
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="fa fa-user-secret"></i></span>
+          <input [(ngModel)]="pin" type="text" pInputText placeholder="PIN">
+        </div>
+        <br/>
+        <br/>
+      </div>
+    </div>
+    <button pButton type="button" (click)="sendPin()" label="Login" icon="fa-check" ></button>
   </div>
 
 </div>

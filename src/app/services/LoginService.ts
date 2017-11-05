@@ -26,6 +26,18 @@ export class LoginService {
       .catch(this.handleError);
   }
 
+  setPin(pin:number,uid:string): Observable<Login> {
+    this.url = Config.SERVER+"Diklabu/api/v1/auth/setpin/";  // URL to web API
+    console.log("LoginURL:"+this.url);
+    var body = {pin: pin,uid: uid};
+    console.log(" Sende zum Server: "+JSON.stringify(body));
+    return this.http.post(this.url,body)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+
+
   private extractData(res: Response) {
     console.log("URL="+this.url);
     console.log("Receive Login: "+JSON.stringify(res.json()));

@@ -34,6 +34,25 @@ export class PupilDetailService {
     return Observable.throw(errMsg);
   }
 
+  getSPupilDetails(id:number) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/x-www-form-urlencoded;  charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/sauth/"+id;  // URL to web API
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getSPupilImage(id:number) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/x-www-form-urlencoded;  charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/sauth/bild64/"+id;  // URL to web API
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
   getPupilDetails(id:number) {
     var headers = new Headers();
