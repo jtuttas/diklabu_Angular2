@@ -22,8 +22,8 @@
         <input (keydown)="keyDown($event)" style="width: 60px;" type="text" pInputText [(ngModel)]="editedAnwesenheit.BEMERKUNG" placeholder="Bem." />
       </ng-template>
       <ng-template let-car="rowData" pTemplate="body" let-i="rowIndex">
-        <a *ngIf="data[i]['id'+col.field.substr(2)] && data[i]['id'+col.field.substr(2)].startsWith('f')" class="select fehlend" [pTooltip]="data[i]['idkuk'+col.field.substr(2)]" tooltipPosition="top" >{{data[i]['id'+col.field.substr(2)]}}</a>
-        <a *ngIf="data[i]['id'+col.field.substr(2)] && !data[i]['id'+col.field.substr(2)].startsWith('f')" class="select" [pTooltip]="data[i]['idkuk'+col.field.substr(2)]" tooltipPosition="top" >{{data[i]['id'+col.field.substr(2)]}}</a>
+        <a *ngIf="data[i]['id'+col.field.substr(2)] && data[i]['id'+col.field.substr(2)].toLowerCase().startsWith('f')" class="select fehlend" [pTooltip]="data[i]['idkuk'+col.field.substr(2)]" tooltipPosition="top" >{{data[i]['id'+col.field.substr(2)]}}</a>
+        <a *ngIf="data[i]['id'+col.field.substr(2)] && !data[i]['id'+col.field.substr(2)].toLowerCase().startsWith('f')" class="select" [pTooltip]="data[i]['idkuk'+col.field.substr(2)]" tooltipPosition="top" >{{data[i]['id'+col.field.substr(2)]}}</a>
         <img *ngIf="data[i]['idb'+col.field.substr(2)]" src="../assets/flag.png" class="select" [pTooltip]="data[i]['idb'+col.field.substr(2)]" tooltipPosition="top" />
       </ng-template>
     </p-column>
