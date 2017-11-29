@@ -14,6 +14,7 @@ import {CourseSelectComponent} from "./CourseSelectComponent";
 import {MailObject} from "./data/MailObject";
 import {DokuService} from "./services/DokuService";
 import {Termin, Termindaten} from "./data/Termin";
+import {LoaderService} from "./loader/loader.service";
 
 @Component({
   selector: 'anwesenheit',
@@ -26,6 +27,7 @@ export class AnwesenheitsComponent implements OnInit {
   @ViewChild('mailDialog') mailDialog;
   @ViewChild('infoDialog') infoDialog;
   @ViewChild('dataTable') dataTable;
+
 
   public mailObject:MailObject=new MailObject("","","","");
 
@@ -48,13 +50,14 @@ export class AnwesenheitsComponent implements OnInit {
   von: Date;
   bis: Date;
 
-  constructor(private service:SharedService,private anwesenheitsService: AnwesenheitsService,private messageService: MessageService,private dokuService:DokuService) {
+  constructor(private loaderService:LoaderService, private service:SharedService,private anwesenheitsService: AnwesenheitsService,private messageService: MessageService,private dokuService:DokuService) {
   }
 
   ngOnInit() {
     console.log("INIT Anwesenheitskomponente");
+
     this.subscription = this.service.getCoursebook().subscribe(message => {
-      console.log("Anwesenheits Component constructor !"+message.constructor.name);
+      console.log("Anwesenheits Component Model Changed !"+message.constructor.name);
       this.update();
     });
     this.dokuService.setDisplayDoku(true,"Anwesenheit");
@@ -70,13 +73,16 @@ export class AnwesenheitsComponent implements OnInit {
   }
 
   update() {
+    console.log("Update startet");
     this.KName=CourseBookComponent.courseBook.course.KNAME;
     this.von=CourseBookComponent.courseBook.fromDate;
     this.bis=CourseBookComponent.courseBook.toDate;
     this.cols = new Array();
     this.colsOrg = new Array();
+
     this.buildCols(CourseSelectComponent.pupils);
     this.filterChanged({filter1: this.selectedFilter1,filter2: this.selectedFilter2})
+    console.log("Update Ended");
     //this.applyFilter();
   }
 
@@ -85,8 +91,13 @@ export class AnwesenheitsComponent implements OnInit {
    * @param {any[]} p Array mit Schülern
    */
   buildCols(p:any[]) {
+    this.cols.push({field: "info",header: "info"});
+    this.cols.push({field: "VNAME",header: "Vorname"});
+    this.cols.push({field: "NNAME",header: "Nachname"});
+    this.colsOrg.push({field: "info",header: "info"});
+    this.colsOrg.push({field: "VNAME",header: "Vorname"});
+    this.colsOrg.push({field: "NNAME",header: "Nachname"});
     this.data = new Array();
-
     this.cols.push({field: "info",header: "info"});
     this.cols.push({field: "VNAME",header: "Vorname"});
     this.cols.push({field: "NNAME",header: "Nachname"});
@@ -99,7 +110,6 @@ export class AnwesenheitsComponent implements OnInit {
       this.cols.push({field: "id"+CourseBook.toSQLString(from),header: CourseBook.toReadbleString(from)});
       this.colsOrg.push({field: "id"+CourseBook.toSQLString(from),header: CourseBook.toReadbleString(from)});
       //this.cols.push({DATUM: CourseBook.toSQLString(from)+"T00:00:00",field:"dummy"});
-      console.log ("Erzeuge Spalte: id"+CourseBook.toIDString(from));
       from=new Date(from.getTime()+1000*60*60*24);
     }
 

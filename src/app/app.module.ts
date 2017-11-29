@@ -11,7 +11,7 @@ import {DurationPickerComponent} from "./DurationPickerComponent";
 import {HttpClientModule} from "@angular/common/http";
 import {LFSelectComponent} from "./LFSelectComponent";
 import {NewVerlaufComponent} from "./NewVerlaufComponent";
-import {HttpModule} from "@angular/http";
+import {HttpModule, RequestOptions, XHRBackend} from "@angular/http";
 import {ListVerlaufComponent} from "./ListVerlaufComponent";
 import 'hammerjs';
 
@@ -26,7 +26,7 @@ import {
   GrowlModule,
   InputTextareaModule,
   InputTextModule,
-  MenuModule, OrderListModule, PanelModule, PasswordModule,
+  MenuModule, OrderListModule, PanelModule, PasswordModule, ProgressSpinnerModule,
   SharedModule, SplitButtonModule, TieredMenuModule, TooltipModule
 } from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
@@ -58,6 +58,11 @@ import {NotenService} from "./services/NotenService";
 import {AnwesenheitsFilterComponent} from "./AnwesenheitsFilterComponent";
 import {BetriebeComponent} from "./BetriebeComponent";
 import {PupilLoginComponent} from "./PupilLoginComponent";
+import {LoaderComponent} from "./loader/loader.component";
+import {LoaderService} from "./loader/loader.service";
+import {HttpService} from "./loader/HttpService";
+import {httpServiceFactory} from "./loader/http-service.factory";
+
 
 
 
@@ -67,7 +72,8 @@ import {PupilLoginComponent} from "./PupilLoginComponent";
     , ListVerlaufComponent,   CourseBookComponent, AnwesenheitsComponent, LoginComponent,
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
     CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente,
-    FehlzeitenComponent, NotenComponent, AnwesenheitsFilterComponent, BetriebeComponent,PupilLoginComponent
+    FehlzeitenComponent, NotenComponent, AnwesenheitsFilterComponent, BetriebeComponent,PupilLoginComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
@@ -75,14 +81,20 @@ import {PupilLoginComponent} from "./PupilLoginComponent";
     ,HttpClientModule,HttpModule, DataTableModule, SharedModule,
     GrowlModule,routing, DialogModule, ButtonModule, InputTextModule,
     InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule,MenuModule,PasswordModule, CalendarModule, DropdownModule,
-    DataListModule, OrderListModule, TieredMenuModule, DataGridModule, PanelModule
+    DataListModule, OrderListModule, TieredMenuModule, DataGridModule, PanelModule, ProgressSpinnerModule, ProgressSpinnerModule
   ],
   exports: [
 
   ],
   providers: [
     SharedService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService,
-    MailService,  PupilDetailService, DokuService, CourseService, NotenService
+    MailService,  PupilDetailService, DokuService, CourseService, NotenService,
+    LoaderService,
+    {
+      provide: HttpService,
+      useFactory: httpServiceFactory,
+      deps: [XHRBackend, RequestOptions, LoaderService ]
+    }
   ],
   entryComponents: [
 

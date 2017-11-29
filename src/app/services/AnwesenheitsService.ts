@@ -13,6 +13,8 @@ import {PupilDetails} from "../data/PupilDetails";
 import {PupilDetailService} from "./PupilDetailService";
 import {MessageService} from "primeng/components/common/messageservice";
 import {Subject} from "rxjs/Subject";
+import {Subscription} from "rxjs/Subscription";
+import {HttpService} from "../loader/HttpService";
 
 
 
@@ -21,10 +23,11 @@ export class AnwesenheitsService {
 
   public static anwesenheit;
   private url;
-  constructor (private http: Http,private pupilDetailService:PupilDetailService) {
+  constructor (private http: HttpService,private pupilDetailService:PupilDetailService) {
   }
 
   getAnwesenheit(): Observable<Anwesenheit[]> {
+
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");

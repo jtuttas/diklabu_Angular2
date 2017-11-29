@@ -8,11 +8,12 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {Config} from "../data/Config";
 import {DOCUMENT} from "@angular/platform-browser/src/dom/dom_tokens";
+import {HttpService} from "../loader/HttpService";
 
 @Injectable()
 export class MailService {
   private url;
-  constructor (private http: Http) {
+  constructor (private http: HttpService) {
   }
 
   private extractData(res: Response) {

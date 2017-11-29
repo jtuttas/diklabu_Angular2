@@ -1,0 +1,9 @@
+.loader-hidden {
+    visibility: hidden;
+}
+
+
+.content {
+  text-align: center;
+  height: 250px;
+}

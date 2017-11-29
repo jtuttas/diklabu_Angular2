@@ -7,11 +7,12 @@ import {CourseBookComponent} from "../CourseBookComponent";
 import {AppComponent} from "../app.component";
 import {Config} from "../data/Config";
 import {PupilDetails} from "../data/PupilDetails";
+import {HttpService} from "../loader/HttpService";
 
 @Injectable()
 export class PupilDetailService {
   private url;
-  constructor (private http: Http) {
+  constructor (private http: HttpService) {
   }
 
   private extractData(res: Response) {

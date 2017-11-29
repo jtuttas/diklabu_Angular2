@@ -1,0 +1,6 @@
+<p-dialog header="Loading...." [(visible)]="show" [closable]="false" [width]="300" [height]="250" [resizable]="false">
+  <div [class.loader-hidden]="!show" class="content" >
+    <p-progressSpinner *ngIf="show"></p-progressSpinner>
+  </div>
+
+</p-dialog>

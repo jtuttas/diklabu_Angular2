@@ -8,12 +8,13 @@ import {CourseBookComponent} from "../CourseBookComponent";
 import {Pupil} from "../data/Pupil";
 import {Company} from "../data/Company";
 import {Config} from "../data/Config";
+import {HttpService} from "../loader/HttpService";
 
 @Injectable()
 export class PupilService {
 
   private url;
-  constructor (private http: Http) {}
+  constructor (private http: HttpService) {}
 
   getPupils(kname:string): Observable<Pupil[]> {
     var headers = new Headers();

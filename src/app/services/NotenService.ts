@@ -6,13 +6,14 @@ import {Config} from "../data/Config";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {Grade} from "../data/Grades";
+import {HttpService} from "../loader/HttpService";
 
 @Injectable()
 export class NotenService {
 
   private url:string;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpService) {
   }
 
   getCurrentYear() {

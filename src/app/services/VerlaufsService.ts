@@ -8,13 +8,14 @@ import {CourseBook} from "../data/CourseBook";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {Config} from "../data/Config";
+import {HttpService} from "../loader/HttpService";
 
 @Injectable()
 export class VerlaufsService {
 
   private url;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpService) {
   }
 
   getVerlauf(): Observable<Verlauf[]> {
