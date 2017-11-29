@@ -91,12 +91,6 @@ export class AnwesenheitsComponent implements OnInit {
    * @param {any[]} p Array mit Schülern
    */
   buildCols(p:any[]) {
-    this.cols.push({field: "info",header: "info"});
-    this.cols.push({field: "VNAME",header: "Vorname"});
-    this.cols.push({field: "NNAME",header: "Nachname"});
-    this.colsOrg.push({field: "info",header: "info"});
-    this.colsOrg.push({field: "VNAME",header: "Vorname"});
-    this.colsOrg.push({field: "NNAME",header: "Nachname"});
     this.data = new Array();
     this.cols.push({field: "info",header: "info"});
     this.cols.push({field: "VNAME",header: "Vorname"});

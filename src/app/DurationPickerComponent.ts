@@ -11,12 +11,29 @@ import {CourseBookComponent} from "./CourseBookComponent";
 export class DurationPickerComponent {
   @Output() durationUpdated = new EventEmitter();
 
+  de: any;
+
   public fromDate: Date = CourseBookComponent.courseBook.fromDate;
   public toDate: Date = CourseBookComponent.courseBook.toDate;
 
   constructor(private messageService: MessageService) {
     this.fromDate.setHours(0,0,0,0);
     this.toDate.setHours(23,59,59,0);
+  }
+
+  ngOnInit() {
+
+      this.de = {
+        firstDayOfWeek: 1,
+        dayNames: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnestag", "Freitag", "Samstag"],
+        dayNamesShort: ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+        dayNamesMin: ["So","Mo","Di","Mi","Do","Fr","Sa"],
+        monthNames: [ "Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember" ],
+        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Mai", "Jun","Jul", "Aug", "Sep", "Okt", "Nov", "Dez" ],
+        today: 'Heute',
+        clear: 'löschen'
+      };
+
   }
 
   fromChange(event): void {

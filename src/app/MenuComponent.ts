@@ -5,6 +5,7 @@ import {LoginService} from "./services/LoginService";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/components/common/messageservice";
 import {CourseSelectComponent} from "./CourseSelectComponent";
+import {Config} from "./data/Config";
 
 @Component({
   selector: 'menu',
@@ -22,19 +23,45 @@ export class MenuComponent {
   }
 
   ngOnInit() {
-    this.items = [
-      {label: 'Verlauf', icon: 'fa-flash', command: event2 => this.showVerlauf(event2)},
-      {label: 'Anwesenheit', icon: 'fa-check',
-        items: [
-          {label: 'Übersicht', icon: 'fa-table', command: event2 => this.showAnwesenheit(event2)},
-          {label: 'heute', icon: 'fa-user-plus',command: event2 => this.showTodayAnwesenheit(event2)}
-        ]
-      },
-      {label: 'Fehlzeiten', icon: 'fa-hotel', command: event2 => this.showFehlzeiten(event2)},
-      {label: 'Klasse/Betriebe', icon: 'fa-info-circle', command: event2 => this.showBetriebe(event2)},
-      {label: 'Noten', icon: 'fa-graduation-cap', command: event2 => this.showGrades(event2)},
-      {label: 'Logout', icon: 'fa-times', command: event2 => this.logout(event2)}
-    ];
+    if (CourseBookComponent.courseBook.role=="Verwaltung" || CourseBookComponent.courseBook.role=="Admin" || Config.debug) {
+      this.items = [
+        {label: 'Verlauf', icon: 'fa-flash', command: event2 => this.showVerlauf(event2)},
+        {
+          label: 'Anwesenheit', icon: 'fa-check',
+          items: [
+            {label: 'Übersicht', icon: 'fa-table', command: event2 => this.showAnwesenheit(event2)},
+            {label: 'heute', icon: 'fa-user-plus', command: event2 => this.showTodayAnwesenheit(event2)}
+          ]
+        },
+        {label: 'Fehlzeiten', icon: 'fa-hotel', command: event2 => this.showFehlzeiten(event2)},
+        {label: 'Klasse/Betriebe', icon: 'fa-info-circle', command: event2 => this.showBetriebe(event2)},
+        {label: 'Noten', icon: 'fa-graduation-cap', command: event2 => this.showGrades(event2)},
+        {
+          label: 'Verwaltung', icon: 'fa-eye',
+          items: [
+            {label: 'Klassenzugehörigkeit', icon: 'fa-table', command: event2 => this.showAnwesenheit(event2)},
+          ]
+        },
+        {label: 'Logout', icon: 'fa-times', command: event2 => this.logout(event2)}
+      ];
+
+    }
+    else {
+      this.items = [
+        {label: 'Verlauf', icon: 'fa-flash', command: event2 => this.showVerlauf(event2)},
+        {
+          label: 'Anwesenheit', icon: 'fa-check',
+          items: [
+            {label: 'Übersicht', icon: 'fa-table', command: event2 => this.showAnwesenheit(event2)},
+            {label: 'heute', icon: 'fa-user-plus', command: event2 => this.showTodayAnwesenheit(event2)}
+          ]
+        },
+        {label: 'Fehlzeiten', icon: 'fa-hotel', command: event2 => this.showFehlzeiten(event2)},
+        {label: 'Klasse/Betriebe', icon: 'fa-info-circle', command: event2 => this.showBetriebe(event2)},
+        {label: 'Noten', icon: 'fa-graduation-cap', command: event2 => this.showGrades(event2)},
+        {label: 'Logout', icon: 'fa-times', command: event2 => this.logout(event2)}
+      ];
+    }
   }
 
   showVerlauf(e) {
