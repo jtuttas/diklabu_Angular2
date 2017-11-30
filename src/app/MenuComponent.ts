@@ -39,7 +39,7 @@ export class MenuComponent {
         {
           label: 'Verwaltung', icon: 'fa-eye',
           items: [
-            {label: 'Klassenzugehörigkeit', icon: 'fa-table', command: event2 => this.showAnwesenheit(event2)},
+            {label: 'Klassenzugehörigkeit', icon: 'fa-table', command: event2 => this.showZugehoerigkeit(event2)},
           ]
         },
         {label: 'Logout', icon: 'fa-times', command: event2 => this.logout(event2)}
@@ -67,6 +67,10 @@ export class MenuComponent {
   showVerlauf(e) {
     console.log("show Verlauf");
     this.router.navigate(['/diklabu', { outlets: { sub: 'verlauf' } }]);
+  }
+  showZugehoerigkeit(e) {
+    console.log("show Zugehörigkeit");
+    this.router.navigate(['/diklabu', { outlets: { sub: 'zugehoerigkeit' } }]);
   }
   showAnwesenheit(e) {
     console.log("show Anwesenheit");

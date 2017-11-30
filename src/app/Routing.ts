@@ -12,6 +12,7 @@ import {FehlzeitenComponent} from "./FehlzeitenComponent";
 import {NotenComponent} from "./NotenComponent";
 import {BetriebeComponent} from "./BetriebeComponent";
 import {PupilLoginComponent} from "./PupilLoginComponent";
+import {KurszugehoerigkeitComponent} from "./KurszugehoerigkeitComponent";
 
 const appRoutes: Routes = [
   {
@@ -21,7 +22,7 @@ const appRoutes: Routes = [
   },
   {path: 'login', component: LoginComponent},
   {
-    path: 'diklabu', component: diklabuComponent, canActivate: [AuthenticationGuard], data: {roles: ['Admin','Lehrer']},
+    path: 'diklabu', component: diklabuComponent, canActivate: [AuthenticationGuard], data: {roles: ['Admin','Lehrer',"Verwaltung"]},
 
     children: [
       {path: 'verlauf', component: VerlaufComponent, outlet: 'sub'},
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
       {path: 'todayanwesenheit', component: TodayAnwesenheitsComponente, outlet: 'sub'},
       {path: 'fehlzeiten', component: FehlzeitenComponent, outlet: 'sub'},
       {path: 'noten', component: NotenComponent, outlet: 'sub'},
-      {path: 'betriebe', component: BetriebeComponent, outlet: 'sub'}
+      {path: 'betriebe', component: BetriebeComponent, outlet: 'sub'},
+      {path: 'zugehoerigkeit', component: KurszugehoerigkeitComponent, outlet: 'sub'}
     ]
   },
   {

@@ -26,7 +26,7 @@ import {
   GrowlModule,
   InputTextareaModule,
   InputTextModule,
-  MenuModule, OrderListModule, PanelModule, PasswordModule, ProgressSpinnerModule,
+  MenuModule, OrderListModule, PanelModule, PasswordModule, PickListModule, ProgressSpinnerModule,
   SharedModule, SplitButtonModule, TieredMenuModule, TooltipModule
 } from "primeng/primeng";
 import {AnwesenheitsService} from "./services/AnwesenheitsService";
@@ -62,6 +62,7 @@ import {LoaderComponent} from "./loader/loader.component";
 import {LoaderService} from "./loader/loader.service";
 import {HttpService} from "./loader/HttpService";
 import {httpServiceFactory} from "./loader/http-service.factory";
+import {KurszugehoerigkeitComponent} from "./KurszugehoerigkeitComponent";
 
 
 
@@ -73,7 +74,7 @@ import {httpServiceFactory} from "./loader/http-service.factory";
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
     CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente,
     FehlzeitenComponent, NotenComponent, AnwesenheitsFilterComponent, BetriebeComponent,PupilLoginComponent,
-    LoaderComponent
+    LoaderComponent, KurszugehoerigkeitComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
@@ -81,7 +82,8 @@ import {httpServiceFactory} from "./loader/http-service.factory";
     ,HttpClientModule,HttpModule, DataTableModule, SharedModule,
     GrowlModule,routing, DialogModule, ButtonModule, InputTextModule,
     InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule,MenuModule,PasswordModule, CalendarModule, DropdownModule,
-    DataListModule, OrderListModule, TieredMenuModule, DataGridModule, PanelModule, ProgressSpinnerModule, ProgressSpinnerModule
+    DataListModule, OrderListModule, TieredMenuModule, DataGridModule, PanelModule, ProgressSpinnerModule, ProgressSpinnerModule,
+    PickListModule
   ],
   exports: [
 
