@@ -3,9 +3,11 @@
 
   <ng-template let-pupil pTemplate="item">
     <div style="text-align: left;">
-      <img (click)="editPupil(pupil)" src="../assets/setting.png" style="vertical-align :middle;cursor: crosshair;"/>
-      <span>{{pupil.VNAME}} {{pupil.NNAME}}</span>
+      <img (click)="editPupil(pupil)" src="../assets/setting.png" style="vertical-align :middle;cursor: help;"/>
+      <span *ngIf="pupil.ABGANG=='N'">{{pupil.VNAME}} {{pupil.NNAME}}</span>
+      <span *ngIf="pupil.ABGANG!='N'"><i>{{pupil.VNAME}} {{pupil.NNAME}} (ABGANG)</i></span>
     </div>
   </ng-template>
 
 </p-pickList>
+<pupileditdetails #editDialog (editCompleted)="editCompleted($event)"></pupileditdetails>

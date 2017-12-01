@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {Pupil} from "./data/Pupil";
 import {CourseSelectComponent} from "./CourseSelectComponent";
 import {SharedService} from "./services/SharedService";
@@ -6,13 +6,17 @@ import {Subscription} from "rxjs/Subscription";
 import {PupilService} from "./services/PupilService";
 import {MessageService} from "primeng/components/common/messageservice";
 import {CourseBookComponent} from "./CourseBookComponent";
-
+import {CourseService} from "./services/CourseService";
 @Component({
   selector: 'verwaltung',
   templateUrl: './KurszugehoerigkeitComponent.html',
 })
 
 export class KurszugehoerigkeitComponent {
+  @ViewChild('editDialog') editDialog;
+
+  editedPupil:Pupil;
+
   allPupils: Pupil[];
   orgAll:Pupil[];
 
@@ -22,7 +26,7 @@ export class KurszugehoerigkeitComponent {
   subscription: Subscription;
   courseName="Schüler des Kurses "+CourseBookComponent.courseBook.course.KNAME;
 
-  constructor(private service:SharedService,private pupilServive:PupilService,private messageService: MessageService) {
+  constructor(private service:SharedService,private pupilServive:PupilService,private messageService: MessageService,public courseService:CourseService) {
     this.subscription = this.service.getCoursebook().subscribe(message => {
       console.log("KurszugehoerigkeitComponent Component Model Changed !"+message.constructor.name);
       this.coursePupils = new Array();
@@ -115,6 +119,8 @@ export class KurszugehoerigkeitComponent {
         else {
           console.log("Füge hinzu zur Liste "+JSON.stringify(p));
           CourseSelectComponent.pupils.push(p);
+          this.orgCourse.push(p);
+          this.courseService.anzahl=CourseSelectComponent.pupils.length;
         }
 
 
@@ -145,6 +151,8 @@ export class KurszugehoerigkeitComponent {
         }
         else {
           CourseSelectComponent.pupils = CourseSelectComponent.pupils.filter(obj => obj.id != p.id);
+          this.orgCourse = this.orgCourse.filter(obj => obj.id != p.id);
+          this.courseService.anzahl=CourseSelectComponent.pupils.length;
         }
 
 
@@ -160,6 +168,40 @@ export class KurszugehoerigkeitComponent {
   }
 
   editPupil(p:Pupil) {
+    this.editedPupil=p;
     console.log("Edit Pupil "+JSON.stringify(p));
+    this.editDialog.showDialog(p);
+  }
+
+  editCompleted(event:Pupil) {
+    console.log("Edit Completed: "+JSON.stringify(event));
+    let p:Pupil = this.allPupils.find(x => x.id == event.id);
+    p.VNAME=event.VNAME;
+    p.NNAME=event.NNAME;
+    p.ABGANG=event.ABGANG;
+    p = this.orgAll.find(x => x.id == event.id);
+    p.VNAME=event.VNAME;
+    p.NNAME=event.NNAME;
+    p.ABGANG=event.ABGANG;
+    p = this.coursePupils.find(x => x.id == event.id);
+    if (p) {
+      p.VNAME = event.VNAME;
+      p.NNAME = event.NNAME;
+      p.ABGANG = event.ABGANG;
+    }
+    p = this.orgCourse.find(x => x.id == event.id);
+    if (p) {
+      p.VNAME = event.VNAME;
+      p.NNAME = event.NNAME;
+      p.ABGANG = event.ABGANG;
+    }
+    p = CourseSelectComponent.pupils.find(x => x.id == event.id);
+    if (p) {
+      p.VNAME = event.VNAME;
+      p.NNAME = event.NNAME;
+      p.ABGANG = event.ABGANG;
+      this.courseService.anzahl=CourseSelectComponent.pupils.filter(x=> x.ABGANG=="N").length;
+    }
+
   }
 }

@@ -30,12 +30,14 @@ export class CourseSelectComponent {
 
   public courses: SelectItem[];
   public compDisabled: boolean = true;
-  public anzahl = 0;
+
   public static pupils: Pupil[];
 
-  constructor(http: HttpClient, private messageService: MessageService, private pupilService: PupilService, private courseService: CourseService) {
+  constructor(http: HttpClient, private messageService: MessageService, private pupilService: PupilService, public courseService: CourseService) {
 
     // Make the HTTP request:
+
+
     http.get(Config.SERVER + "Diklabu/api/v1/noauth/klassen").subscribe(data => {
         // Read the result field from the JSON response.
         console.log("CourseSelectComponent receive: " + JSON.stringify(data));
@@ -83,13 +85,14 @@ export class CourseSelectComponent {
 
   updated() {
     console.log("CourseSelecComponent updated():" + this.selectedCourse);
-    this.pupilService.getPupils(this.selectedCourse.KNAME)
+    this.pupilService.getPupils(this.selectedCourse.id)
       .subscribe(
-        pupils => {
-          CourseSelectComponent.pupils = pupils;
-          this.anzahl = pupils.length;
+        data => {
+          CourseSelectComponent.pupils=data;
+          console.log("getPupils habe empfangen:"+JSON.stringify(data))
+          this.courseService.anzahl = CourseSelectComponent.pupils.filter(x=> x.ABGANG=="N").length;
           this.courseUpdated.emit(this.selectedCourse);
-          console.log("Insgesamt " + pupils.length + " Schüler  empfangen!")
+          console.log("Insgesamt " + CourseSelectComponent.pupils.length + " Schüler  empfangen!")
         }
       )
   }

@@ -30,7 +30,7 @@ export class TodayAnwesenheitsComponente {
   // Injizieren der notwendigen Services
   constructor(private service: SharedService, private anwesenheitsService: AnwesenheitsService, private messageService: MessageService, private courseService: CourseService,private dokuService:DokuService) {
     console.log(" TodayAnwesenheits Component constructor");
-    this.pupils = <APupil[]>CourseSelectComponent.pupils;
+    this.pupils = <APupil[]>CourseSelectComponent.pupils.filter(x=> x.ABGANG=="N");
     for (var i = 0; i < this.pupils.length; i++) {
       this.pupils[i].imageSrc = "../assets/anonym.gif"
       this.pupils[i].vermerkIndex = 0;
@@ -46,7 +46,7 @@ export class TodayAnwesenheitsComponente {
     // Beim CourseBook unterschreiben (Observer), um über Änderung am Klassenbuch (Klasse, Zeitbereit) informiert zu werden
     this.subscription = this.service.getCoursebook().subscribe(message => {
       console.log("TodayAnwesenheits Component new Data !" + message.constructor.name);
-      this.pupils = <APupil[]>CourseSelectComponent.pupils;
+      this.pupils = <APupil[]>CourseSelectComponent.pupils.filter(x=> x.ABGANG=="N");
       for (var i = 0; i < this.pupils.length; i++) {
         this.pupils[i].imageSrc = "../assets/anonym.gif"
         this.pupils[i].vermerkIndex = 0;

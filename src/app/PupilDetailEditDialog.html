@@ -1,0 +1,55 @@
+<p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="600" appendTo="body">
+  <div class="ui-g ui-fluid ui-g-12">
+    <div class="ui-md-5">
+      <pupilimage #pimage></pupilimage>
+      <strong>Bemerkungen</strong>
+      <textarea pInputTextarea [(ngModel)]="pupilDetails.info"></textarea>
+      <button pButton type="button" (click)="updateBem()" icon="fa-check" label="Bem. aktualisieren"
+              class="ui-button-success"></button>
+    </div>
+    <div class="ui-md-7">
+      <h3>Schülerdaten</h3>
+       <p style="padding-top: 10px">
+      <span class="ui-float-label">
+       <input id="vname" type="text" [(ngModel)]="pupilDetails.vorname" pInputText/>
+       <label for="vname">Vorname</label>
+       </span>
+         </p>
+      <p style="padding-top: 10px">
+      <span class="ui-float-label">
+       <input id="nname" type="text" [(ngModel)]="pupilDetails.name" pInputText/>
+       <label for="nname">Name</label>
+       </span>
+      </p>
+      <p style="padding-top: 10px">
+      <span class="ui-float-label">
+       <input id="email" type="text" [(ngModel)]="pupilDetails.email" pInputText/>
+       <label for="email">Email</label>
+       </span>
+      </p>
+      <strong>Geb. Datum</strong>
+      <p-calendar  [(ngModel)]="gebDat" [showIcon]="true" [locale]="de" dateFormat="dd.mm.yy"></p-calendar>
+      <br/>
+      <br/>
+      <strong>Abgang</strong>
+      <br/>
+      <p-inputSwitch id="abgang" onLabel="Ja" offLabel="Nein" [(ngModel)]="abgang"></p-inputSwitch>
+      <h3>Ausbilder</h3>
+      <p> {{pupilDetails.ausbilder.NNAME}} <a href='mailto:{{pupilDetails.ausbilder.EMAIL}}'>{{pupilDetails.ausbilder.EMAIL}}</a>
+      ,Tel: {{pupilDetails.ausbilder.TELEFON}}
+      ,Fax: {{pupilDetails.ausbilder.FAX}}
+      <h3>Betrieb</h3>
+      {{pupilDetails.betrieb.NAME}}, {{pupilDetails.betrieb.STRASSE}},{{pupilDetails.betrieb.PLZ}} {{pupilDetails.betrieb.NAME}}
+      <h3>Klassen/Kurse</h3>
+      <ul>
+        <li *ngFor="let c of pupilDetails.klassen; let j = index" [value]="j">
+          {{c.KNAME}}
+        </li>
+      </ul>
+
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" (click)="setPupil()" label="Aktualisieren"></button>
+  </p-footer>
+</p-dialog>

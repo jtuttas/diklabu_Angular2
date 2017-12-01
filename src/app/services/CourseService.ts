@@ -12,6 +12,7 @@ import {DokuComponent} from "../DokuComponent";
 export class CourseService {
 
   private url;
+  public anzahl=0;
 
   constructor(private http: Http) {
   }
@@ -73,6 +74,14 @@ export class CourseService {
     this.url = Config.SERVER+"Diklabu/api/v1/klasse/"+kname+"/bilder64/"+height;  // URL to web API
     console.log("get CoursePictures  URL="+this.url);
     return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getCourses() {
+    this.url = Config.SERVER + "Diklabu/api/v1/noauth/klassen";
+    console.log("get Courses  URL="+this.url);
+    return this.http.get(this.url)
       .map(this.extractData)
       .catch(this.handleError);
   }

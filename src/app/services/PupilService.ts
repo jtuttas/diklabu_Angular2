@@ -11,6 +11,7 @@ import {Config} from "../data/Config";
 import {HttpService} from "../loader/HttpService";
 import {Anwesenheitseintrag} from "../data/Anwesenheitseintrag";
 import {Course} from "../data/Course";
+import {CourseBook} from "../data/CourseBook";
 
 @Injectable()
 export class PupilService {
@@ -18,12 +19,12 @@ export class PupilService {
   private url;
   constructor (private http: HttpService) {}
 
-  getPupils(kname:string): Observable<Pupil[]> {
+  getPupils(id:number): Observable<Pupil[]> {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = Config.SERVER+"Diklabu/api/v1/klasse/"+kname;  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/klasse/member/"+id;  // URL to web API
     console.log("get pupils URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)
@@ -50,6 +51,36 @@ export class PupilService {
     this.url = Config.SERVER+"Diklabu/api/v1/klasse/betriebe/"+kname;  // URL to web API
     console.log("get companies URL="+this.url);
     return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  setPupil(pupil:Pupil) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/schueler/verwaltung/"+pupil.id;  // URL to web API
+    console.log("URL="+this.url);
+    var header;
+    if (pupil.GEBDAT) {
+      header = {
+        ABGANG: pupil.ABGANG,
+        EMAIL: pupil.EMAIL,
+        NNAME: pupil.NNAME,
+        VNAME: pupil.VNAME,
+        GEBDAT: CourseBook.toSQLString(pupil.GEBDAT)
+      };
+    }
+    else {
+      header = {
+        ABGANG: pupil.ABGANG,
+        EMAIL: pupil.EMAIL,
+        NNAME: pupil.NNAME,
+        VNAME: pupil.VNAME,
+      }
+    }
+    console.log("Sende zum Server: "+JSON.stringify(header));
+    return this.http.post(this.url,header,{headers: headers})
       .map(this.extractData)
       .catch(this.handleError);
   }

@@ -73,14 +73,19 @@ export class AnwesenheitsComponent implements OnInit {
   }
 
   update() {
-    console.log("Update startet");
+    console.log("Update startet"+JSON.stringify(CourseSelectComponent.pupils));
     this.KName=CourseBookComponent.courseBook.course.KNAME;
     this.von=CourseBookComponent.courseBook.fromDate;
     this.bis=CourseBookComponent.courseBook.toDate;
     this.cols = new Array();
     this.colsOrg = new Array();
 
-    this.buildCols(CourseSelectComponent.pupils);
+    let p:Pupil[]=CourseSelectComponent.pupils;
+    console.log("Klasse hat "+p.length+" Schüler: Abgang[0]=("+CourseSelectComponent.pupils[0].ABGANG+")");
+    p=p.filter(x=> x.ABGANG=="N");
+    console.log("Klasse gefiltert hat "+p.length+" Schüler");
+
+    this.buildCols(CourseSelectComponent.pupils.filter(x=> x.ABGANG=="N"));
     this.filterChanged({filter1: this.selectedFilter1,filter2: this.selectedFilter2})
     console.log("Update Ended");
     //this.applyFilter();
