@@ -1,6 +1,6 @@
 import {Course} from "./Course";
 
-class Ausbilder {
+export class Ausbilder {
   EMAIL: string="";
   FAX: string = "";
   ID: number = -1;
@@ -9,7 +9,7 @@ class Ausbilder {
   TELEFON: string = "";
 }
 
-class Betrieb {
+export class Betrieb {
   ID: number = -1;
   NAME: string = "";
   ORT: string = "";

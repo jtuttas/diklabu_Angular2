@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild} from "@angular/core";
 import {MessageService} from "primeng/components/common/messageservice";
-import {PupilDetails} from "./data/PupilDetails";
+import {Ausbilder, Betrieb, PupilDetails} from "./data/PupilDetails";
 import {PupilDetailService} from "./services/PupilDetailService";
 import {Pupil} from "./data/Pupil";
 import {PupilImageComponent} from "./PupilImageComponent";
@@ -32,6 +32,13 @@ export class PupilDetailDialog {
     this.pupilDetailService.getPupilDetails(p.id).subscribe(
       data => {
         this.pupilDetails = data;
+
+        if (!this.pupilDetails.ausbilder) {
+          this.pupilDetails.ausbilder=new Ausbilder();
+        }
+        if (!this.pupilDetails.betrieb) {
+          this.pupilDetails.betrieb= new Betrieb();
+        }
       },
       err => {
         console.log("Error Details: +err");
