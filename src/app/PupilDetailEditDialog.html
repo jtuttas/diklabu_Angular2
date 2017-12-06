@@ -1,7 +1,7 @@
 <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" [width]="600" appendTo="body">
   <div class="ui-g ui-fluid ui-g-12">
-    <div class="ui-md-5">
-      <pupilimage #pimage></pupilimage>
+    <div *ngIf="this.pupilDetails.id" class="ui-md-5">
+      <pupilimage   #pimage></pupilimage>
       <strong>Bemerkungen</strong>
       <textarea pInputTextarea [(ngModel)]="pupilDetails.info"></textarea>
       <button pButton type="button" (click)="updateBem()" icon="fa-check" label="Bem. aktualisieren"

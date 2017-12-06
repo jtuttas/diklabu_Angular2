@@ -85,6 +85,26 @@ export class PupilService {
       .catch(this.handleError);
   }
 
+  newPupil(pupil:Pupil) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+    this.url = Config.SERVER+"Diklabu/api/v1/schueler/admin/";  // URL to web API
+    console.log("URL="+this.url);
+    var header;
+    header = {
+      ABGANG: pupil.ABGANG,
+      EMAIL: pupil.EMAIL,
+      NNAME: pupil.NNAME,
+      VNAME: pupil.VNAME,
+      GEBDAT: CourseBook.toSQLString(pupil.GEBDAT)
+    };
+    console.log("Sende zum Server: "+JSON.stringify(header));
+    return this.http.post(this.url,header,{headers: headers})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
   addPupilToCourse(pupil:Pupil,course:Course) {
     console.log("Add Pupil: "+JSON.stringify(pupil)+ " to course "+JSON.stringify(course));
     var headers = new Headers();

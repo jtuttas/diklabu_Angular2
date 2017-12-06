@@ -7,6 +7,7 @@ import {PupilImageComponent} from "./PupilImageComponent";
 import {DatepickerComponent} from "./DatepickerComponent";
 import {CourseBook} from "./data/CourseBook";
 import {PupilService} from "./services/PupilService";
+import {DokuService} from "./services/DokuService";
 
 @Component({
   selector: 'pupileditdetails',
@@ -21,19 +22,20 @@ import {PupilService} from "./services/PupilService";
 export class PupilDetailEditDialog {
   @ViewChild('pimage') pimage:PupilImageComponent;
   @Output() editCompleted = new EventEmitter();
+  @Output() newCompleted = new EventEmitter();
 
   public display:boolean=false;
-  public titel:string="";
+  public titel:string="Neuen Schüler anlegen";
   public pupilDetails:PupilDetails=new PupilDetails();
   abgang: boolean =false
   gebDat: Date;
   de: any;
 
-  constructor(private pupilDetailService:PupilDetailService,private messageService: MessageService,private pupilService:PupilService) {
+  constructor(private dokuService:DokuService, private pupilDetailService:PupilDetailService,private messageService: MessageService,private pupilService:PupilService) {
 
   }
   ngOnInit() {
-
+    this.dokuService.setDisplayDoku(false);
     this.de = {
       firstDayOfWeek: 1,
       dayNames: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnestag", "Freitag", "Samstag"],
@@ -46,39 +48,49 @@ export class PupilDetailEditDialog {
     };
   }
   showDialog(p:Pupil) {
-    this.pimage.getImage(p);
-    this.titel = p.VNAME + " " + p.NNAME;
     this.display = true;
-    this.pupilDetailService.getPupilDetails(p.id).subscribe(
-      data => {
-        this.pupilDetails = data;
-        if (this.pupilDetails.gebDatum) {
+    if (p.id) {
+      this.pupilDetails.id=p.id;
+      this.titel = p.VNAME + " " + p.NNAME;
+      this.pupilDetailService.getPupilDetails(p.id).subscribe(
+        data => {
+          this.pupilDetails = data;
+          if (this.pupilDetails.gebDatum) {
 
-        this.gebDat = new Date(this.pupilDetails.gebDatum);
-        this.gebDat.setMinutes(0);
-        this.gebDat.setHours(0);
-        this.gebDat.setSeconds(0);
-        if (!this.pupilDetails.ausbilder) {
-          this.pupilDetails.ausbilder=new Ausbilder();
-        }
-        if (!this.pupilDetails.betrieb) {
-          this.pupilDetails.betrieb= new Betrieb();
-        }
-      }
-      else {
-          this.gebDat=null;
-        }
-        if (this.pupilDetails.abgang=="J") {
-          this.abgang=true;
-        }
-        else {
-          this.abgang=false;
-        }
-      },
-      err => {
-        console.log("Error Details: +err");
-        this.messageService.add({severity: 'error', summary: 'Fehler', detail: err});
-      });
+            this.gebDat = new Date(this.pupilDetails.gebDatum);
+            this.gebDat.setMinutes(0);
+            this.gebDat.setHours(0);
+            this.gebDat.setSeconds(0);
+            if (!this.pupilDetails.ausbilder) {
+              this.pupilDetails.ausbilder = new Ausbilder();
+            }
+            if (!this.pupilDetails.betrieb) {
+              this.pupilDetails.betrieb = new Betrieb();
+            }
+          }
+          else {
+            this.gebDat = null;
+          }
+          if (this.pupilDetails.abgang == "J") {
+            this.abgang = true;
+          }
+          else {
+            this.abgang = false;
+          }
+          this.pimage.getImage(p);
+        },
+        err => {
+          console.log("Error Details: +err");
+          this.messageService.add({severity: 'error', summary: 'Fehler', detail: err});
+        });
+    }
+    else {
+      this.pupilDetails =new PupilDetails();
+      this.titel = "Neuen Schüler anlegen.."
+      this.gebDat = null;
+      this.pupilDetails.id=null;
+
+    }
   }
 
   updateBem() {
@@ -93,14 +105,21 @@ export class PupilDetailEditDialog {
   }
 
   setPupil() {
-    this.display=false;
     let pupil:Pupil = new Pupil();
     pupil.id=this.pupilDetails.id;
     if (this.pupilDetails.vorname) {
       pupil.VNAME=this.pupilDetails.vorname;
     }
+    else {
+      this.messageService.add({severity: 'warning', summary: 'Warnung', detail: "Der Schüler muss einen Vornamen haben!"});
+      return;
+    }
     if (this.pupilDetails.name) {
       pupil.NNAME=this.pupilDetails.name;
+    }
+    else {
+      this.messageService.add({severity: 'warning', summary: 'Warnung', detail: "Der Schüler muss einen Nachnamen haben!"});
+      return;
     }
     if (this.pupilDetails.email) {
       pupil.EMAIL=this.pupilDetails.email;
@@ -115,14 +134,39 @@ export class PupilDetailEditDialog {
       pupil.GEBDAT=this.gebDat;
       console.log("Eingestellt ist "+this.gebDat);
     }
-    this.pupilService.setPupil(pupil).subscribe(
-      data => {
-        console.log("Received: "+JSON.stringify(data));
-        this.editCompleted.emit(pupil);
-      },
-      err => {
-        this.messageService.add({severity: 'error', summary: 'Fehler beim Ändern der Daten von '+pupil.VNAME+' '+pupil.NNAME+':'+ err});
-      }
-    );
+    else {
+      this.messageService.add({severity: 'warning', summary: 'Warnung', detail: "Der Schüler muss ein Geburtsdatum haben!"});
+      return;
+    }
+    this.display=false;
+    if (pupil.id) {
+      this.pupilService.setPupil(pupil).subscribe(
+        data => {
+          console.log("Received: " + JSON.stringify(data));
+          this.editCompleted.emit(pupil);
+        },
+        err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Fehler beim Ändern der Daten von ' + pupil.VNAME + ' ' + pupil.NNAME + ':' + err
+          });
+        }
+      );
+    }
+    else {
+      this.pupilService.newPupil(pupil).subscribe(
+        data => {
+          console.log("New Pupil Received: " + JSON.stringify(data));
+          this.newCompleted.emit(data);
+          this.messageService.add({severity: 'info', summary: 'Information', detail: "Neuen Schüler "+pupil.VNAME+" "+pupil.NNAME+" angelegt!"});
+        },
+        err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Fehler beim hinzufügen von ' + pupil.VNAME + ' ' + pupil.NNAME + ':' + err
+          });
+        }
+      );
+    }
   }
 }

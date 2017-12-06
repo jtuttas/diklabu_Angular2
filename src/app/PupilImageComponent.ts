@@ -30,21 +30,24 @@ export class PupilImageComponent {
   getImage(p:Pupil) {
     this.currentPupil=p;
     this.imgSrc="../assets/anonym.gif";
-    this.uploadUrl=Config.SERVER+"/Diklabu/api/v1/schueler/bild/"+p.id;
-    this.pupilDetailService.getPupilImage(p.id).subscribe(
-      data => {
-      if (data) {
-        console.log("Bild vorhanden");
-        let base64:string=data.base64;
-        var patt = /(?:\r\n|\r|\n)/g;
-        base64 = base64.replace(patt,"");
-        this.imgSrc="data:image/png;base64,"+base64;
+    if (p.id) {
+      this.uploadUrl = Config.SERVER + "/Diklabu/api/v1/schueler/bild/" + p.id;
+      this.pupilDetailService.getPupilImage(p.id).subscribe(
+        data => {
+          if (data) {
+            console.log("Bild vorhanden");
+            let base64: string = data.base64;
+            var patt = /(?:\r\n|\r|\n)/g;
+            base64 = base64.replace(patt, "");
+            this.imgSrc = "data:image/png;base64," + base64;
 
-      }
-      },
-      err => {console.log("Error Image: +err");
-        this.messageService.add({severity:'error', summary:'Fehler', detail: err});
-      });
+          }
+        },
+        err => {
+          console.log("Error Image: +err");
+          this.messageService.add({severity: 'error', summary: 'Fehler', detail: err});
+        });
+    }
   }
 
   onBasicUpload(e) {

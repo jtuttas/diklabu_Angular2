@@ -1,3 +1,4 @@
+<button *ngIf="role=='Admin'" pButton type="button" (click)="newPupil()" icon="fa-plus-circle" label="new"></button>
 <p-pickList  (onMoveAllToTarget)="moveAllToTaget($event)" (onMoveToTarget)="moveToTarget($event)"  (onMoveToSource)="moveToSource($event)"  [source]="allPupils" [target]="coursePupils" sourceHeader="Alle Schüler" [targetHeader]="courseName" [responsive]="true" filterBy="NNAME,VNAME"
             dragdrop="true" dragdropScope="cars" sourceFilterPlaceholder="Search by Name" targetFilterPlaceholder="Search by Name" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
 
@@ -10,4 +11,4 @@
   </ng-template>
 
 </p-pickList>
-<pupileditdetails #editDialog (editCompleted)="editCompleted($event)"></pupileditdetails>
+<pupileditdetails #editDialog (newCompleted)="newCompleted($event)" (editCompleted)="editCompleted($event)"></pupileditdetails>

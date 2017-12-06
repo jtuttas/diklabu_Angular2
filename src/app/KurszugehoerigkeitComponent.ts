@@ -15,6 +15,7 @@ import {CourseService} from "./services/CourseService";
 export class KurszugehoerigkeitComponent {
   @ViewChild('editDialog') editDialog;
 
+  role: string = CourseBookComponent.courseBook.role;
   editedPupil:Pupil;
 
   allPupils: Pupil[];
@@ -167,22 +168,34 @@ export class KurszugehoerigkeitComponent {
     );
   }
 
+  newPupil() {
+    this.editedPupil=new Pupil();
+    this.editDialog.showDialog(this.editedPupil);
+  }
+
   editPupil(p:Pupil) {
     this.editedPupil=p;
     console.log("Edit Pupil "+JSON.stringify(p));
     this.editDialog.showDialog(p);
   }
 
+  newCompleted(event:Pupil) {
+    this.editedPupil=event;
+    console.log("Ein neuer Schüler:"+JSON.stringify(event));
+    this.allPupils.push(event);
+    this.orgAll.push(event);
+  }
+
   editCompleted(event:Pupil) {
     console.log("Edit Completed: "+JSON.stringify(event));
-    let p:Pupil = this.allPupils.find(x => x.id == event.id);
-    p.VNAME=event.VNAME;
-    p.NNAME=event.NNAME;
-    p.ABGANG=event.ABGANG;
+    let p: Pupil = this.allPupils.find(x => x.id == event.id);
+    p.VNAME = event.VNAME;
+    p.NNAME = event.NNAME;
+    p.ABGANG = event.ABGANG;
     p = this.orgAll.find(x => x.id == event.id);
-    p.VNAME=event.VNAME;
-    p.NNAME=event.NNAME;
-    p.ABGANG=event.ABGANG;
+    p.VNAME = event.VNAME;
+    p.NNAME = event.NNAME;
+    p.ABGANG = event.ABGANG;
     p = this.coursePupils.find(x => x.id == event.id);
     if (p) {
       p.VNAME = event.VNAME;
@@ -200,8 +213,7 @@ export class KurszugehoerigkeitComponent {
       p.VNAME = event.VNAME;
       p.NNAME = event.NNAME;
       p.ABGANG = event.ABGANG;
-      this.courseService.anzahl=CourseSelectComponent.pupils.filter(x=> x.ABGANG=="N").length;
+      this.courseService.anzahl = CourseSelectComponent.pupils.filter(x => x.ABGANG == "N").length;
     }
-
   }
 }

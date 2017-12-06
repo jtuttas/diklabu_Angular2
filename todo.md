@@ -1,4 +1,5 @@
 ## Todo
-- AJAX loading Indicator
-- Verwaltungsmenu (Schüler -> Klassen/Kurse zuordnung) und Schüler einträge ändern.
+- Schüler login Fehlzeiten übersicht!
 - EXCEL Vorlagen verwenden
+- Lehrer kann nur die Klassen sehen in die er auch unterrichtet (hier auch Admin Panel vorsehen alle Lehrer <-> gewählte Klasse)
+- Neue Schüler anlegen
