@@ -10,6 +10,9 @@ import {CourseBookComponent} from "./CourseBookComponent";
 import {CourseService} from "./services/CourseService";
 import {SelectItem} from "primeng/primeng";
 import {Config} from "./data/Config";
+import {Headers} from "@angular/http";
+import {TeacherService} from "./services/TeacherService";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -33,14 +36,10 @@ export class CourseSelectComponent {
 
   public static pupils: Pupil[];
 
-  constructor(http: HttpClient, private messageService: MessageService, private pupilService: PupilService, public courseService: CourseService) {
+  constructor(private router:Router,private teacherService: TeacherService, private messageService: MessageService, private pupilService: PupilService, public courseService: CourseService) {
 
-    // Make the HTTP request:
-
-
-    http.get(Config.SERVER + "Diklabu/api/v1/noauth/klassen").subscribe(data => {
-        // Read the result field from the JSON response.
-        console.log("CourseSelectComponent receive: " + JSON.stringify(data));
+    this.teacherService.getCoursesOfTeacher(CourseBookComponent.courseBook.idLehrer).subscribe(
+      data => {
         this.courses = [];
         let co: any = data;
         for (var i = 0; i < co.length; i++) {
@@ -50,13 +49,21 @@ export class CourseSelectComponent {
           }
           this.courses.push({label: label, value: co[i]});
         }
-        this.selectedCourse=co[0];
-        this.compDisabled = false;
-        this.updated();
+        if (this.courses.length==0) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Fehler',
+            detail: 'Sie sind keinen Klassen zugeordnet!'});
+          this.router.navigate(['/login']);
+        }
+        else {
+          this.selectedCourse=co[0];
+          this.compDisabled = false;
+          this.updated();
+        }
+
       },
-
-      (err: HttpErrorResponse) => {
-
+      err => {
         this.compDisabled = true;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
@@ -78,8 +85,8 @@ export class CourseSelectComponent {
           });
         }
 
-      });
-    console.log("Construktor CourseSelectComponent");
+      }
+    );
   }
 
 

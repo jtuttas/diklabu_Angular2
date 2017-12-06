@@ -39,7 +39,8 @@ export class MenuComponent {
         {
           label: 'Verwaltung', icon: 'fa-eye',
           items: [
-            {label: 'Klassenzugehörigkeit', icon: 'fa-table', command: event2 => this.showZugehoerigkeit(event2)},
+            {label: 'Schülerzugehörigkeit', icon: 'fa-table', command: event2 => this.showZugehoerigkeit(event2)},
+            {label: 'Lehrerzugehörigkeit', icon: 'fa-book', command: event2 => this.showLehrerZugehoerigkeit(event2)},
           ]
         },
         {label: 'Logout', icon: 'fa-times', command: event2 => this.logout(event2)}
@@ -71,6 +72,10 @@ export class MenuComponent {
   showZugehoerigkeit(e) {
     console.log("show Zugehörigkeit");
     this.router.navigate(['/diklabu', { outlets: { sub: 'zugehoerigkeit' } }]);
+  }
+  showLehrerZugehoerigkeit(e) {
+    console.log("show Lehrer Zugehörigkeit");
+    this.router.navigate(['/diklabu', { outlets: { sub: 'lzugehoerigkeit' } }]);
   }
   showAnwesenheit(e) {
     console.log("show Anwesenheit");

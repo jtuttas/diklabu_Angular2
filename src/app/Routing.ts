@@ -13,6 +13,7 @@ import {NotenComponent} from "./NotenComponent";
 import {BetriebeComponent} from "./BetriebeComponent";
 import {PupilLoginComponent} from "./PupilLoginComponent";
 import {KurszugehoerigkeitComponent} from "./KurszugehoerigkeitComponent";
+import {LehrerzugehoerigkeitComponent} from "./LehrerzugehoerigkeitComponent";
 
 const appRoutes: Routes = [
   {
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
       {path: 'fehlzeiten', component: FehlzeitenComponent, outlet: 'sub'},
       {path: 'noten', component: NotenComponent, outlet: 'sub'},
       {path: 'betriebe', component: BetriebeComponent, outlet: 'sub'},
-      {path: 'zugehoerigkeit', component: KurszugehoerigkeitComponent, outlet: 'sub'}
+      {path: 'zugehoerigkeit', component: KurszugehoerigkeitComponent, outlet: 'sub'},
+      {path: 'lzugehoerigkeit', component: LehrerzugehoerigkeitComponent, outlet: 'sub'}
     ]
   },
   {

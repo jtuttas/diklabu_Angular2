@@ -64,6 +64,8 @@ import {HttpService} from "./loader/HttpService";
 import {httpServiceFactory} from "./loader/http-service.factory";
 import {KurszugehoerigkeitComponent} from "./KurszugehoerigkeitComponent";
 import {PupilDetailEditDialog} from "./PupilDetailEditDialog";
+import {LehrerzugehoerigkeitComponent} from "./LehrerzugehoerigkeitComponent";
+import {TeacherService} from "./services/TeacherService";
 
 
 
@@ -75,7 +77,7 @@ import {PupilDetailEditDialog} from "./PupilDetailEditDialog";
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
     CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente,
     FehlzeitenComponent, NotenComponent, AnwesenheitsFilterComponent, BetriebeComponent,PupilLoginComponent,
-    LoaderComponent, KurszugehoerigkeitComponent, PupilDetailEditDialog,
+    LoaderComponent, KurszugehoerigkeitComponent, PupilDetailEditDialog, LehrerzugehoerigkeitComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,
@@ -91,7 +93,7 @@ import {PupilDetailEditDialog} from "./PupilDetailEditDialog";
   ],
   providers: [
     SharedService,AppComponent, PupilService, AnwesenheitsService, LoginService, AuthenticationGuard, VerlaufsService,
-    MailService,  PupilDetailService, DokuService, CourseService, NotenService,
+    MailService,  PupilDetailService, DokuService, CourseService, NotenService, TeacherService,
     LoaderService,
     {
       provide: HttpService,

@@ -1,0 +1,9 @@
+<p-pickList  (onMoveAllToTarget)="moveAllToTaget($event)" (onMoveToTarget)="moveToTarget($event)"  (onMoveToSource)="moveToSource($event)"  [source]="allTeachers" [target]="courseTeachers" sourceHeader="Alle Lehrer" [targetHeader]="courseName" [responsive]="true" filterBy="NNAME,VNAME,id"
+            dragdrop="true" dragdropScope="cars" sourceFilterPlaceholder="Search.." targetFilterPlaceholder="Search.." [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+
+  <ng-template let-teacher pTemplate="item">
+    <div style="text-align: left;">
+      <span >{{teacher.id}}:{{teacher.VNAME}} {{teacher.NNAME}}</span>
+    </div>
+  </ng-template>
+</p-pickList>
