@@ -170,7 +170,7 @@ export class CourseSelectComponent {
         this.courseInfoDialog.lnname = data.LEHRER_NNAME;
         this.courseInfoDialog.lemail = data.LEHRER_EMAIL;
         this.courseInfoDialog.mailto = "mailto:" + data.LEHRER_EMAIL;
-        this.courseInfoDialog.showDialog("Info f. die Klasse " + CourseBookComponent.courseBook.course.KNAME, "Info f. die Klasse ");
+        this.courseInfoDialog.showDialog("Info f. die Klasse " + CourseBookComponent.courseBook.course.KNAME,data.TITEL);
       },
       err => {
         this.messageService.add({severity: 'error', summary: 'Fehler', detail: err});

@@ -1,0 +1,29 @@
+<p-dataList [value]="coursePortfolio">
+  <p-header>
+    <h3>Portfolios der Klasse {{KName}} </h3>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-2 links">
+        <strong>Name</strong>
+      </div>
+      <div class="ui-md-3 links">
+        <strong>Einträge</strong>
+      </div>
+    </div>
+  </p-header>
+  <ng-template let-portfolio pTemplate="item" let-i="index">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-2 links">
+        <img (click)="infoClick(portfolio.ID_Schueler)" class="select" src="../assets/Info.png"/>
+        <img (click)="mailClick(portfolio.ID_Schueler)" class="select" src="../assets/mail.png"/>
+        <strong style="vertical-align: top;">{{getPupil(portfolio.ID_Schueler).VNAME}} {{getPupil(portfolio.ID_Schueler).NNAME}}</strong>
+      </div>
+      <div class="ui-md-3 links">
+        {{getPortfolioList(portfolio)}}
+      </div>
+    </div>
+  </ng-template>
+</p-dataList>
+<sendmail #mailDialog [mail]="mailObject"></sendmail>
+<pupildetails #infoDialog></pupildetails>
+
+

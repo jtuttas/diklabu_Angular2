@@ -37,7 +37,7 @@ export class TeacherService {
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
     headers.append("Content-Type","application/json;  charset=UTF-8");
 
-    this.url = Config.SERVER+"Diklabu/api/v1/klasse/klassenlehrer/"+tid;  // URL to web API
+    this.url = Config.SERVER+"Diklabu/api/v1/klasse/klassenlehrer/"+tid+"/false";  // URL to web API
     console.log("get Teacher URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractData)

@@ -66,6 +66,7 @@ import {KurszugehoerigkeitComponent} from "./KurszugehoerigkeitComponent";
 import {PupilDetailEditDialog} from "./PupilDetailEditDialog";
 import {LehrerzugehoerigkeitComponent} from "./LehrerzugehoerigkeitComponent";
 import {TeacherService} from "./services/TeacherService";
+import {PortfolioComponent} from "./PortfolioComponent";
 
 
 
@@ -77,7 +78,7 @@ import {TeacherService} from "./services/TeacherService";
     diklabuComponent,  MailDialog, PupilDetailDialog, PupilImageComponent, DokuComponent, PlanDialog,MenuComponent,
     CourseInfoDialog, VerlaufComponent, VerlaufDeleteDialog, TodayAnwesenheitsComponente,
     FehlzeitenComponent, NotenComponent, AnwesenheitsFilterComponent, BetriebeComponent,PupilLoginComponent,
-    LoaderComponent, KurszugehoerigkeitComponent, PupilDetailEditDialog, LehrerzugehoerigkeitComponent
+    LoaderComponent, KurszugehoerigkeitComponent, PupilDetailEditDialog, LehrerzugehoerigkeitComponent, PortfolioComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule,

@@ -18,6 +18,7 @@ export class CourseService {
   }
 
 
+
   getStundenplan(kname:string) {
     var headers = new Headers();
     headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
@@ -39,6 +40,18 @@ export class CourseService {
     console.log("get Vertretungsplan  URL="+this.url);
     return this.http.get(this.url,{headers: headers})
       .map(this.extractPlainData)
+      .catch(this.handleError);
+  }
+
+  getPortfolio(idKlasse:number) {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+
+    this.url = Config.SERVER+"Diklabu/api/v1/portfolio/"+idKlasse;  // URL to web API
+    console.log("get Portfolio  URL="+this.url);
+    return this.http.get(this.url,{headers: headers})
+      .map(this.extractData)
       .catch(this.handleError);
   }
 

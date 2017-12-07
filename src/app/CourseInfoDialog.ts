@@ -7,9 +7,10 @@ import {CourseBookComponent} from "./CourseBookComponent";
   styles: ['textarea{width:100%;}'],
   template:
   ' <p-dialog [header]="titel" [(visible)]="display" modal="modal" [closable]="true" appendTo="body">' +
+  '<strong>{{courseTitel}}</strong>' +
   '<h3>Klassenlehrer</h3>' +
   '<strong>{{lvname}} {{lnname}}</strong>' +
-  '<p><a [href]="mailto">{{lemail}}</a></p>' +
+  ' (<a [href]="mailto">{{lemail}}</a>)' +
   '<h3>Klassenbemerkung</h3>' +
   '<textarea pInputTextarea [(ngModel)]="bem"></textarea>' +
   '<p-footer>\n' +
@@ -21,6 +22,7 @@ export class CourseInfoDialog {
 
   public display: boolean = false;
   public titel: string = "";
+  public courseTitel:string = "";
   public bem: string = "";
   public lvname: string = "";
   public lnname: string = "";
@@ -29,9 +31,10 @@ export class CourseInfoDialog {
 
   constructor(private courseService: CourseService) {}
 
-  showDialog(titel: string) {
+  showDialog(titel: string,courseTitel: string) {
     this.titel = titel;
     this.display = true;
+    this.courseTitel =courseTitel;
   }
 
   bemChanged() {
