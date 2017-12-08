@@ -13,6 +13,9 @@ import {DokuService} from "./services/DokuService";
 import {Portfolio, PortfolioEintrag} from "./data/Portfolio";
 import {Anwesenheit} from "./data/Anwesenheit";
 import {MailObject} from "./data/MailObject";
+import {Config} from "./data/Config";
+import {saveAs as importedSaveAs} from "file-saver";
+
 @Component({
   selector: 'portfolio',
   templateUrl: './PortfolioComponent.html',
@@ -27,13 +30,21 @@ export class PortfolioComponent {
   subscription: Subscription;
   KName:string;
 
-  constructor(private dokuService:DokuService, private service:SharedService,private messageService: MessageService,public courseService:CourseService) {
+  constructor(private pupilService:PupilService, private dokuService:DokuService, private service:SharedService,private messageService: MessageService,public courseService:CourseService) {
     this.subscription = this.service.getCoursebook().subscribe(message => {
       console.log("LehrerzugehoerigkeitComponent Component Model Changed !"+message.constructor.name);
       this.update();
     });
   }
 
+  public  downloadPortfolio(p:Pupil) {
+    console.log("Cretae Portfolio for "+p.id);
+    this.pupilService.downloadPortfolio(p.id).subscribe(blob => {
+      console.log("Download Portfolio reveived BLOB");
+      importedSaveAs(blob, "Portfolio_"+p.VNAME+"_"+p.NNAME+".pdf");
+      }
+    )
+  }
 
 
   private update() {

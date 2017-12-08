@@ -5,6 +5,9 @@
       <div class="ui-g-12 ui-md-2 links">
         <strong>Name</strong>
       </div>
+      <div class="ui-md-1 links">
+        <strong>Portfolio</strong>
+      </div>
       <div class="ui-md-3 links">
         <strong>Einträge</strong>
       </div>
@@ -16,6 +19,9 @@
         <img (click)="infoClick(portfolio.ID_Schueler)" class="select" src="../assets/Info.png"/>
         <img (click)="mailClick(portfolio.ID_Schueler)" class="select" src="../assets/mail.png"/>
         <strong style="vertical-align: top;">{{getPupil(portfolio.ID_Schueler).VNAME}} {{getPupil(portfolio.ID_Schueler).NNAME}}</strong>
+      </div>
+      <div class="ui-md-1 links">
+        <img (click)="downloadPortfolio(getPupil(portfolio.ID_Schueler))" class="select" src="../assets/pdficon.png"/>
       </div>
       <div class="ui-md-3 links">
         {{getPortfolioList(portfolio)}}

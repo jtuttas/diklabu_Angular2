@@ -1,5 +1,5 @@
 import { Injectable }              from '@angular/core';
-import { Http, Response, Headers }          from '@angular/http';
+import {Http, Response, Headers, RequestOptions, ResponseContentType} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -84,6 +84,21 @@ export class PupilService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+  downloadPortfolio(id:number): Observable<Blob> {
+    var headers = new Headers();
+    headers.append("auth_token", ""+CourseBookComponent.courseBook.auth_token);
+    headers.append("Content-Type","application/json;  charset=UTF-8");
+    let options = new RequestOptions({responseType: ResponseContentType.Blob});
+    options.headers=headers;
+
+    this.url = Config.SERVER+"Diklabu/api/v1/schueler/portfolio/"+id;  // URL to web API
+    console.log("URL="+this.url);
+    return this.http.get(this.url,options)
+      .map(res => res.blob())
+      .catch(this.handleError)
+  }
+
 
   newPupil(pupil:Pupil) {
     var headers = new Headers();
