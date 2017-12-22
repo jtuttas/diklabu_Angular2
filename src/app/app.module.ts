@@ -71,6 +71,7 @@ import {PortfolioComponent} from "./PortfolioComponent";
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent, DatepickerComponent, CourseSelectComponent, DurationPickerComponent, LFSelectComponent, NewVerlaufComponent
@@ -87,7 +88,7 @@ import {PortfolioComponent} from "./PortfolioComponent";
     GrowlModule,routing, DialogModule, ButtonModule, InputTextModule,
     InputTextareaModule, FileUploadModule,SplitButtonModule,TooltipModule,MenuModule,PasswordModule, CalendarModule, DropdownModule,
     DataListModule, OrderListModule, TieredMenuModule, DataGridModule, PanelModule, ProgressSpinnerModule, ProgressSpinnerModule,
-    PickListModule, InputSwitchModule
+    PickListModule, InputSwitchModule,
   ],
   exports: [
 

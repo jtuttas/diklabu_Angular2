@@ -14,7 +14,7 @@ import {Portfolio, PortfolioEintrag} from "./data/Portfolio";
 import {Anwesenheit} from "./data/Anwesenheit";
 import {MailObject} from "./data/MailObject";
 import {Config} from "./data/Config";
-import {saveAs as importedSaveAs} from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'portfolio',
@@ -41,7 +41,7 @@ export class PortfolioComponent {
     console.log("Cretae Portfolio for "+p.id);
     this.pupilService.downloadPortfolio(p.id).subscribe(blob => {
       console.log("Download Portfolio reveived BLOB");
-      importedSaveAs(blob, "Portfolio_"+p.VNAME+"_"+p.NNAME+".pdf");
+      FileSaver.saveAs(blob, "Portfolio_"+p.VNAME+"_"+p.NNAME+".pdf");
       }
     )
   }

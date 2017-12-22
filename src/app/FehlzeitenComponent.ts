@@ -103,8 +103,12 @@ export class FehlzeitenComponent {
   }
 
   getPupilName(id:number):string {
+    //console.log("getPupilName von ID="+id);
     let p:Pupil= CourseSelectComponent.getPupil(id);
-    return p.VNAME+" "+p.NNAME;
+    if (p) {
+      return p.VNAME+" "+p.NNAME;
+    }
+    return "N.N.";
   }
 
   infoClick(a:Anwesenheit) {
