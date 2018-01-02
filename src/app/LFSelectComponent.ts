@@ -8,6 +8,9 @@ import {Lernfeld} from "./data/Lernfeld";
 import {MessageService} from "primeng/components/common/messageservice";
 import {SelectItem} from "primeng/primeng";
 import {Config} from "./data/Config";
+import {CourseBookComponent} from "./CourseBookComponent";
+import {SharedService} from "./services/SharedService";
+import {Subscription} from "rxjs/Subscription";
 
 
 @Component({
@@ -17,19 +20,20 @@ import {Config} from "./data/Config";
 
 })
 
-export class LFSelectComponent{
+export class LFSelectComponent {
   @Output() lfLoaded = new EventEmitter();
 
+  subscription: Subscription;
+  public lfs: SelectItem[] = [];
+  public allLfs: SelectItem[] = [];
+  public selectedLF = "LF1";
+  public compDisabled: boolean = true;
 
-  public lfs:SelectItem[];
-  public selectedLF="LF1";
-  public compDisabled:boolean=true;
 
-
-  public getLfNumber(s:string):number {
-    for (var i=0;i<this.lfs.length;i++) {
-      console.log( "test ("+s+") ist "+this.lfs[i].label);
-      if (this.lfs[i].label==s) {
+  public getLfNumber(s: string): number {
+    for (var i = 0; i < this.lfs.length; i++) {
+      console.log("test (" + s + ") ist " + this.lfs[i].label);
+      if (this.lfs[i].label == s) {
         return i;
       }
     }
@@ -37,49 +41,79 @@ export class LFSelectComponent{
   }
 
 
-  constructor(http:HttpClient,private messageService: MessageService){
+  constructor(private http: HttpClient, private messageService: MessageService, private  sharedService: SharedService) {
 
+    console.log("Construktor CourseSelectComponent");
+  }
 
+  ngOnInit() {
+    this.subscription = this.sharedService.getCoursebook().subscribe(message => {
+      console.log("LFSelectComponent: Course Book Changed");
+        this.filterLfs();
+    });
     // Make the HTTP request:
-    http.get(Config.SERVER+"Diklabu/api/v1/noauth/lernfelder").subscribe(data => {
-      // Read the result field from the JSON response.
-      console.log("reviced ld:"+JSON.stringify(data));
-      let lfd:any=data;
-      this.lfs =  [];
-      for (var i=0;i<lfd.length;i++) {
-        this.lfs.push({label: lfd[i].id, value: lfd[i].id});
-      }
-      this.compDisabled=false;
-      this.selectedLF=this.lfs[0].value;
-      this.lfLoaded.emit();
-    },
+    this.http.get(Config.SERVER + "Diklabu/api/v1/noauth/lernfelder").subscribe(data => {
+        // Read the result field from the JSON response.
+        console.log("reveived lf:" + JSON.stringify(data));
+        let lfd:any=data;
+        for (var i = 0; i < lfd.length; i++) {
+          //console.log("push "+lfd[i].id);
+          this.allLfs.push({label: lfd[i].id, value: lfd[i].id});
+        }
+        console.log("all LFs size="+this.allLfs.length);
+        this.filterLfs();
+      },
 
       (err: HttpErrorResponse) => {
 
-        this.compDisabled=true;
+        this.compDisabled = true;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('An error occurred:', err.error.message);
-          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Lernfeldliste nicht vom Server laden! MSG='+err.error.message});
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Fehler',
+            detail: 'Kann Lernfeldliste nicht vom Server laden! MSG=' + err.error.message
+          });
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-          this.messageService.add({severity:'error', summary:'Fehler', detail:'Kann Lernfeldliste nicht vom Server laden! MSG='+err.name});
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Fehler',
+            detail: 'Kann Lernfeldliste nicht vom Server laden! MSG=' + err.name
+          });
         }
 
-    });
-    console.log("Construktor CourseSelectComponent");
+      });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
-  removeLf(excluded:string) {
-    console.log(" Entferne LF Eintrag "+excluded+" Da bereits Note(n) vorhanden!");
-    console.log(" Bisherige einträge:"+JSON.stringify(this.lfs));
-    for (var j=0;j<this.lfs.length;j++) {
-      if (this.lfs[j].label==excluded) {
+  filterLfs() {
+    console.log("Course Categorie="+CourseBookComponent.courseBook.course.idKategorie);
+    if (CourseBookComponent.courseBook.course.idKategorie == 1 || CourseBookComponent.courseBook.course.idKategorie == 9) {
+      this.lfs = this.allLfs.filter(lf => lf.label == "Kurs");
+    }
+    else {
+      this.lfs = this.allLfs.filter(lf => lf.label != "Kurs");
+    }
+    console.log("Filter LFS size="+this.lfs.length);
+    this.compDisabled = false;
+    this.selectedLF = this.lfs[0].value;
+    this.lfLoaded.emit();
+  }
+
+  removeLf(excluded: string) {
+    console.log(" Entferne LF Eintrag " + excluded + " Da bereits Note(n) vorhanden!");
+    console.log(" Bisherige einträge:" + JSON.stringify(this.lfs));
+    for (var j = 0; j < this.lfs.length; j++) {
+      if (this.lfs[j].label == excluded) {
         this.lfs.splice(j, 1);
-        this.selectedLF=this.lfs[0].label;
+        this.selectedLF = this.lfs[0].label;
         return;
       }
     }
