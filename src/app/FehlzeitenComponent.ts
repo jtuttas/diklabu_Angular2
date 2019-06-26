@@ -82,7 +82,7 @@ export class FehlzeitenComponent {
   sendReport(a:Anwesenheit) {
     console.log("Send Bericht!");
     let p:Pupil= CourseSelectComponent.getPupil(a.id_Schueler);
-    this.mailDialog.mailService.getTemplate("assets/template.txt",window.location.origin).subscribe(
+    this.mailDialog.mailService.getTemplate("template.txt",window.location.origin).subscribe(
       data => {
         let template = data;
         this.anwesenheitsService.fillFehlzeitenbericht(template,a,(content,recipient) => {

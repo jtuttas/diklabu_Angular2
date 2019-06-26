@@ -14,14 +14,15 @@ import {Config} from "./data/Config";
   '}'  ],
   template: ' <img width="200" alt="Pupil Image" [src]="imgSrc">'+
     '<div id="adapt">'+
-  '<p-fileUpload  name="file"  mode="basic" accept="image/*" (onUpload)="onBasicUpload($event)" [url]="uploadUrl"></p-fileUpload>'+
+  '<p-fileUpload  name="file"  mode="basic" accept="image/*" (onBeforeSend)="onBeforeSend($event)" (onUpload)="onBasicUpload($event)" [url]="uploadUrl"></p-fileUpload>'+
     '</div>'
   ,
 })
 export class PupilImageComponent {
 
   public imgSrc="../assets/anonym.gif";
-  public uploadUrl:string = Config.SERVER+"/Diklabu/api/v1/schueler/bild/";
+
+  public uploadUrl:string = Config.SERVER+"Diklabu/api/v1/schueler/bild/";
   private currentPupil:Pupil;
 
   constructor(private pupilDetailService:PupilDetailService,private messageService: MessageService) {
@@ -31,7 +32,7 @@ export class PupilImageComponent {
     this.currentPupil=p;
     this.imgSrc="../assets/anonym.gif";
     if (p.id) {
-      this.uploadUrl = Config.SERVER + "/Diklabu/api/v1/schueler/bild/" + p.id;
+      this.uploadUrl = Config.SERVER + "Diklabu/api/v1/schueler/bild/" + p.id;
       this.pupilDetailService.getPupilImage(p.id).subscribe(
         data => {
           if (data) {
@@ -48,6 +49,10 @@ export class PupilImageComponent {
           this.messageService.add({severity: 'error', summary: 'Fehler', detail: err});
         });
     }
+  }
+  private onBeforeSend(event) {
+    console.log("On BeforeSend!")
+    event.xhr.setRequestHeader("auth_token", ""+CourseBookComponent.courseBook.auth_token);
   }
 
   onBasicUpload(e) {

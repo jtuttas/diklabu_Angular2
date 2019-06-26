@@ -56,7 +56,7 @@ export class MailService {
 
 
   getTemplate(s: string, url:string) {
-    url = url +"/"+s;  // URL to web API
+    url = Config.SERVER+s;  // URL to web API
     return this.http.get(url)
       .map(res => {return res.text();})
       .catch(this.handleError);

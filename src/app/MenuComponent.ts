@@ -36,7 +36,7 @@ export class MenuComponent {
         {label: 'Fehlzeiten', icon: 'fa-hotel', command: event2 => this.showFehlzeiten(event2)},
         {label: 'Klasse/Betriebe', icon: 'fa-info-circle', command: event2 => this.showBetriebe(event2)},
        // {label: 'Noten', icon: 'fa-graduation-cap', command: event2 => this.showGrades(event2)},
-        {label: 'Portfolio', icon: 'fa-certificate', command: event2 => this.showPortfolio(event2)},
+       // {label: 'Portfolio', icon: 'fa-certificate', command: event2 => this.showPortfolio(event2)},
         {
           label: 'Verwaltung', icon: 'fa-eye',
           items: [
